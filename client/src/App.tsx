@@ -7,12 +7,11 @@ import styled from 'styled-components';
 const queryClient = new QueryClient();
 const S = {
   OutletWrapper: styled.div`
+    flex: 1;
     max-width: 1264px;
     width: 100%;
     background: none;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
+    margin: auto;
   `,
 };
 
