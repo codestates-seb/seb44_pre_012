@@ -2,12 +2,14 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'pre_Project'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+java {
+	sourceCompatibility = '11'
+}
 
 configurations {
 	compileOnly {
@@ -17,14 +19,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-}
-
-ext {
-	set('snippetsDir', file("build/generated-snippets"))
-}
-
-configurations {
-	asciidoctorExtensions
 }
 
 dependencies {
@@ -50,30 +44,5 @@ dependencies {
 }
 
 tasks.named('test') {
-	outputs.dir snippetsDir
 	useJUnitPlatform()
-}
-
-tasks.named('asciidoctor') {
-	configurations "asciidoctorExtensions"
-	inputs.dir snippetsDir
-	dependsOn test
-}
-
-task copyDocument(type: Copy) {
-	dependsOn asciidoctor
-	println "asciidoctor output: ${asciidoctor.outputDir}"
-	from file("${asciidoctor.outputDir}")
-	into file("src/main/resources/static/docs")
-}
-
-build {
-	dependsOn copyDocument
-}
-
-bootJar {
-	dependsOn copyDocument
-	from ("${asciidoctor.outputDir}") {
-		into 'src/main/resources/static/docs'
-	}
 }
