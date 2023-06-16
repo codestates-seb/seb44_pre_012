@@ -3,8 +3,8 @@ import LoginForm from '../components/LoginForm';
 import SocialButtons from '../components/SocialButtons';
 import logoIcon from '../assets/logoIcon.png';
 import { Link } from 'react-router-dom';
-import { SOCIAL_LOGINS } from '../contants/socialLogin';
-import { USER_MESSAGES } from '../contants/userMessages';
+import { SOCIAL_LOGINS } from '../constants/socialLogin';
+import { USER_MESSAGES } from '../constants/userMessages';
 
 type Social = {
   label: string;

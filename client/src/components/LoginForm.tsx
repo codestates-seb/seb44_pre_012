@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import InputField from './InputField';
 import FormSubmit from './FormSubmit';
-import { USER_MESSAGES } from '../contants/userMessages';
+import { USER_MESSAGES } from '../constants/userMessages';
 
 export default function LoginForm() {
   return (
