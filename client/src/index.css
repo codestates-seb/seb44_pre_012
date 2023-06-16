@@ -3,10 +3,10 @@
   line-height: 1.5;
   font-weight: 400;
   font-size: 15px;
-
   color-scheme: light dark;
   color: hsl(210, 8%, 45%);
-  background-color: hsl(210, 8%, 95%);
+  background-color: hsl(0, 0%, 100%);
+  --do: hsl(210, 8%, 95%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

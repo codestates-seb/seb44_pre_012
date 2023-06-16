@@ -1,4 +1,8 @@
-import { styled } from 'styled-components';
+import styled from 'styled-components';
+
+export default function FormSubmit({ text }) {
+  return <S.Button>{text}</S.Button>;
+}
 
 const S = {
   Button: styled.button`
@@ -15,10 +19,9 @@ const S = {
     border: 1px solid rgba(0, 0, 0, 0);
     &:hover {
       background: var(--color-blue-200);
+    }
+    &:focus {
       box-shadow: var(--button-fc-box-shadow);
     }
   `,
 };
-export default function FormSubmit({ text }) {
-  return <S.Button>{text}</S.Button>;
-}

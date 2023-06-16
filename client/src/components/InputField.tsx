@@ -1,11 +1,27 @@
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 
 type Props = {
+  type: string;
   label: string;
   link?: string;
   message?: string;
 };
+
+export default function InputField({ type, label, link, message }: Props) {
+  return (
+    <S.Container>
+      <S.InputInfo>
+        <S.Label htmlFor={label}>{label}</S.Label>
+        <S.Link tabIndex={-1} to={`${link}`}>
+          {message}
+        </S.Link>
+      </S.InputInfo>
+      <S.InputText id={label} type={type} />
+      <S.Error>{label} cannot be empty.</S.Error>
+    </S.Container>
+  );
+}
 
 const S = {
   Container: styled.div`
@@ -45,18 +61,9 @@ const S = {
       color: var(--color-blue-100);
     }
   `,
+  Error: styled.div`
+    color: hsl(358, 62%, 52%);
+    margin-top: 5px;
+    font-size: var(--font-s);
+  `,
 };
-
-export default function InputField({ label, link, message }: Props) {
-  return (
-    <S.Container>
-      <S.InputInfo>
-        <S.Label htmlFor={label}>{label}</S.Label>
-        <S.Link tabIndex={-1} to={`${link}`}>
-          {message}
-        </S.Link>
-      </S.InputInfo>
-      <S.InputText id={label} />
-    </S.Container>
-  );
-}
