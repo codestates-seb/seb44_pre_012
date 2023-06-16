@@ -7,9 +7,10 @@ import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
 export default function QuestionList() {
-
-  function addCommasToNumber(number:number) {
-    const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  function addCommasToNumber(number: number) {
+    const formattedNumber = number
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return formattedNumber;
   }
 
@@ -43,12 +44,8 @@ export default function QuestionList() {
 
 const S = {
   Main: styled.main`
-    /* border: 1px solid green; */
-    /* width: 100vw; */
     display: flex;
     > div {
-      /* border: 1px solid yellow; */
-      /* padding: 25px 24px; */
     }
   `,
 
@@ -114,13 +111,12 @@ const S = {
       background: var(--color-button-sky-hover);
       color: var(--color-tag-blue-hover);
     }
-   .active {
+    .active {
       background: var(--color-button-sky-hover);
       color: var(--color-button-sky-active);
     }
   `,
   Ul: styled.ul`
-    /* border: 1px solid yellow; */
     padding: 0 24px 0 0;
   `,
 };

@@ -66,7 +66,6 @@ export default function Aside() {
 
 const S = {
   Aside: styled.aside`
-    /* border: 1px solid red; */
     padding: 25px;
 
     @media (max-width: 979px) {
@@ -104,7 +103,6 @@ const S = {
       margin-bottom: 10px;
     }
     a {
-      /* border: 1px solid red; */
       width: 90%;
       font-size: 13px;
     }

@@ -1,33 +1,21 @@
 import { styled } from 'styled-components';
 import { QuestionInfo } from '../../types/types';
 import '../../index.css';
+import monthNames from '../../constant/monthNames';
+import colors from '../../constant/colorNames';
 
 interface QuestionContentProps {
-  data : QuestionInfo;
+  data: QuestionInfo;
 }
 
 export default function QuestionContent({ data }: QuestionContentProps) {
   const tempPostedTime: Date = new Date(data.createdAt);
   const now: Date = new Date();
-  const elapsedMilliseconds:number = now.getTime() - tempPostedTime.getTime();
+  const elapsedMilliseconds: number = now.getTime() - tempPostedTime.getTime();
   const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
   const elapsedMinutes = Math.floor(elapsedSeconds / 60);
   const elapsedHours = Math.floor(elapsedMinutes / 60);
   const elapsedDays = Math.floor(elapsedHours / 24);
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
 
   let formattedElapsedTime;
   switch (true) {
@@ -71,8 +59,10 @@ export default function QuestionContent({ data }: QuestionContentProps) {
             ))}
           </div>
           <div>
-            <span>이미지</span>
-            <span>{data.userName}</span>
+            <span>
+              <S.UserImg>{data.userName.slice(0, 1).toUpperCase()}</S.UserImg>
+            </span>
+            <a>{data.userName}</a>
             <span>12</span>
             <span>asked {formattedElapsedTime}</span>
           </div>
@@ -82,19 +72,23 @@ export default function QuestionContent({ data }: QuestionContentProps) {
   );
 }
 
+const getRandomColor = (): string => {
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+};
+
 const S = {
   Li: styled.li`
     border-top: 0.5px solid var(--color-layout-lightgray);
     display: flex;
     padding: 16px;
-
+    width: 100%;
     &:last-child {
       border-bottom: 0.5px solid var(--color-layout-lightgray);
     }
   `,
 
   Content: styled.article`
-    /* border: 1px solid blue; */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -102,7 +96,7 @@ const S = {
   `,
 
   SubInfo: styled.div`
-    /* border: 1px solid yellow; */
+    width: 100px;
     padding: 3px 0;
     text-align: right;
     color: var(--color-subInfo-lightgray);
@@ -122,13 +116,19 @@ const S = {
     display: flex;
     justify-content: space-between;
 
-    div:last-child {
+    > div:last-child {
+      display: flex;
+      align-items: center;
       text-align: right;
       span {
         margin-left: 5px;
       }
-      > span:nth-child(2) {
+      > a {
+        margin-left: 5px;
         color: var(--color-content-title);
+        &:hover {
+          color: var(--color-button-blue);
+        }
       }
       > span:nth-child(3) {
         font-weight: 500;
@@ -141,6 +141,10 @@ const S = {
     color: var(--color-content-title);
     font-size: 17px;
     margin-bottom: 2px;
+    font-weight: 500;
+    &:hover {
+      color: var(--color-button-blue);
+    }
   `,
 
   Desc: styled.div`
@@ -159,5 +163,20 @@ const S = {
     background-color: var(--color-button-sky);
     color: var(--color-tag-blue);
     margin-right: 6px;
+    &:hover {
+      background-color: var(--color-tag-skyblue-hover);
+      color: var(--color-tag-blue-hover);
+    }
+  `,
+  UserImg: styled.div`
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background-color: ${getRandomColor};
+    text-align: center;
+    font-weight: 500;
+    line-height: 16px;
+    font-size: 8px;
+    color: white;
   `,
 };
