@@ -15,8 +15,8 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> },
       // { index: true, element: <QuestionList /> },
       // 주석 보고 추가해주세요.
-      { path: 'user/login', element: <Login /> },
-      // { path: 'user/register', element: <컴포넌트명 /> },
+      { path: 'users/login', element: <Login /> },
+      // { path: 'users/register', element: <컴포넌트명 /> },
       // { path: 'users/:userId', element: <컴포넌트명 /> },
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
