@@ -1,0 +1,24 @@
+{
+    "data": [
+      {
+        "question": {
+            "questionId": 3,
+            "questionTitle": "How to pass props from layout.js to page.js in Next.js 13 folder-based routing?",
+            "questionContent": "Next.js 13 operates on a folder-based routing system, where the folder structure itself defines the routing.\n\nFor example, the layout.js file, located directly under the app folder, includes components and styles that are shared across multiple pages.\n\nHere's a folder structure on my project (The parent folder containing package.json etc and unnecessary files are omitted.) :\n\napp\n  ├── (DropDownPages)/\n  │   ├── layout.js ------ (2) * problem (parent component)\n  │   ├── bookmark/\n  │   │    └── page.js --- (3) (children component)\n  │   └── product/\n  │        └── page.js --- (3) (children component)\n  │\n  │ \n  ├── layout.js   ---- (1) \n  └── page.js\n\n(1) app/layout.js\n\nIn the layout.js file --- (1) just under app folder, I have added a Header and Footer and pages within tags.",
+            "viewCount": 0
+          },
+        "questionAnswers": {
+          "questionAnswer-Id": 1,
+          "questionAnswerContent": "I'm curious if there are any other approaches to passing props without relying on Redux or React's Context API. I'd like to explore different methods for passing data down the component tree in a more efficient manner. Any suggestions or insights would be greatly appreciated. Thank you!",
+          "userId": 1,
+          "userName": "Lee Doyu"
+        }
+      }
+    ],
+    "pageInfo": {
+      "page": 1,
+      "totalElements": 2,
+      "totalPages": 1
+    }
+  }
+  
