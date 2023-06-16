@@ -143,6 +143,11 @@ const S = {
         color: var(--color-button-blue);
         font-size: 21px;
 
+        &:hover {
+          background: var(--color-button-gray);
+          color: white;
+          cursor: pointer;
+        }
       }
     }
     img {
@@ -156,14 +161,20 @@ const S = {
       color: var(--color-content-title);
       font-size: 11px;
 
+      &:hover {
+        color: var(--color-button-blue);
+      }
     }
   `,
   TagBox: styled.div`
     a {
-      color: var(--color-button-blue);
+      color: var(--color-content-title);
       font-size: 13px;
       margin-top: 7px;
       display: inline-block;
+      &:hover {
+        color: var(--color-button-blue);
+      }
     }
     > div:first-child {
       font-size: 19px;

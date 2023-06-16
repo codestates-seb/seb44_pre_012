@@ -7,6 +7,12 @@ import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
 export default function QuestionList() {
+
+  function addCommasToNumber(number:number) {
+    const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return formattedNumber;
+  }
+
   return (
     <S.Main>
       <div>
@@ -15,7 +21,7 @@ export default function QuestionList() {
           <S.AskButton> Ask Question </S.AskButton>
         </S.Title>
         <S.SubTitle>
-          <div> {data.length} questions</div>
+          <div> {addCommasToNumber(data.length)} questions</div>
           <S.FilterContainer>
             <FilterButtons />
             <S.Filter>
@@ -24,11 +30,11 @@ export default function QuestionList() {
             </S.Filter>
           </S.FilterContainer>
         </S.SubTitle>
-        <ul>
+        <S.Ul>
           {data.map((el: QuestionInfo) => (
             <QuestionContent key={el.questionId} data={el} />
           ))}
-        </ul>
+        </S.Ul>
       </div>
       <Aside />
     </S.Main>
@@ -37,17 +43,18 @@ export default function QuestionList() {
 
 const S = {
   Main: styled.main`
-    border: 1px solid green;
-    width: 100%;
-    height: 100vh;
+    /* border: 1px solid green; */
+    /* width: 100vw; */
     display: flex;
     > div {
-      border: 1px solid yellow;
-      padding: 25px 24px;
+      /* border: 1px solid yellow; */
+      /* padding: 25px 24px; */
     }
   `,
 
   Title: styled.div`
+    padding: 25px 24px 0 24px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,15 +71,18 @@ const S = {
     height: 38px;
     background: var(--color-button-blue);
     border: 1px solid var(--color-button-blue);
-
+    font-weight: 500;
     color: #ffffff;
     border-radius: 3px;
     box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
     font-size: 13px;
+    &:hover {
+      background: var(--color-content-title);
+    }
   `,
 
   SubTitle: styled.section`
-    /* border: 1px solid pink; */
+    padding: 3px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,7 +98,7 @@ const S = {
   Filter: styled.button`
     background: var(--color-button-sky);
     color: var(--color-tag-blue);
-    border: 1px solid var(--color-button-sky-hover);
+    border: 1px solid #97b6cc;
     padding: 9px;
     border-radius: 3px;
     display: flex;
@@ -100,5 +110,17 @@ const S = {
     > span {
       margin-left: 3px;
     }
+    &:hover {
+      background: var(--color-button-sky-hover);
+      color: var(--color-tag-blue-hover);
+    }
+   .active {
+      background: var(--color-button-sky-hover);
+      color: var(--color-button-sky-active);
+    }
+  `,
+  Ul: styled.ul`
+    /* border: 1px solid yellow; */
+    padding: 0 24px 0 0;
   `,
 };

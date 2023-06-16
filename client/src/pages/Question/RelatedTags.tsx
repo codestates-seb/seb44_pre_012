@@ -7,7 +7,7 @@ export default function RelatedTags() {
     <div>
       {data.map(item => (
         <S.OneTag key={item.tagName}>
-          <button>{item.tagName}</button> <div>&times; {item.numberOfTags}</div>
+          <button title={`show questions tagged ${item.tagName}`}>{item.tagName}</button> <div>&times; {item.numberOfTags}</div>
         </S.OneTag>
       ))}
     </div>
@@ -26,10 +26,15 @@ const S = {
       color: var(--color-tag-blue);
       margin-right: 6px;
       font-size: 12px;
+
+      &:hover{
+        background-color: var(--color-tag-skyblue-hover);
+      color: var(--color-tag-blue-hover);
+      }
     }
     div {
       font-size: 11px;
-      colors: var(--color-subInfo-lightgray);
+      color: var(--color-subInfo-lightgray);
     }
   `,
 };
