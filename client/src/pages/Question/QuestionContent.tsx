@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { QuestionInfo } from '../../types/types';
 import '../../index.css';
-import monthNames from '../../constant/monthNames';
-import colors from '../../constant/colorNames';
+import monthNames from '../../constants/monthNames';
+import colors from '../../constants/colorNames';
 
 interface QuestionContentProps {
   data: QuestionInfo;
