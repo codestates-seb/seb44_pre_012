@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {Link} from "react-router-dom";
+import logoIcon from "../assets/logoIcon.png"
+import '../index.css';
 
 const S = {
     Container: styled.div`
@@ -9,22 +11,24 @@ const S = {
     align-items: flex-start;
     flex-flow: row wrap;
     margin: 0 auto;
-    padding: 32px 12px 12px 12px;
+    padding: 36px 36px 34px 36px;
     width: 100%;
-    height: 270px;
     `,
     FooterLogoImgContainer: styled.div`
     display: block;
-    margin: 0 auto;
+    width:50px;
+    margin: 0 0 0 auto;
     `,
     FooterLogoImg: styled.img`
-        width:32px;
-        height:37px;
+    width:50px;
     `,
     FooterMenuListContainer: styled.div`
     color: hsl(210,8%,60%);
     display: block;
     margin: 0 auto;
+    &:nth-child(2) {
+        margin-left: 20px;        
+    }
     &:nth-child(5) {
         li {
             &:nth-child(7) {
@@ -49,19 +53,21 @@ const S = {
     text-align:left;
     &:hover{
         color: #9fa6ad;
+        cursor: pointer;
     }
     `,
     FooterSNSListContainer: styled.div`
     display: flex;
-    margin: 8px;
+    margin: 0;
     `,
     FooterSNSList: styled.li`
     color: hsl(210,8%,60%);
     display: inline-block;
     font-size:12px;
-    margin: 0 6px;
+    margin-right:8px;
     &:hover{
         color: #9fa6ad;
+        cursor: pointer;
     }
     `,
     FooterVersionInfo: styled.div`
@@ -86,7 +92,7 @@ const Footer = () => {
     return (
         <S.Container>
             <S.FooterLogoImgContainer>
-                <Link to="/"><S.FooterLogoImg /></Link>
+                <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
             </S.FooterLogoImgContainer>
             <S.FooterMenuListContainer>
             <S.FooterMenuTitle>{footerMenuTitle[0]}</S.FooterMenuTitle>
@@ -120,7 +126,6 @@ const Footer = () => {
                 </S.FooterSNSListContainer>
                 <S.FooterVersionInfo>{versionInfo}</S.FooterVersionInfo>
             </S.FooterMenuListContainer>
-
         </S.Container>
 
     )
