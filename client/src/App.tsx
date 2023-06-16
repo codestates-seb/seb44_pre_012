@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-// import Header from './components/Header';
+import Header from './components/Header';
 
 const queryClient = new QueryClient();
 const S = {
@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       {/* 헤더, 푸터 컴포넌트 생성시 주석처리 해제 및 import 필요. */}
-      {/* <Header /> */}
+      <Header />
       <QueryClientProvider client={queryClient}>
         <S.OutletWrapper>
           <Outlet />
