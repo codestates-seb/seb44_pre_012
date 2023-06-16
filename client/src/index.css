@@ -1,5 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: -apple-system, "system-ui", "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif */
   line-height: 1.5;
   font-weight: 400;
 
@@ -20,6 +21,13 @@
   --color-button-sky-hover: #b3d3ea;
   --color-layout-orange: #f48225;
   --color-layout-black: #23262a;
+  --color-layout-lightgray: #e3e6e8;
+  --color-page-title: #232629;
+  --color-content-title: #0074cc;
+  --color-content-desc: #3b4045;
+  --color-subInfo-lightgray: #6a737c;
+  --color-tag-blue: #39739d;
+
 }
 
 /* 스타일 리셋 */
