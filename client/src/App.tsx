@@ -5,18 +5,6 @@ import styled from 'styled-components';
 // import Header from './components/Header';
 
 const queryClient = new QueryClient();
-const S = {
-  Container: styled.div<{ background: string }>`
-    background: ${props => props.background};
-    min-height: 100vh;
-  `,
-  OutletWrapper: styled.div`
-    flex: 1;
-    max-width: 1264px;
-    width: 100%;
-    margin: auto;
-  `,
-};
 
 function App() {
   const location = useLocation();
@@ -49,3 +37,16 @@ function App() {
 }
 
 export default App;
+
+const S = {
+  Container: styled.div<{ background: string }>`
+    background: ${props => props.background};
+    min-height: 100vh;
+  `,
+  OutletWrapper: styled.div`
+    flex: 1;
+    max-width: 1264px;
+    width: 100%;
+    margin: auto;
+  `,
+};
