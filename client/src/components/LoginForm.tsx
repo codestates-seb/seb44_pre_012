@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import InputField from './InputField';
 import FormSubmit from './FormSubmit';
 import { USER_MESSAGES } from '../constants/userMessages';
+import { PATHS } from '../constants/paths';
 
 export default function LoginForm() {
   return (
@@ -11,7 +12,7 @@ export default function LoginForm() {
         <InputField
           type="password"
           label={USER_MESSAGES.PASSWORD}
-          link="/user/login"
+          link={PATHS.LOGIN}
           message={USER_MESSAGES.FORGOT_PASSWORD}
         />
         <FormSubmit text={USER_MESSAGES.LOGIN} />

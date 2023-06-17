@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { PATHS } from './constants/paths';
 // import Header from './components/Header';
 
 const queryClient = new QueryClient();
@@ -11,9 +12,9 @@ function App() {
 
   let bgColor;
   switch (location.pathname) {
-    case '/users/logout':
-    case '/users/login':
-    case '/user/register':
+    case PATHS.LOGIN:
+    case PATHS.LOGOUT:
+    case PATHS.REGISTER:
       bgColor = 'hsl(210, 8%, 95%)';
       break;
     default:
