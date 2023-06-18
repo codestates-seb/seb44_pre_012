@@ -4,27 +4,55 @@ import FormSubmit from './FormSubmit';
 import { USER_MESSAGES } from '../constants/userMessages';
 import { PATHS } from '../constants/paths';
 import { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/authSlice';
 import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { loginRequest } from '../api/loginRequest';
+
+interface LoginInfo {
+  email: string;
+  password: string;
+}
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const [loginInfo, setLoginInfo] = useState({
+  const isLoggedIn: boolean = useSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     email: '',
     password: '',
   });
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
 
   const handleInputValue =
     (key: 'email' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
     };
+
+  const loginMutation = useMutation(loginRequest, {
+    onSuccess: data => {
+      setEmailError('');
+      setPasswordError('');
+      dispatch(login(data.user));
+
+      navigate(`/`);
+    },
+    onError: (err: any) => {
+      const error = err.response.data;
+      if (error.message.includes('invalid email')) {
+        setEmailError('No user found with matching email.');
+      } else if (error.message.includes('invalid password')) {
+        setPasswordError('The email or password is incorrect.');
+      } else {
+        setEmailError('The email is not a valid email address.');
+      }
+    },
+  });
 
   const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,34 +60,11 @@ export default function LoginForm() {
       setEmailError('Email cannot be empty.');
       return;
     }
-
     if (!loginInfo.password) {
       setPasswordError('Password cannot be empty.');
       return;
     }
-
-    return axios
-      .post(
-        'https://f8f2a07f-23cc-4893-b937-d54fcb607024.mock.pstmn.io/user/login',
-        loginInfo
-      )
-      .then((res: AxiosResponse<any>) => {
-        setEmailError('');
-        setPasswordError('');
-        dispatch(login(res.data.user));
-
-        navigate(`/`);
-      })
-      .catch(err => {
-        const error = err.response.data;
-        if (error.message.includes('invalid email')) {
-          setEmailError('No user found with matching email.');
-        } else if (error.message.includes('invalid password')) {
-          setPasswordError('The email or password is incorrect.');
-        } else {
-          setEmailError('The email is not a valid email address.');
-        }
-      });
+    loginMutation.mutate(loginInfo);
   };
   return (
     <>

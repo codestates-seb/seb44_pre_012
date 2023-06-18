@@ -1,35 +1,33 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { PATHS } from './constants/paths';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
+import fetchUser from './api/fetchUser';
 // import Header from './components/Header';
 
 const queryClient = new QueryClient();
+// 하단 주석 실제 서버와 연결 후 주석 해제
 // axios.defaults.withCredentials = true;
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const authHandler = async () => {
-    try {
-      const res = await axios.get(
-        'https://f8f2a07f-23cc-4893-b937-d54fcb607024.mock.pstmn.io/users/me'
-      );
-      dispatch(login(res.data));
-    } catch (err) {
-      console.log(err.response?.data);
-    }
-  };
-
-  useEffect(() => {
-    authHandler();
-  }, [dispatch]);
+  const { data: userData, error } = useQuery(['user'], fetchUser, {
+    onError: () => {
+      alert(`${error}가 발생하였습니다. 다시 시도 해주세요.`);
+    },
+    onSuccess: data => {
+      dispatch(login(data));
+    },
+  });
 
   let bgColor;
   switch (location.pathname) {
@@ -46,19 +44,23 @@ function App() {
     <>
       {/* 헤더, 푸터 컴포넌트 생성시 주석처리 해제 및 import 필요. */}
       {/* <Header /> */}
-      <QueryClientProvider client={queryClient}>
-        <S.Container background={bgColor}>
-          <S.OutletWrapper>
-            <Outlet />
-          </S.OutletWrapper>
-        </S.Container>
-      </QueryClientProvider>
+      <S.Container background={bgColor}>
+        <S.OutletWrapper>
+          <Outlet />
+        </S.OutletWrapper>
+      </S.Container>
       {/* <Footer /> */}
     </>
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  );
+}
 
 const S = {
   Container: styled.div<{ background: string }>`
