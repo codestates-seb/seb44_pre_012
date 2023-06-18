@@ -1,5 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: -apple-system, "system-ui", "Segoe UI Adjusted", "Segoe UI", "Liberation Sans", sans-serif */
   line-height: 1.5;
   font-weight: 400;
   font-size: 15px;
@@ -15,6 +16,27 @@
   -webkit-text-size-adjust: 100%;
 
   /* color */
+  --color-button-blue: #0a95ff;
+  --color-button-blue-hover: #0073cc;
+  --color-button-sky: #e1ecf4;
+  --color-button-sky-hover: #b3d3ea;
+  --color-button-white: #f8f9f9;
+  --color-button-white-hover: #f1f2f3;
+
+  --color-button-sky-active: #1e3c52;
+  --color-layout-orange: #f48225;
+  --color-layout-black: #23262a;
+  --color-layout-lightgray: #e3e6e8;
+  --color-page-title: #232629;
+  --color-content-title: #0074cc;
+  --color-content-desc: #3b4045;
+  --color-subInfo-lightgray: #6a737c;
+  --color-tag-blue: #39739d;
+  --color-tag-blue-hover: #2c5877;
+  --color-tag-skyblue-hover: #d0e3f1;
+  --color-aside-yellow: #fbf3d5;
+  --color-aside-lightyellow: #fdf7e2;
+  --color-button-gray: #525960;
   --color-button-blue: hsl(206, 100%, 52%);
   --color-button-blue-hover: hsl(206, 100%, 40%);
   --color-button-sky: hsl(205, 46%, 92%);
