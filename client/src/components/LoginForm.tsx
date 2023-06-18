@@ -10,6 +10,7 @@ import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { loginRequest } from '../api/loginRequest';
+import { ERROR_MESSAGES } from '../constants/errorMessage';
 
 interface LoginInfo {
   email: string;
@@ -45,11 +46,11 @@ export default function LoginForm() {
     onError: (err: any) => {
       const error = err.response.data;
       if (error.message.includes('invalid email')) {
-        setEmailError('No user found with matching email.');
+        setEmailError(ERROR_MESSAGES.NO_USER_FOUND);
       } else if (error.message.includes('invalid password')) {
-        setPasswordError('The email or password is incorrect.');
+        setPasswordError(ERROR_MESSAGES.INVALID_PASSWORD);
       } else {
-        setEmailError('The email is not a valid email address.');
+        setEmailError(ERROR_MESSAGES.INVALID_EMAIL);
       }
     },
   });
@@ -57,11 +58,11 @@ export default function LoginForm() {
   const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!loginInfo.email) {
-      setEmailError('Email cannot be empty.');
+      setEmailError(ERROR_MESSAGES.EMAIL_EMPTY);
       return;
     }
     if (!loginInfo.password) {
-      setPasswordError('Password cannot be empty.');
+      setPasswordError(ERROR_MESSAGES.PASSWORD_EMPTY);
       return;
     }
     loginMutation.mutate(loginInfo);
