@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
+import QuestionList from './pages/Question/QuestionList';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       // { path: 'users/:userId', element: <컴포넌트명 /> },
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
-      // { path: 'questions', element: <QuestionList /> },
+      { path: 'questions', element: <QuestionList /> },
       // { path: 'questions/register', element: <컴포넌트명 /> },
     ],
   },
