@@ -29,7 +29,7 @@ public class CustomUserDetailService implements UserDetailsService {
         Optional<User> optionalUser = userRepository.findByEmail(username);
         User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        return null;
+        return new CustomUserDetails(findUser);
     }
 
     private final class CustomUserDetails extends User implements UserDetails{
