@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export default function FormSubmit({ text }) {
+type Props = {
+  text: string;
+};
+
+export default function FormSubmit({ text }: Props) {
   return <S.Button>{text}</S.Button>;
 }
 

@@ -4,11 +4,20 @@ import styled from 'styled-components';
 type Props = {
   type: string;
   label: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   link?: string;
   message?: string;
+  error?: string;
 };
 
-export default function InputField({ type, label, link, message }: Props) {
+export default function InputField({
+  type,
+  label,
+  onChange,
+  link,
+  message,
+  error,
+}: Props) {
   return (
     <S.Container>
       <S.InputInfo>
@@ -17,8 +26,8 @@ export default function InputField({ type, label, link, message }: Props) {
           {message}
         </S.Link>
       </S.InputInfo>
-      <S.InputText id={label} type={type} />
-      <S.Error>{label} cannot be empty.</S.Error>
+      <S.InputText id={label} type={type} onChange={onChange} />
+      <S.Error>{error}</S.Error>
     </S.Container>
   );
 }
