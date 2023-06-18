@@ -1,16 +1,16 @@
 import { styled } from 'styled-components';
-import InputField from './InputField';
-import FormSubmit from './FormSubmit';
-import { USER_MESSAGES } from '../constants/userMessages';
-import { PATHS } from '../constants/paths';
+import InputField from '../../components/InputField';
+import FormSubmit from '../../components/FormSubmit';
+import { USER_MESSAGES } from '../../constants/userMessages';
+import { PATHS } from '../../constants/paths';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/authSlice';
-import { RootState } from '../store/store';
+import { login } from '../../store/authSlice';
+import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { loginRequest } from '../api/loginRequest';
-import { ERROR_MESSAGES } from '../constants/errorMessage';
+import { loginRequest } from '../../api/loginRequest';
+import { ERROR_MESSAGES } from '../../constants/errorMessage';
 
 interface LoginInfo {
   email: string;

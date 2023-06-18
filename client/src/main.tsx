@@ -4,7 +4,7 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import QuestionList from './pages/Question/QuestionList';
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Login /> },
+      { index: true, element: <QuestionList /> },
       // { index: true, element: <QuestionList /> },
       // 주석 보고 추가해주세요.
       { path: 'users/login', element: <Login /> },

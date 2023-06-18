@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import LoginForm from '../components/LoginForm';
-import SocialButtons from '../components/SocialButtons';
-import logoIcon from '../assets/logoIcon.png';
+import SocialButtons from '../../components/SocialButtons';
+import logoIcon from '../../assets/logoIcon.png';
+import LoginForm from './LoginForm';
 import { Link } from 'react-router-dom';
-import { SOCIAL_LOGINS } from '../constants/socialLogin';
-import { USER_MESSAGES } from '../constants/userMessages';
+import { SOCIAL_LOGINS } from '../../constants/socialLogin';
+import { USER_MESSAGES } from '../../constants/userMessages';
 
 type Social = {
   label: string;
