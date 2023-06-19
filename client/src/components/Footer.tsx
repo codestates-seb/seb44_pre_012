@@ -52,62 +52,73 @@ const Footer = () => {
     const versionInfo:string = "Site design / logo © 2023 Stack Exchange Inc; user contributions licensed under CC BY-SA. rev 2023.6.15.43493";
 
     return (
-        <S.Container>
-            <S.FooterLogoImgContainer>
-                <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
-            </S.FooterLogoImgContainer>
-            {footerMenus.map((menu, idx) => (
-                <S.FooterMenuListContainer key={idx}>
-                    <S.FooterMenuTitle>
-                    {menu.title}
-                    </S.FooterMenuTitle>
-                    <ul>
-                    {menu.MENUS.map((item, i) => (
-                        <S.FooterMenuList key={i}>{item}</S.FooterMenuList>
-                    ))}
-                    </ul>
+        <S.Footer>
+            <S.Container>
+                <S.FooterLogoImgContainer>
+                    <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
+                </S.FooterLogoImgContainer>
+                <S.Nav>
+                {footerMenus.map((menu, idx) => (
+                    <S.FooterMenuListContainer key={idx}>
+                        <S.FooterMenuTitle>
+                        {menu.title}
+                        </S.FooterMenuTitle>
+                        <ul>
+                        {menu.MENUS.map((item, i) => (
+                            <S.FooterMenuList key={i}>{item}</S.FooterMenuList>
+                        ))}
+                        </ul>
+                    </S.FooterMenuListContainer>
+                ))}
+                </S.Nav>
+                <S.FooterMenuListContainer>
+                    <S.FooterSNSListContainer>
+                        <ul>
+                        {footerSNS.map(el => {return <S.FooterSNSList>{el}</S.FooterSNSList>})}
+                        </ul>
+                    </S.FooterSNSListContainer>
+                    <S.FooterVersionInfo>{versionInfo}</S.FooterVersionInfo>
                 </S.FooterMenuListContainer>
-            ))}
-
-            <S.FooterMenuListContainer>
-                <S.FooterSNSListContainer>
-                    <ul>
-                    {footerSNS.map(el => {return <S.FooterSNSList>{el}</S.FooterSNSList>})}
-                    </ul>
-                </S.FooterSNSListContainer>
-                <S.FooterVersionInfo>{versionInfo}</S.FooterVersionInfo>
-            </S.FooterMenuListContainer>
-        </S.Container>
+            </S.Container>
+        </S.Footer>
 
     )
 }
 
 const S = {
+    Footer: styled.footer`
+    background-color: #222629;
+    display:flex;
+    justify-content:center;
+    `,
     Container: styled.div`
     background-color: #222629;
+    max-width: 1264px;
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
     flex-flow: row wrap;
     margin: 0 auto;
     padding: 36px 36px 34px 36px;
-    width: 100%;
     `,
     FooterLogoImgContainer: styled.div`
-    display: block;
-    width:50px;
-    margin: 0 0 0 auto;
+    display: flex;
+    width:64px;
+    height: 258px;
+    margin: 0 auto;
+    flex: 0 10px 64px;
     `,
     FooterLogoImg: styled.img`
     width:50px;
     `,
+    Nav:styled.nav`
+        display:flex;
+        flex: 2 1 auto;
+        flex-wrap: wrap;
+    `,
     FooterMenuListContainer: styled.div`
     color: hsl(210,8%,60%);
-    display: block;
-    margin: 0 auto;
-    &:nth-child(2) {
-        margin-left: 20px;        
-    }
+    margin-right: 60px;
+    flex: 1 0 auto;
     &:nth-child(5) {
         li {
             &:nth-child(7) {
@@ -122,7 +133,7 @@ const S = {
     font-size:13px;
     display: block;
     text-align:left;
-    margin: 10px auto;
+    margin: 12px auto;
     `,
     FooterMenuList: styled.li`
     color: hsl(210,8%,60%);
@@ -142,7 +153,8 @@ const S = {
     FooterSNSList: styled.li`
     color: hsl(210,8%,60%);
     display: inline-block;
-    font-size:12px;
+    font-size:11px;
+    margin-top:14px;
     margin-right:8px;
     &:hover{
         color: #9fa6ad;
@@ -154,7 +166,7 @@ const S = {
     display: block;
     font-size:11px;
     margin-top: 188px;
-    width: 300px;
+    width: 340px;
     `
 }
 
