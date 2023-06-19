@@ -1,16 +1,59 @@
 import { styled } from 'styled-components';
 import '../../index.css';
 import { RiArrowDownSFill } from 'react-icons/ri';
+import { QuestionInfo } from '../../types/types';
 
-export default function FilterButtons() {
+interface FilterButtonsProps {
+  data: QuestionInfo[];
+  handleFilteredData: (filteredData: QuestionInfo[]) => void;
+}
+
+export default function FilterButtons({
+  data,
+  handleFilteredData,
+}: FilterButtonsProps) {
+  const filterOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    let filteredData;
+    const title = event.currentTarget.title;
+    switch (title) {
+      case 'Newest':
+        filteredData = data.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        handleFilteredData(filteredData);
+        break;
+      case 'Active':
+        filteredData = data;
+        handleFilteredData(filteredData);
+        break;
+      case 'Bountied':
+        filteredData = data;
+        handleFilteredData(filteredData);
+        break;
+      case 'Unanswered':
+        filteredData = data.filter(item => !item.answerCount);
+        handleFilteredData(filteredData);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <S.Container>
-      <button>Newest</button>
-      <button>Active</button>
-      <button>
+      <button title="Newest" onClick={filterOnClick}>
+        Newest
+      </button>
+      <button title="Active" onClick={filterOnClick}>
+        Active
+      </button>
+      <button title="Bountied" onClick={filterOnClick}>
         Bountied <span>220</span>
       </button>
-      <button>Unanswered</button>
+      <button title="Unanswered" onClick={filterOnClick}>
+        Unanswered
+      </button>
       <button>
         More <RiArrowDownSFill />
       </button>

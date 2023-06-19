@@ -1,18 +1,28 @@
+import { useState } from 'react';
 import { styled } from 'styled-components';
-import { data } from '../../temp/AllQuestionQuery.json';
 import QuestionContent from './QuestionContent';
 import { QuestionInfo } from '../../types/types';
 import FilterButtons from './FilterButtons';
 import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
+import { data } from '../../temp/AllQuestionQuery.json';
+
 export default function QuestionList() {
-  function addCommasToNumber(number: number) {
+  const RecentData = data.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+  const [QuestionData, setQuestionData] = useState<QuestionInfo[]>(RecentData);
+
+  const addCommasToNumber = (number: number) => {
     const formattedNumber = number
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return formattedNumber;
-  }
+  };
+
+  const handleFilteredData = (filteredData: QuestionInfo[]) =>
+    setQuestionData(filteredData);
 
   return (
     <S.Main>
@@ -22,9 +32,12 @@ export default function QuestionList() {
           <S.AskButton> Ask Question </S.AskButton>
         </S.Title>
         <S.SubTitle>
-          <div> {addCommasToNumber(data.length)} questions</div>
+          <div> {addCommasToNumber(QuestionData.length)} questions</div>
           <S.FilterContainer>
-            <FilterButtons />
+            <FilterButtons
+              data={data}
+              handleFilteredData={handleFilteredData}
+            />
             <S.Filter>
               <BiFilter size="21" />
               <span>Filter</span>
@@ -32,7 +45,7 @@ export default function QuestionList() {
           </S.FilterContainer>
         </S.SubTitle>
         <S.Ul>
-          {data.map((el: QuestionInfo) => (
+          {QuestionData.map((el: QuestionInfo) => (
             <QuestionContent key={el.questionId} data={el} />
           ))}
         </S.Ul>
