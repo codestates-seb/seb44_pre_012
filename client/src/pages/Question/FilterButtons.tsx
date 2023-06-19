@@ -1,7 +1,9 @@
+import { useState, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
 import '../../index.css';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { QuestionInfo } from '../../types/types';
+import DropdownMenu from './DropDown';
 
 interface FilterButtonsProps {
   data: QuestionInfo[];
@@ -12,7 +14,22 @@ export default function FilterButtons({
   data,
   handleFilteredData,
 }: FilterButtonsProps) {
-  const filterOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const [selectedMenu, setSelectedMenu] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const DropDownHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const buttonData = [
+    { title: 'Newest' },
+    { title: 'Active' },
+    { title: 'Bountied', count: 220 },
+    { title: 'Unanswered' },
+    { title: 'More', icon: <RiArrowDownSFill /> },
+  ];
+
+  const handleFilterOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     let filteredData;
     const title = event.currentTarget.title;
     switch (title) {
@@ -22,42 +39,57 @@ export default function FilterButtons({
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         handleFilteredData(filteredData);
+        setSelectedMenu('Newest');
         break;
       case 'Active':
         filteredData = data;
         handleFilteredData(filteredData);
+        setSelectedMenu('Active');
+
         break;
       case 'Bountied':
         filteredData = data;
         handleFilteredData(filteredData);
+        setSelectedMenu('Bountied');
+
         break;
       case 'Unanswered':
         filteredData = data.filter(item => !item.answerCount);
         handleFilteredData(filteredData);
+        setSelectedMenu('Unanswered');
+
         break;
       default:
         break;
     }
   };
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <S.Container>
-      <button title="Newest" onClick={filterOnClick}>
-        Newest
-      </button>
-      <button title="Active" onClick={filterOnClick}>
-        Active
-      </button>
-      <button title="Bountied" onClick={filterOnClick}>
-        Bountied <span>220</span>
-      </button>
-      <button title="Unanswered" onClick={filterOnClick}>
-        Unanswered
-      </button>
-      <button>
-        More <RiArrowDownSFill />
-      </button>
-    </S.Container>
+    <div>
+      <S.Container>
+        {buttonData.map((item, index) => (
+          <button
+            ref={buttonRef}
+            key={index}
+            title={item.title}
+            onClick={
+              item.title === 'More' ? DropDownHandler : handleFilterOnClick
+            }
+            className={selectedMenu === item.title ? 'active' : ''}
+          >
+            {item.title}
+            {item.count && <span>{item.count}</span>}
+            {item.icon && item.icon}
+          </button>
+        ))}
+      </S.Container>
+      <DropdownMenu
+        buttonRef={buttonRef}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+    </div>
   );
 }
 
@@ -79,6 +111,7 @@ const S = {
         color: white;
         border-radius: 3px;
         padding: 1px 5px;
+        margin-left: 3px;
       }
       &:first-child {
         border-radius: 3px 0px 0px 3px;
@@ -93,7 +126,7 @@ const S = {
       &:hover {
         background: var(--color-button-white-hover);
       }
-      .active {
+      &.active {
         background: var(--color-layout-lightgray);
         color: var(--color-content-desc);
       }
