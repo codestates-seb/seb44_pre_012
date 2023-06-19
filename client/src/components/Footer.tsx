@@ -3,6 +3,85 @@ import {Link} from "react-router-dom";
 import logoIcon from "../assets/logoIcon.png"
 import '../index.css';
 
+type FooterMenu = {
+    title: string;
+    MENUS: string[];
+    url: string[];
+  };
+
+const Footer = () => {
+    const footerMenus:FooterMenu[] =[
+        { title: "STACK_OVERFLOW", MENUS: ["QUESTIONS", "HELP"], url: ["/", "/"] },
+        {
+          title: "PRODUCTS",
+          MENUS: ["Teams", "Advertising", "Collectives", "Talent"],
+          url: ["/", "/"]
+        },
+        {
+          title: "COMPANY",
+          MENUS: [
+            "About",
+            "Press",
+            "Work Here",
+            "Legal",
+            "Privacy Policy",
+            "Terms of Service",
+            "Contact Us",
+            "Cookie Settings",
+            "Cookie Policy"
+          ],
+          url: ["/", "/"]
+        },
+        {
+          title: "STACK EXCHANGE NETWORK",
+          MENUS: [
+            "Technology",
+            "Culture & recreation",
+            "Life & arts",
+            "Science",
+            "Professional",
+            "Business",
+            "API",
+            "Data"
+          ],
+          url: ["/", "/"]
+        }
+      ];
+
+    const footerSNS:string[] = ["Blog", "Facebook", "Twitter", "Linkedin", "Instagram"]
+    const versionInfo:string = "Site design / logo © 2023 Stack Exchange Inc; user contributions licensed under CC BY-SA. rev 2023.6.15.43493";
+
+    return (
+        <S.Container>
+            <S.FooterLogoImgContainer>
+                <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
+            </S.FooterLogoImgContainer>
+            {footerMenus.map((menu) => (
+                <S.FooterMenuListContainer>
+                    <S.FooterMenuTitle>
+                    {menu.title}
+                    </S.FooterMenuTitle>
+                    <ul>
+                    {menu.MENUS.map((item) => (
+                        <S.FooterMenuList>{item}</S.FooterMenuList>
+                    ))}
+                    </ul>
+                </S.FooterMenuListContainer>
+            ))}
+
+            <S.FooterMenuListContainer>
+                <S.FooterSNSListContainer>
+                    <ul>
+                    {footerSNS.map(el => {return <S.FooterSNSList>{el}</S.FooterSNSList>})}
+                    </ul>
+                </S.FooterSNSListContainer>
+                <S.FooterVersionInfo>{versionInfo}</S.FooterVersionInfo>
+            </S.FooterMenuListContainer>
+        </S.Container>
+
+    )
+}
+
 const S = {
     Container: styled.div`
     background-color: #222629;
@@ -77,58 +156,6 @@ const S = {
     margin-top: 188px;
     width: 300px;
     `
-}
-
-const Footer = () => {
-    const footerMenuTitle:string[][] = [["STACK OVERFLOW"], ["PRODUCTS"], ["COMPANY"], ["STACK EXCHANGE NETWORK"]]
-    const footerMenu:string[][] = [["Questions", "Help"],
-    ["Teams", "Advertising", "Collectives", "Talent"],
-    ["About", "Press", "Work Here", "Legal", "Privacy Policy", "Terms of Service", "Contact Us", "Cookie Settings", "Cookie Policy"],
-    ["Technology", "Culture & recreation", "Life & arts", "Science", "Professional", "Business", "API", "Data"]
-]
-    const footerSNS:string[] = ["Blog", "Facebook", "Twitter", "Linkedin", "Instagram"]
-    const versionInfo:string = "Site design / logo © 2023 Stack Exchange Inc; user contributions licensed under CC BY-SA. rev 2023.6.15.43493";
-
-    return (
-        <S.Container>
-            <S.FooterLogoImgContainer>
-                <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
-            </S.FooterLogoImgContainer>
-            <S.FooterMenuListContainer>
-            <S.FooterMenuTitle>{footerMenuTitle[0]}</S.FooterMenuTitle>
-                <ul>
-                {footerMenu[0].map(el => {return <S.FooterMenuList>{el}</S.FooterMenuList>})}
-                </ul>
-            </S.FooterMenuListContainer>
-            <S.FooterMenuListContainer>
-            <S.FooterMenuTitle>{footerMenuTitle[1]}</S.FooterMenuTitle>
-                <ul>
-                {footerMenu[1].map(el => {return <S.FooterMenuList>{el}</S.FooterMenuList>})}
-                </ul>
-            </S.FooterMenuListContainer>
-            <S.FooterMenuListContainer>
-            <S.FooterMenuTitle>{footerMenuTitle[2]}</S.FooterMenuTitle>
-                <ul>
-                {footerMenu[2].map(el => {return <S.FooterMenuList>{el}</S.FooterMenuList>})}
-                </ul>
-            </S.FooterMenuListContainer>
-            <S.FooterMenuListContainer>
-            <S.FooterMenuTitle>{footerMenuTitle[3]}</S.FooterMenuTitle>
-                <ul>
-                {footerMenu[3].map(el => {return <S.FooterMenuList>{el}</S.FooterMenuList>})}
-                </ul>
-            </S.FooterMenuListContainer>
-            <S.FooterMenuListContainer>
-                <S.FooterSNSListContainer>
-                    <ul>
-                    {footerSNS.map(el => {return <S.FooterSNSList>{el}</S.FooterSNSList>})}
-                    </ul>
-                </S.FooterSNSListContainer>
-                <S.FooterVersionInfo>{versionInfo}</S.FooterVersionInfo>
-            </S.FooterMenuListContainer>
-        </S.Container>
-
-    )
 }
 
 export default Footer;
