@@ -1,71 +1,83 @@
-import { styled } from 'styled-components';
 import InputField from '../../components/InputField';
 import FormSubmit from '../../components/FormSubmit';
-import { USER_MESSAGES } from '../../constants/userMessages';
-import { PATHS } from '../../constants/paths';
+import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/authSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { loginRequest } from '../../api/loginRequest';
+import { USER_MESSAGES } from '../../constants/userMessages';
+import { PATHS } from '../../constants/paths';
 import { ERROR_MESSAGES } from '../../constants/errorMessage';
-
-interface LoginInfo {
-  email: string;
-  password: string;
-}
+import { AxiosResponse } from 'axios';
+import { loginRequest } from '../../api/loginRequest';
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn: boolean = useSelector(
-    (state: RootState) => state.auth.isLoggedIn
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.login.isLogin
   );
-  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
+  const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+  const [loginError, setLoginError] = useState<string>('');
 
   const handleInputValue =
     (key: 'email' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
     };
 
-  const loginMutation = useMutation(loginRequest, {
-    onSuccess: data => {
-      setEmailError('');
-      setPasswordError('');
-      dispatch(login(data.user));
-
-      navigate(`/`);
-    },
-    onError: (err: any) => {
-      const error = err.response.data;
-      if (error.message.includes('invalid email')) {
-        setEmailError(ERROR_MESSAGES.NO_USER_FOUND);
-      } else if (error.message.includes('invalid password')) {
-        setPasswordError(ERROR_MESSAGES.INVALID_PASSWORD);
-      } else {
-        setEmailError(ERROR_MESSAGES.INVALID_EMAIL);
-      }
-    },
-  });
-
   const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!loginInfo.email) {
-      setEmailError(ERROR_MESSAGES.EMAIL_EMPTY);
+      setEmailError('Email cannot be empty.');
       return;
     }
+
     if (!loginInfo.password) {
-      setPasswordError(ERROR_MESSAGES.PASSWORD_EMPTY);
+      setPasswordError('Password cannot be empty.');
       return;
     }
-    loginMutation.mutate(loginInfo);
+
+    return loginRequest(loginInfo)
+      .then((res: AxiosResponse<any>) => {
+        if (res.status === 200) {
+          const accessToken = 'accesstoken';
+          const refreshToken = 'refreshtoken';
+          // const accessToken = res.headers['authorization'];
+          // const refreshToken = res.headers['refresh'];
+          const memberId = res.data.data.id;
+
+          // 로컬 스토리지에 저장
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          localStorage.setItem('memberId', memberId);
+
+          setEmailError('');
+          setPasswordError('');
+          dispatch(
+            login({ accessToken, memberId, isLogin: true, refreshToken })
+          );
+          navigate(`/`);
+        }
+      })
+      .catch(err => {
+        if (err.status === 401) {
+          const error = err.response.data;
+          if (error?.errorMessage === 'INVALID_EMAIL') {
+            setEmailError(ERROR_MESSAGES.INVALID_EMAIL);
+            setLoginError(ERROR_MESSAGES.LOGIN_ERROR);
+          } else if (error?.errorMessage === 'INVALID_PASSWORD') {
+            setPasswordError(ERROR_MESSAGES.INVALID_PASSWORD);
+          }
+        } else {
+          console.log('Error without response: ', err);
+        }
+      });
   };
   return (
     <>
@@ -88,6 +100,7 @@ export default function LoginForm() {
           />
           <FormSubmit text={USER_MESSAGES.LOGIN} />
         </S.Form>
+        {loginError && <S.ErrorMessage>{loginError}</S.ErrorMessage>}
       </S.LoginForm>
       {isLoggedIn ? <p>로그인 됐어잉</p> : <p>로그인 안됐어잉</p>}
     </>
@@ -110,5 +123,9 @@ const S = {
 
   Form: styled.form`
     width: 100%;
+  `,
+  ErrorMessage: styled.p`
+    color: hsl(358, 62%, 52%);
+    font-size: var(--font-xs);
   `,
 };

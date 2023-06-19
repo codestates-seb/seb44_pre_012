@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { PATHS } from './constants/paths';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
-import fetchUser from './api/fetchUser';
+import { useEffect } from 'react';
 // import Header from './components/Header';
 
 const queryClient = new QueryClient();
@@ -20,14 +20,22 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { data: userData, error } = useQuery(['user'], fetchUser, {
-    onError: () => {
-      alert(`${error}가 발생하였습니다. 다시 시도 해주세요.`);
-    },
-    onSuccess: data => {
-      dispatch(login(data));
-    },
-  });
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const memberId = localStorage.getItem('memberId');
+    const refreshToken = localStorage.getItem('refreshToken');
+    console.log(accessToken, memberId, refreshToken);
+    if (accessToken && memberId && refreshToken) {
+      dispatch(
+        login({
+          accessToken,
+          memberId,
+          isLogin: true,
+          refreshToken,
+        })
+      );
+    }
+  }, [dispatch]);
 
   let bgColor;
   switch (location.pathname) {

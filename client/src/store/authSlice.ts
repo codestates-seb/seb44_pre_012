@@ -1,31 +1,32 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface User {
-  email: string;
-  name: string;
-}
+import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
-  isLoggedIn: boolean;
-  user: User | null;
+  login: {
+    accessToken: string | null;
+    refreshToken: string | null;
+    memberId: number | null;
+    isLogin: boolean;
+  };
 }
 
 const initialState: AuthState = {
-  isLoggedIn: false,
-  user: null,
+  login: {
+    accessToken: null,
+    refreshToken: null,
+    memberId: null,
+    isLogin: false,
+  },
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login(state, action: PayloadAction<User>) {
-      state.isLoggedIn = true;
-      state.user = action.payload;
+    login: (state, action) => {
+      state.login = action.payload;
     },
-    logout(state) {
-      state.isLoggedIn = false;
-      state.user = null;
+    logout: (state, action) => {
+      state.login = action.payload;
     },
   },
 });
