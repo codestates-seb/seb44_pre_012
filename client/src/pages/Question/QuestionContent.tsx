@@ -1,52 +1,22 @@
 import { styled } from 'styled-components';
 import { QuestionInfo } from '../../types/types';
 import '../../index.css';
-import monthNames from '../../constants/monthNames';
 import colors from '../../constants/colorNames';
-
+import { formatElapsedTime } from '../../util/formatElapsedTime';
 interface QuestionContentProps {
   data: QuestionInfo;
 }
 
 export default function QuestionContent({ data }: QuestionContentProps) {
-  const tempPostedTime: Date = new Date(data.createdAt);
-  const now: Date = new Date();
-  const elapsedMilliseconds: number = now.getTime() - tempPostedTime.getTime();
-  const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
-  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
-  const elapsedHours = Math.floor(elapsedMinutes / 60);
-  const elapsedDays = Math.floor(elapsedHours / 24);
-
-  let formattedElapsedTime;
-  switch (true) {
-    case elapsedDays > 0:
-      const formattedDate = `${
-        monthNames[tempPostedTime.getMonth()]
-      } ${tempPostedTime.getDate()}, ${tempPostedTime.getFullYear()}`;
-      const formattedTime = `${tempPostedTime.getHours()}:${String(
-        tempPostedTime.getMinutes()
-      ).padStart(2, '0')}`;
-      formattedElapsedTime = `${formattedDate} at ${formattedTime}`;
-      break;
-    case elapsedHours > 1:
-      formattedElapsedTime = `${elapsedHours} hours ago`;
-      break;
-    case elapsedHours === 1:
-      formattedElapsedTime = `${elapsedHours} hour ago`;
-      break;
-    case elapsedMinutes > 0:
-      formattedElapsedTime = `${elapsedMinutes} minute(s) ago`;
-      break;
-    default:
-      formattedElapsedTime = `${elapsedSeconds} seconds ago`;
-      break;
-  }
-
   return (
     <S.Li key={data.questionId}>
       <S.SubInfo>
         <div>{data.voteCount} votes</div>
-        <div>0 answers</div>
+        <div>
+          {data.answerCount === 1
+            ? '1 answer'
+            : `${data.answerCount} answers`}
+        </div>
         <div>{data.viewCount} views</div>
       </S.SubInfo>
       <S.Content>
@@ -64,7 +34,7 @@ export default function QuestionContent({ data }: QuestionContentProps) {
             </span>
             <a>{data.userName}</a>
             <span>12</span>
-            <span>asked {formattedElapsedTime}</span>
+            <span>asked {formatElapsedTime(data.createdAt)}</span>
           </div>
         </S.BelowInfo>
       </S.Content>
