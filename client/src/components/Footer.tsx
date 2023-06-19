@@ -56,14 +56,14 @@ const Footer = () => {
             <S.FooterLogoImgContainer>
                 <Link to="/"><S.FooterLogoImg src={logoIcon}/></Link>
             </S.FooterLogoImgContainer>
-            {footerMenus.map((menu) => (
-                <S.FooterMenuListContainer>
+            {footerMenus.map((menu, idx) => (
+                <S.FooterMenuListContainer key={idx}>
                     <S.FooterMenuTitle>
                     {menu.title}
                     </S.FooterMenuTitle>
                     <ul>
-                    {menu.MENUS.map((item) => (
-                        <S.FooterMenuList>{item}</S.FooterMenuList>
+                    {menu.MENUS.map((item, i) => (
+                        <S.FooterMenuList key={i}>{item}</S.FooterMenuList>
                     ))}
                     </ul>
                 </S.FooterMenuListContainer>
