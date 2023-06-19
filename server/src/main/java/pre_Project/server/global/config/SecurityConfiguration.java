@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import pre_Project.server.global.auth.jwt.JwtTokenizer;
 import java.util.Arrays;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
 
@@ -31,7 +33,8 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(Customizer.withDefaults())
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .apply(new CustomFilterConfigurer())
@@ -50,8 +53,9 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("POST","PATCH","GET","DELETE"));
+        configuration.addAllowedOrigin("*");
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
 
         UrlBasedCorsConfigurationSource source =  new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);

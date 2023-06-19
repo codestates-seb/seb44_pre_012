@@ -35,7 +35,7 @@ public class JwtAuthenticationFiler extends UsernamePasswordAuthenticationFilter
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                                                 new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getPassWord());
+                                                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -61,7 +61,7 @@ public class JwtAuthenticationFiler extends UsernamePasswordAuthenticationFilter
 
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        String base64EncodedSecretKey = jwtTokenizer.encodedBase64SecretKey(jwtTokenizer.getSecretKey());
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
         return accessToken;
@@ -70,7 +70,7 @@ public class JwtAuthenticationFiler extends UsernamePasswordAuthenticationFilter
     private String delegateRefreshToken(User user) {
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-        String base64EncodedSecretKey = jwtTokenizer.encodedBase64SecretKey(jwtTokenizer.getSecretKey());
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
         return refreshToken;

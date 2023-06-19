@@ -21,18 +21,18 @@ import java.util.Map;
 @Component
 public class JwtTokenizer {
     @Getter
-    @Value("${jwt.key}")
+    @Value("${jwt.key}") // 환경변수로 등록되어있는 key값
     private String secretKey;
 
     @Getter
-    @Value("${jwt.access-token-expiration-minutes}")
+    @Value("${jwt.access-token-expiration-minutes}") // application.yml에 적혀있음
     private int accessTokenExpirationMinutes;
 
     @Getter
-    @Value("${jwt.refresh-token-expiration-minutes}")
+    @Value("${jwt.refresh-token-expiration-minutes}") // application.yml에 적혀있음
     private int refreshTokenExpirationMinutes;
 
-    public String encodedBase64SecretKey(String secretKey) {
+    public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
