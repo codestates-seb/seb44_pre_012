@@ -18,6 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pre_Project.server.domain.user.repository.UserRepository;
 import pre_Project.server.global.auth.filter.JwtAuthenticationFiler;
 import pre_Project.server.global.auth.filter.JwtVerificationFiler;
+import pre_Project.server.global.auth.handler.UserAccessDeniedHandler;
+import pre_Project.server.global.auth.handler.UserAuthenticationEntryPoint;
 import pre_Project.server.global.auth.handler.UserAuthenticationFailureHandler;
 import pre_Project.server.global.auth.handler.UserAuthenticationSuccessHandler;
 import pre_Project.server.global.auth.jwt.JwtTokenizer;
@@ -50,6 +52,10 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                .accessDeniedHandler(new UserAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
