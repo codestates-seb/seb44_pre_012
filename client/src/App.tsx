@@ -1,4 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -30,6 +32,7 @@ function App() {
             <Outlet />
           </S.OutletWrapper>
         </S.Container>
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
       <Footer />
     </>
