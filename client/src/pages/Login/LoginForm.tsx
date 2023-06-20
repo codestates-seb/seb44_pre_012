@@ -39,6 +39,7 @@ export default function LoginForm() {
     passwordError: '',
     loginError: '',
   });
+
   const handleInputValue =
     (key: 'email' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
@@ -46,7 +47,18 @@ export default function LoginForm() {
 
   const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let newErrorMessages = { ...error };
+    // 에러 상태 초기화
+    setError({
+      emailError: '',
+      passwordError: '',
+      loginError: '',
+    });
+
+    let newErrorMessages: ErrorType = {
+      emailError: '',
+      passwordError: '',
+      loginError: '',
+    };
 
     if (!loginInfo.email) {
       newErrorMessages = {
@@ -83,14 +95,21 @@ export default function LoginForm() {
             emailError: '',
             passwordError: '',
           }));
+
           dispatch(
             login({ accessToken, memberId, isLogin: true, refreshToken })
           );
+
+          setLoginInfo({
+            email: '',
+            password: '',
+          });
+
           navigate(`/`);
         }
       })
       .catch(err => {
-        if (err.status === 401) {
+        if (err.response && err.response.status === 401) {
           const error = err.response.data;
           if (error?.errorMessage === 'INVALID_EMAIL') {
             setError(prev => ({
@@ -101,11 +120,12 @@ export default function LoginForm() {
           } else if (error?.errorMessage === 'INVALID_PASSWORD') {
             setError(prev => ({
               ...prev,
+              emailError: ERROR_MESSAGES.INVALID_PASSWORD,
               passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
             }));
+          } else {
+            return;
           }
-        } else {
-          console.log('Error without response: ', err);
         }
       });
   };
@@ -145,6 +165,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     margin: 0 auto;
     padding: 1.6rem;

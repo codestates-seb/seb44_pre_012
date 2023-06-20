@@ -8,6 +8,7 @@ import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import QuestionList from './pages/Question/QuestionList';
+import Logout from './pages/Logout/Logout';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       // { index: true, element: <QuestionList /> },
       // 주석 보고 추가해주세요.
       { path: 'users/login', element: <Login /> },
+      { path: 'users/logout', element: <Logout /> },
       // { path: 'users/register', element: <컴포넌트명 /> },
       // { path: 'users/:userId', element: <컴포넌트명 /> },
 
