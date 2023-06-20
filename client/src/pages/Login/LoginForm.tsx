@@ -12,20 +12,33 @@ import { ERROR_MESSAGES } from '../../constants/errorMessage';
 import { AxiosResponse } from 'axios';
 import { loginRequest } from '../../api/loginRequest';
 
+type LoginInfoType = {
+  email: string;
+  password: string;
+};
+
+type ErrorType = {
+  emailError: string;
+  passwordError: string;
+  loginError: string;
+};
+
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(
     (state: RootState) => state.auth.login.isLogin
   );
-  const [loginInfo, setLoginInfo] = useState({
+  const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
     email: '',
     password: '',
   });
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-  const [loginError, setLoginError] = useState<string>('');
 
+  const [error, setError] = useState<ErrorType>({
+    emailError: '',
+    passwordError: '',
+    loginError: '',
+  });
   const handleInputValue =
     (key: 'email' | 'password') => (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
@@ -33,32 +46,43 @@ export default function LoginForm() {
 
   const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let newErrorMessages = { ...error };
+
     if (!loginInfo.email) {
-      setEmailError('Email cannot be empty.');
-      return;
+      newErrorMessages = {
+        ...newErrorMessages,
+        emailError: ERROR_MESSAGES.EMAIL_EMPTY,
+      };
     }
 
     if (!loginInfo.password) {
-      setPasswordError('Password cannot be empty.');
+      newErrorMessages = {
+        ...newErrorMessages,
+        passwordError: ERROR_MESSAGES.PASSWORD_EMPTY,
+      };
+    }
+
+    if (newErrorMessages.emailError || newErrorMessages.passwordError) {
+      setError(newErrorMessages);
       return;
     }
 
     return loginRequest(loginInfo)
       .then((res: AxiosResponse<any>) => {
         if (res.status === 200) {
-          const accessToken = 'accesstoken';
-          const refreshToken = 'refreshtoken';
-          // const accessToken = res.headers['authorization'];
-          // const refreshToken = res.headers['refresh'];
-          const memberId = res.data.data.id;
-
+          const accessToken = res.headers['authorization'];
+          const refreshToken = res.headers['refresh'];
+          const memberId = res.data.id;
           // 로컬 스토리지에 저장
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           localStorage.setItem('memberId', memberId);
 
-          setEmailError('');
-          setPasswordError('');
+          setError(prevError => ({
+            ...prevError,
+            emailError: '',
+            passwordError: '',
+          }));
           dispatch(
             login({ accessToken, memberId, isLogin: true, refreshToken })
           );
@@ -69,10 +93,16 @@ export default function LoginForm() {
         if (err.status === 401) {
           const error = err.response.data;
           if (error?.errorMessage === 'INVALID_EMAIL') {
-            setEmailError(ERROR_MESSAGES.INVALID_EMAIL);
-            setLoginError(ERROR_MESSAGES.LOGIN_ERROR);
+            setError(prev => ({
+              ...prev,
+              emailError: ERROR_MESSAGES.INVALID_EMAIL,
+              loginError: ERROR_MESSAGES.LOGIN_ERROR,
+            }));
           } else if (error?.errorMessage === 'INVALID_PASSWORD') {
-            setPasswordError(ERROR_MESSAGES.INVALID_PASSWORD);
+            setError(prev => ({
+              ...prev,
+              passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
+            }));
           }
         } else {
           console.log('Error without response: ', err);
@@ -87,7 +117,7 @@ export default function LoginForm() {
             type="email"
             label={USER_MESSAGES.EMAIL}
             onChange={handleInputValue('email')}
-            error={emailError}
+            error={error.emailError}
           />
 
           <InputField
@@ -96,12 +126,15 @@ export default function LoginForm() {
             link={PATHS.LOGIN}
             onChange={handleInputValue('password')}
             message={USER_MESSAGES.ACCOUNT}
-            error={passwordError}
+            error={error.passwordError}
           />
           <FormSubmit text={USER_MESSAGES.LOGIN} />
         </S.Form>
-        {loginError && <S.ErrorMessage>{loginError}</S.ErrorMessage>}
+        {error.loginError && (
+          <S.ErrorMessage>{error.loginError}</S.ErrorMessage>
+        )}
       </S.LoginForm>
+      {/* 로그인 여부 테스트 문구. 추후 삭제할 것. */}
       {isLoggedIn ? <p>로그인 됐어잉</p> : <p>로그인 안됐어잉</p>}
     </>
   );

@@ -24,7 +24,6 @@ function App() {
     const accessToken = localStorage.getItem('accessToken');
     const memberId = localStorage.getItem('memberId');
     const refreshToken = localStorage.getItem('refreshToken');
-    console.log(accessToken, memberId, refreshToken);
     if (accessToken && memberId && refreshToken) {
       dispatch(
         login({
