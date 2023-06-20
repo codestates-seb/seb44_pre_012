@@ -10,6 +10,7 @@ import { PATHS } from './constants/paths';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { useEffect } from 'react';
+import Footer from './components/Footer';
 // import Header from './components/Header';
 
 const queryClient = new QueryClient();
@@ -56,7 +57,7 @@ function App() {
           <Outlet />
         </S.OutletWrapper>
       </S.Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
