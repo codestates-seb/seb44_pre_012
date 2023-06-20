@@ -26,9 +26,6 @@ type ErrorType = {
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.auth.login.isLogin
-  );
   const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
     email: '',
     password: '',
@@ -155,7 +152,6 @@ export default function LoginForm() {
         )}
       </S.LoginForm>
       {/* 로그인 여부 테스트 문구. 추후 삭제할 것. */}
-      {isLoggedIn ? <p>로그인 됐어잉</p> : <p>로그인 안됐어잉</p>}
     </>
   );
 }
