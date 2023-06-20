@@ -7,8 +7,8 @@
       "userName": "Vito De Tullio",
       "tag": ["java", "maven", "integration-testing", "maven-module"],
       "createdAt": "2023-06-16T01:09:00",
-      "voteCount":1,
-      "answerCount":0,
+      "voteCount": 1,
+      "answerCount": 0,
       "viewCount": 1
     },
     {
@@ -18,8 +18,8 @@
       "userName": "mariadev",
       "tag": ["node.js", "typescript"],
       "createdAt": "2023-06-15T22:00:00",
-      "voteCount":1,
-      "answerCount":1,
+      "voteCount": 1,
+      "answerCount": 1,
       "viewCount": 5
     },
     {
@@ -29,8 +29,8 @@
       "userName": "Doyu",
       "tag": ["nextjs13", "react"],
       "createdAt": "2023-05-15T22:00:00",
-      "voteCount":2,
-      "answerCount":3,
+      "voteCount": 2,
+      "answerCount": 3,
       "viewCount": 9
     }
   ],
