@@ -5,7 +5,11 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import QuestionList from './pages/Question/QuestionList';
+import Logout from './pages/Logout/Logout';
 
 const router = createBrowserRouter([
   {
@@ -13,15 +17,16 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Login /> },
+      { index: true, element: <QuestionList /> },
       // { index: true, element: <QuestionList /> },
       // 주석 보고 추가해주세요.
-      { path: 'user/login', element: <Login /> },
-      // { path: 'user/register', element: <컴포넌트명 /> },
+      { path: 'users/login', element: <Login /> },
+      { path: 'users/logout', element: <Logout /> },
+      // { path: 'users/register', element: <컴포넌트명 /> },
       // { path: 'users/:userId', element: <컴포넌트명 /> },
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
-      // { path: 'questions', element: <QuestionList /> },
+      { path: 'questions', element: <QuestionList /> },
       // { path: 'questions/register', element: <컴포넌트명 /> },
     ],
   },
@@ -29,6 +34,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

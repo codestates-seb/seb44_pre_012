@@ -2,9 +2,11 @@ package pre_Project.server.global.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageInfo {
     private int page;
     private int size;

@@ -5,10 +5,12 @@ import { BsInboxFill } from 'react-icons/bs'
 import { GiDiamondTrophy } from 'react-icons/gi'
 import { FaStackExchange } from 'react-icons/fa'
 import { useState } from "react";
+import logoIcon from '../assets/headerlogo.png';
+import { Link } from 'react-router-dom';
 
 const S = {
-  topbarWrapper: styled.div`
-    max-width: 1264px;
+  topbarWrapper: styled.header`
+    max-width: 100%;
     width: 100%;
     height: 52px;
     display: flex;
@@ -17,13 +19,14 @@ const S = {
     border-top: 3px solid var(--color-layout-orange);
     border-bottom: 1px solid var(--color-ui-border);
     background: white;
+    /* position: absolute; */
   `,
   topbarContainer: styled.div`
-    width: 100%;
+    width: 1264px;
     height: 100%;
     display: flex;
     align-items: center;
-    margin: 0 auto;
+    margin: auto;
   `,
   topbarMenuBtn: styled.div`
     height: 100%;
@@ -35,6 +38,16 @@ const S = {
     &:hover {
       background-color: var(--color-navbar-button-hover);
     }
+  `,
+  topbarLogoImgContainer: styled.div`
+    height: 52px;
+    padding: 0px 8px;
+    display: flex;
+    align-items: center;
+  `,
+  topbarLogoImg: styled.img`
+    width: 150px;
+    height: 28px;
   `,
   topbarNav: styled.ol`
     display: flex;
@@ -72,7 +85,7 @@ const S = {
     padding-left: 5px;
     outline: none;
   `,
-  topSearchPopoverContainer: styled.div`
+  topSearchPopoverContainer: styled.div<{ isdown:boolean }>`
     background-color: white;
     border: 1px solid var(--color-ui-border);
     box-shadow:0px 1px 3px 3px var(--color-ui-border-shadow);
@@ -82,6 +95,7 @@ const S = {
     position: relative;
     margin-top: 10px;
     filter: drop-shadow(0px 0px 5px var(--color-ui-border));
+    display: ${(props) => (props.isdown ? "block" : "none")};
     &::before {
       content: "";
       position: absolute;
@@ -91,7 +105,6 @@ const S = {
 	    border-bottom: 12px solid white;/* 화살표 */
 	    border-left: 12px solid transparent;
 	    border-right: 12px solid transparent;
-      
     }
   `,
   topSearchPopoverWrapper: styled.div`
@@ -154,7 +167,6 @@ const S = {
     font-size: 11px;
     cursor: pointer;
   `,
-
   topbarBtns: styled.ol`
     display: flex;
     align-items: center;
@@ -176,7 +188,7 @@ const S = {
       background-color: var(--color-button-sky-hover);
     }
     `,
-      topbarSignupBtn: styled.li`
+  topbarSignupBtn: styled.li`
       height: 30px;
       font-size: 13px;
       margin-right: 3px;
@@ -192,9 +204,9 @@ const S = {
         background-color: var(--color-button-blue-hover);
       }
     `,
-    topbarMyAccountBtn: styled.li`
+  topbarMyAccountBtn: styled.li`
       width: 40px;
-      height: 52px;
+      height: 49px;
       font-size: 30px;
       cursor: pointer;
       display: flex;
@@ -204,16 +216,16 @@ const S = {
         background-color: var(--color-navbar-button-hover);
       }
     `,
-    topbarReputation: styled.div`
+  topbarReputation: styled.div`
       width: 6px;
       height: 12px;
       font-size: 12px;
       display: flex;
       align-items: center;
     `,
-    topbarInboxBtn: styled.li`
+  topbarInboxBtn: styled.li`
       width: 40px;
-      height: 52px;
+      height: 49px;
       font-size: 30px;
       margin-left: 12px;
       cursor: pointer;
@@ -224,9 +236,9 @@ const S = {
         background-color: var(--color-navbar-button-hover);
       }
     `,
-    topbarAchievementsBtn: styled.li`
+  topbarAchievementsBtn: styled.li`
       width: 40px;
-      height: 52px;
+      height: 49px;
       font-size: 30px;
       cursor: pointer;
       display: flex;
@@ -236,9 +248,9 @@ const S = {
         background-color: var(--color-navbar-button-hover);
       }
     `,
-    topbarHelpBtn: styled.li`
+  topbarHelpBtn: styled.li`
       width: 40px;
-      height: 52px;
+      height: 49px;
       font-size: 30px;
       cursor: pointer;
       display: flex;
@@ -248,9 +260,9 @@ const S = {
         background-color: var(--color-navbar-button-hover);
       }
     `,
-    topbarExchangeBtn: styled.li`
+  topbarExchangeBtn: styled.li`
       width: 40px;
-      height: 52px;
+      height: 49px;
       font-size: 27px;
       cursor: pointer;
       display: flex;
@@ -282,7 +294,11 @@ export default function Header() {
       <S.topbarMenuBtn onClick={MenuDropdown}>      
         {isOpen ? <AiOutlineClose /> : <MdMenu />}
       </S.topbarMenuBtn>
-      <div>이미지</div>
+      <S.topbarLogoImgContainer>
+          <Link to="/">
+            <S.topbarLogoImg src={logoIcon}/>
+          </Link>
+        </S.topbarLogoImgContainer>
       <S.topbarNav>
         <S.navButton>About</S.navButton>
         <S.navButton>Produts</S.navButton>
@@ -297,8 +313,7 @@ export default function Header() {
             type="text"
             placeholder="Search..."/>
         </S.topFormContainer>
-
-        <S.topSearchPopoverContainer>
+        <S.topSearchPopoverContainer isdown={isDown}>
           <S.topSearchPopoverWrapper>
             <S.topSearchPopoverLeft>
               <S.topSearchPopoverContent>
@@ -333,7 +348,6 @@ export default function Header() {
                   collective content
                 </S.topSearchPopoverContentMSG>
               </S.topSearchPopoverContent>
-              
             </S.topSearchPopoverLeft>
             <S.topSearchPopoverRight>
               <S.topSearchPopoverContent>
@@ -368,7 +382,6 @@ export default function Header() {
                   search within status
                 </S.topSearchPopoverContentMSG>
               </S.topSearchPopoverContent>
-
             </S.topSearchPopoverRight>
           </S.topSearchPopoverWrapper>
           <S.topSearchPopoverBottom>
@@ -382,17 +395,11 @@ export default function Header() {
             </S.topSearchPopoverBottomWrapper>
           </S.topSearchPopoverBottom>
         </S.topSearchPopoverContainer>
-
-
       </S.topForm>
-
-        
-
-
-
-
       <S.topbarBtns>
-        <S.topbarLoginBtn>Log in</S.topbarLoginBtn>
+        <Link to="users/login">
+          <S.topbarLoginBtn>Log in</S.topbarLoginBtn>
+        </Link>
         <S.topbarSignupBtn>Sign up</S.topbarSignupBtn>
         <S.topbarMyAccountBtn role="menuitem" title="User Name">
           <MdAccountBox></MdAccountBox>
@@ -409,9 +416,11 @@ export default function Header() {
         <S.topbarHelpBtn role="menuitem" title="Help Center and other resources">
           <MdHelp/>
         </S.topbarHelpBtn>
-        <S.topbarExchangeBtn role="menuitem" title="A list of all 181 Stack Exchange sites">
-          <FaStackExchange/>
-        </S.topbarExchangeBtn>
+        <Link to="users/logout">
+          <S.topbarExchangeBtn role="menuitem" title="A list of all 181 Stack Exchange sites">
+            <FaStackExchange/>
+          </S.topbarExchangeBtn>
+        </Link>
       </S.topbarBtns>
     </S.topbarContainer>
   </S.topbarWrapper>
