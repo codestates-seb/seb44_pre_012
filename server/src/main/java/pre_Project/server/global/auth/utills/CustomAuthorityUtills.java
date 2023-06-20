@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CustomAuthorityUtills {
+public class CustomAuthorityUtills { // 유저 권한 부여
     @Value("${mail.address.admin}")
     private String adminMailAddress;
 

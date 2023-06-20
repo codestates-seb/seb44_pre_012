@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtTokenizer {
+public class JwtTokenizer { // Jwt토큰 생성
     @Getter
     @Value("${jwt.key}") // 환경변수로 등록되어있는 key값
     private String secretKey;

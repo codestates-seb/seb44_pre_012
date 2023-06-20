@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration { // 보안 설정
     private final JwtTokenizer jwtTokenizer;
     private final UserRepository userRepository;
     private final CustomAuthorityUtills authorityUtills;
@@ -41,7 +41,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // 기본 구성 설정
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
@@ -71,7 +71,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() { // cors 설정
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("*");
         configuration.setAllowedHeaders(Arrays.asList("*"));
