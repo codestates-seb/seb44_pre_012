@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { BsFillExclamationCircleFill } from 'react-icons/bs';
 
 type Props = {
   type: string;
@@ -26,7 +27,14 @@ export default function InputField({
           {message}
         </S.Link>
       </S.InputInfo>
-      <S.InputText id={label} type={type} onChange={onChange} />
+      <S.InputWrap>
+        <S.InputText id={label} type={type} onChange={onChange} error={error} />
+        {error && (
+          <S.ErrorIcon>
+            <BsFillExclamationCircleFill />
+          </S.ErrorIcon>
+        )}
+      </S.InputWrap>
       <S.Error>{error}</S.Error>
     </S.Container>
   );
@@ -44,17 +52,30 @@ const S = {
     display: flex;
     justify-content: space-between;
   `,
-  InputText: styled.input`
+  InputWrap: styled.div`
+    position: relative;
+  `,
+  InputText: styled.input<{ error?: string }>`
     width: 100%;
     height: 34px;
     box-shadow: var(--input-border-radius);
-    border: 1px solid var(--input-border-color);
+    border: 1px solid
+      ${props =>
+        props.error
+          ? 'var(--input-err-border-color)'
+          : 'var(--input-border-color)'};
     padding: 0.7rem 0.6rem;
     border-radius: var(--input-border-radius);
     overflow: hidden;
     &:focus {
-      border-color: var(--input-fc-border-color);
-      box-shadow: var(--input-fc-box-shadow);
+      border-color: ${props =>
+        props.error
+          ? 'var(--input-err-border-color)'
+          : 'var(--input-fc-border-color)'};
+      box-shadow: ${props =>
+        props.error
+          ? 'var(--input-fc-err-box-shadow)'
+          : 'var(--input-fc-box-shadow)'};
       outline: 0;
     }
   `,
@@ -74,5 +95,14 @@ const S = {
     color: hsl(358, 62%, 52%);
     margin-top: 5px;
     font-size: var(--font-s);
+  `,
+  ErrorIcon: styled.div`
+    position: absolute;
+    top: 50%;
+    right: 0.7em;
+    transform: translatey(-50%);
+    svg {
+      color: hsl(358, 68%, 59%);
+    }
   `,
 };
