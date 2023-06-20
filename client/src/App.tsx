@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-// import Header from './components/Header';
+import Footer from './components/Footer';
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ function App() {
           </S.OutletWrapper>
         </S.Container>
       </QueryClientProvider>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
