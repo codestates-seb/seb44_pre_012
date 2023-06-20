@@ -7,6 +7,7 @@ import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
 import { data } from '../../temp/AllQuestionQuery.json';
+import { useQuery } from '@tanstack/react-query';
 
 export default function QuestionList() {
   const RecentData = data.sort(
@@ -69,10 +70,16 @@ const S = {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+    }
     > h1 {
       font-weight: 400;
       color: var(--color-page-title);
+      @media (max-width: 400px) {
+        margin-bottom: 15px;
+      }
     }
   `,
 
@@ -97,6 +104,10 @@ const S = {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+    }
     > div {
       font-size: 17px;
       color: var(--color-page-title);
@@ -127,6 +138,9 @@ const S = {
     .active {
       background: var(--color-button-sky-hover);
       color: var(--color-button-sky-active);
+    }
+    @media (max-width: 650px) {
+      display: none;
     }
   `,
   Ul: styled.ul`

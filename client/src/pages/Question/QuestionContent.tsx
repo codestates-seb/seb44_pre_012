@@ -13,9 +13,7 @@ export default function QuestionContent({ data }: QuestionContentProps) {
       <S.SubInfo>
         <div>{data.voteCount} votes</div>
         <div>
-          {data.answerCount === 1
-            ? '1 answer'
-            : `${data.answerCount} answers`}
+          {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
         </div>
         <div>{data.viewCount} views</div>
       </S.SubInfo>
@@ -90,6 +88,7 @@ const S = {
       display: flex;
       align-items: center;
       text-align: right;
+
       span {
         margin-left: 5px;
       }
@@ -98,6 +97,9 @@ const S = {
         color: var(--color-content-title);
         &:hover {
           color: var(--color-button-blue);
+        }
+        @media (max-width: 800px) {
+          display: none;
         }
       }
       > span:nth-child(3) {
@@ -136,6 +138,9 @@ const S = {
     &:hover {
       background-color: var(--color-tag-skyblue-hover);
       color: var(--color-tag-blue-hover);
+    }
+    @media (max-width: 800px) {
+      display: none;
     }
   `,
   UserImg: styled.div`

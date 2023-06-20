@@ -123,6 +123,12 @@ const S = {
         justify-content: center;
         align-items: center;
       }
+      &:nth-child(2),
+      &:nth-child(3) {
+        @media (max-width: 650px) {
+          display: none;
+        }
+      }
       &:hover {
         background: var(--color-button-white-hover);
       }
