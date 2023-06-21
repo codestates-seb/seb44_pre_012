@@ -98,7 +98,8 @@
       "createdAt": "2023-06-21T11:00:00",
       "voteCount": 1,
       "answerCount": 1,
-      "viewCount": 5
+      "viewCount": 5,
+      "bounty": 500
     },
     {
       "questionId": 10,
@@ -153,7 +154,9 @@
       "createdAt": "2023-06-19T12:00:00",
       "voteCount": 1,
       "answerCount": 1,
-      "viewCount": 5
+      "viewCount": 5,
+      "bounty": 50
+
     }
   ]
 }

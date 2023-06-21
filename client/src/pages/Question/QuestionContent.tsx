@@ -12,10 +12,11 @@ export default function QuestionContent({ data }: QuestionContentProps) {
     <S.Li key={data.questionId}>
       <S.SubInfo>
         <div>{data.voteCount} votes</div>
-        <S.AnswerCount className={data.answerCount? 'answer' : ''}>
+        <S.AnswerCount className={data.answerCount ? 'answer' : ''}>
           {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
         </S.AnswerCount>
         <div>{data.viewCount} views</div>
+        <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>{data.bounty ? `+${data.bounty}` : ''} </S.BountyCount>
       </S.SubInfo>
       <S.Content>
         <S.A>{data.questionTitle}</S.A>
@@ -77,14 +78,30 @@ const S = {
     }
   `,
   AnswerCount: styled.span`
-  display: inline-block;
-  margin-bottom: 7px;
+    display: inline-block;
+    margin-bottom: 7px;
+    padding: 1px 3px;
+      font-weight: 500;
     &.answer {
-      color: #2f6f44;
       border: 1px solid #2f6f44;
+      color: #2f6f44;
       border-radius: 3px;
-      padding: 1px 3px;
+
     }
+    &.chose {
+      background: #2f6f44;
+      color: white;
+      border-radius: 3px;
+
+    }
+  `,
+  BountyCount: styled.span`
+  &.hasBounty {
+    color: white;
+    background: #0074cc;
+    border-radius: 3px;
+    padding: 3px 3px;
+    font-weight: 500;}
   `,
   BelowInfo: styled.div`
     text-align: left;

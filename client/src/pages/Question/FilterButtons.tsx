@@ -48,8 +48,18 @@ export default function FilterButtons({
         break;
       case 'Bountied':
         filteredData = [...data].sort((a, b) => {
-          return a.questionTitle.localeCompare(b.questionTitle);
+          if (a.bounty && !b.bounty) {
+            return -1;
+          } else if (!a.bounty && b.bounty) {
+            return 1;
+          } else if (a.bounty && b.bounty) {
+            return b.bounty - a.bounty;
+          } else {
+            return 0;
+          }
         });
+        
+
         setSelectedMenu('Bountied');
         break;
       case 'Unanswered':

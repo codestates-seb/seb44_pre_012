@@ -18,9 +18,8 @@ export default function QuestionList() {
     ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
     {
       getNextPageParam: lastPage => {
-        if (lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages)
-          return undefined;
-        return lastPage.pageInfo.page + 1;
+        return lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages ? undefined : lastPage.pageInfo.page + 1;
+
       },
     }
   );
