@@ -50,9 +50,11 @@
   --color-blue-300: hsl(206, 100%, 40%);
 
   --color-white: hsl(0, 0%, 100%);
+  --color-black: hsl(210, 8%, 15%);
 
   /* font-size */
   --font-title: 1.8rem; /* 27 */
+  --font-xl: 1.4rem; /* 21 */
   --font-l: 1.133rem; /* 17 */
   --font-s: 0.867rem; /* 13 */
   --font-xs: 0.8rem; /* 12 */
@@ -66,6 +68,7 @@
   --input-fc-border-color: hsl(206, 67%, 61%);
   --input-fc-box-shadow: 0px 0px 0px 4px rgba(0, 116, 204, 0.15);
   --input-fc-err-box-shadow: 0px 0px 0px 4px hsla(358, 62%, 47%, 0.15);
+  --check-fc-box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
 
   /* padding */
   --pd-10: 0.667rem;

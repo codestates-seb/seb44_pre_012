@@ -2,15 +2,15 @@ import InputField from '../../components/InputField';
 import FormSubmit from '../../components/FormSubmit';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
-import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { PATHS } from '../../constants/paths';
 import { ERROR_MESSAGES } from '../../constants/errorMessage';
 import { AxiosResponse } from 'axios';
 import { loginRequest } from '../../api/loginRequest';
+import CommonStyles from '../../style/CommonStyles';
 
 type LoginInfoType = {
   email: string;
@@ -128,7 +128,7 @@ export default function LoginForm() {
   };
   return (
     <>
-      <S.LoginForm>
+      <S.FormContainer>
         <S.Form onSubmit={loginRequestHandler}>
           <InputField
             type="email"
@@ -150,30 +150,14 @@ export default function LoginForm() {
         {error.loginError && (
           <S.ErrorMessage>{error.loginError}</S.ErrorMessage>
         )}
-      </S.LoginForm>
+      </S.FormContainer>
       {/* 로그인 여부 테스트 문구. 추후 삭제할 것. */}
     </>
   );
 }
 
 const S = {
-  LoginForm: styled.section`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.6rem;
-    background-color: #fff;
-    border-radius: 0.3rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05),
-      0 1rem 2rem rgba(0, 0, 0, 0.05), 0 1rem 3rem rgba(0, 0, 0, 0.1);
-  `,
-
-  Form: styled.form`
-    width: 100%;
-  `,
+  ...CommonStyles,
   ErrorMessage: styled.p`
     color: hsl(358, 62%, 52%);
     font-size: var(--font-xs);
