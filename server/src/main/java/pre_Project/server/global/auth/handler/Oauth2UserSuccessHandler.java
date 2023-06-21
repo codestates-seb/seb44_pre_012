@@ -1,5 +1,6 @@
 package pre_Project.server.global.auth.handler;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -9,7 +10,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.service.UserService;
 import pre_Project.server.global.auth.jwt.JwtTokenizer;
-import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,31 +23,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 public class Oauth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
-    private final CustomAuthorityUtills authorityUtills;
+    private final CustomAuthorityUtils authorityUtils;
     private final UserService userService;
-
-    public Oauth2UserSuccessHandler(JwtTokenizer jwtTokenizer, CustomAuthorityUtills authorityUtills, UserService userService) {
-        this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtills = authorityUtills;
-        this.userService = userService;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));
-        List<String> authorities = authorityUtills.createRoles(email);
+        List<String> authorities = authorityUtils.createRoles(email);
 
         saveUser(email);
         redirect(request, response, email, authorities);
     }
 
     private void saveUser(String email) {
-        User user = new User(email);
-        userService.createUser(user);
-
+        User user = User.builder()
+                        .email(email)
+                        .passWord("")
+                        .userName("")
+                        .userStatus(User.UserStatus.USER_ACTIVE)
+                        .build();
+        userService.createOauth2User(user);
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
@@ -96,7 +97,7 @@ public class Oauth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 .scheme("http")
                 .host(serverName)
 //                .port(80)
-                .path("/token")
+                .path("/token.html")
                 .queryParams(queryParams)
                 .build()
                 .toUri();

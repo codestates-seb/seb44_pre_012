@@ -1,4 +1,16 @@
 spring:
+  main:
+    allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${OAUTH2_CLIENT_ID}
+            clientSecret: ${OAUTH2_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
   h2:
     console:
       enabled: true
@@ -32,13 +44,4 @@ jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 40
   refresh-token-expiration-minutes: 420
-security:
-  oauth2:
-    client:
-      registration:
-        google:
-          clientId: ${OAUTH2_CLIENT_ID}
-          clientSecret: ${OAUTH2_CLIENT_SECRET}
-          scope :
-            - email
-            - profile
+

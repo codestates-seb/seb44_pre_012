@@ -1,9 +1,6 @@
 package pre_Project.server.domain.user.entitiy;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pre_Project.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -12,14 +9,12 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USERS")
 public class User extends Auditable {
-
-    public User(String email) {
-        this.email = email;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
