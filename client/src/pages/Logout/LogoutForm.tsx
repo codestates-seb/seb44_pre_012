@@ -1,23 +1,18 @@
 import styled from 'styled-components';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CommonStyles from '../../style/CommonStyles';
 import { BsBookmarkHeartFill } from 'react-icons/bs';
 import InputCheck from '../../components/InputCheck';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import FormSubmit from '../../components/FormSubmit';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice';
-import { RootState } from '../../store/store';
 
 export default function LogoutForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.auth.login.isLogin
-  );
-  console.log(isLoggedIn);
 
-  const logoutRequestHandler = e => {
+  const logoutRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
