@@ -7,11 +7,11 @@ spring:
     url: jdbc:h2:mem:test
   jpa:
     hibernate:
-      ddl-auto: create  # (1) ??? ?? ??
-    show-sql: true      # (2) SQL ?? ??
+      ddl-auto: create
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true  # (3) SQL pretty print
+        format_sql: true
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
@@ -32,3 +32,13 @@ jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 40
   refresh-token-expiration-minutes: 420
+security:
+  oauth2:
+    client:
+      registration:
+        google:
+          clientId: ${OAUTH2_CLIENT_ID}
+          clientSecret: ${OAUTH2_CLIENT_SECRET}
+          scope :
+            - email
+            - profile
