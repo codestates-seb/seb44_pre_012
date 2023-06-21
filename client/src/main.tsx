@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import QuestionList from './pages/Question/QuestionList';
 import Logout from './pages/Logout/Logout';
+import Register from './pages/Register/Register';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
       // 주석 보고 추가해주세요.
       { path: 'users/login', element: <Login /> },
       { path: 'users/logout', element: <Logout /> },
-      // { path: 'users/register', element: <컴포넌트명 /> },
+      { path: 'users/register', element: <Register /> },
       // { path: 'users/:userId', element: <컴포넌트명 /> },
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}

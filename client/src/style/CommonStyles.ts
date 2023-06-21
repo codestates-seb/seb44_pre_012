@@ -15,7 +15,8 @@ const CommonStyles = {
     }
   `,
   UserInner: styled.div`
-    width: 19rem;
+    min-width: 19rem;
+    max-width: 19rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,6 +38,21 @@ const CommonStyles = {
   `,
   Form: styled.form`
     width: 100%;
+  `,
+  CaptionWrap: styled.div`
+    font-size: var(--font-xs);
+    color: hsl(210, 8%, 45%);
+    > a {
+      color: var(--color-blue-200);
+      &:hover {
+        color: var(--color-blue-100);
+      }
+    }
+  `,
+  FormButtonWrap: styled.div`
+    display: flex;
+    width: 100%;
+    margin: 1rem auto 2rem;
   `,
 };
 

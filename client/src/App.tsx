@@ -78,8 +78,8 @@ export default function AppWrapper() {
 
 const S = {
   Container: styled.div<{ background: string }>`
+    min-height: 100%;
     background: ${props => props.background};
-    min-height: 100vh;
   `,
   OutletWrapper: styled.div`
     flex: 1;

@@ -1,4 +1,4 @@
-export const SOCIAL_LOGINS = [
+export const SOCIALS = [
   {
     label: 'Log in with Google',
     platform: 'google',

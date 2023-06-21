@@ -3,11 +3,12 @@ import SocialButtons from '../../components/SocialButtons';
 import logoIcon from '../../assets/logoIcon.png';
 import LoginForm from './LoginForm';
 import { Link, useNavigate } from 'react-router-dom';
-import { SOCIAL_LOGINS } from '../../constants/socialLogin';
+import { SOCIALS } from '../../constants/socials';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { RootState } from '../../store/store';
+import CommonStyles from '../../style/CommonStyles';
 
 type Social = {
   label: string;
@@ -23,7 +24,7 @@ export default function Login() {
   const handleGoogleLogin = () => {};
   const handleGithubLogin = () => {};
   const handleFacebookLogin = () => {};
-  const socialLogin: Social[] = SOCIAL_LOGINS.map(login => ({
+  const socialLogin: Social[] = SOCIALS.map(login => ({
     ...login,
     onClick:
       login.platform === 'google'
@@ -42,7 +43,7 @@ export default function Login() {
   }, [isLoggedIn, navigate]);
 
   return (
-    <S.Container>
+    <S.UserContainer>
       <S.Inner>
         <Link to="/">
           {' '}
@@ -58,22 +59,12 @@ export default function Login() {
           <Link to="user/register">{USER_MESSAGES.SIGNUP}</Link>
         </div>
       </S.LinkBox>
-    </S.Container>
+    </S.UserContainer>
   );
 }
 
 const S = {
-  Container: styled.section`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: calc(100vh - 56px);
-    > div {
-      margin-bottom: 1.6rem;
-    }
-  `,
+  ...CommonStyles,
   Inner: styled.div`
     width: 19rem;
     display: flex;

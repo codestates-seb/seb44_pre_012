@@ -12,4 +12,9 @@ export const USER_MESSAGES = {
     'If you’re on a shared computer, remember to log out of your Open ID provider (Facebook, Google, Stack Exchange, etc.) as well.' as const,
   LOGOUT: 'Log out' as const,
   CANCEL: 'Cancel' as const,
+  SIGNUP_CHECK: 'SignUpCheck' as const,
+  SIGNUP_CHECK_LABEL:
+    'Opt-in to receive occasional product updates, user research invitations, company announcements, and digests.' as const,
+  SIGNUP_PASSWORD_CAPTION:
+    'Passwords must contain at least eight characters, including at least 1 letter and 1 number.' as const,
 };

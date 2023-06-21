@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
+import CommonStyles from '../style/CommonStyles';
 
 type Props = {
   type: string;
@@ -9,6 +10,7 @@ type Props = {
   link?: string;
   message?: string;
   error?: string;
+  caption?: string;
 };
 
 export default function InputField({
@@ -18,6 +20,7 @@ export default function InputField({
   link,
   message,
   error,
+  caption,
 }: Props) {
   return (
     <S.Container>
@@ -29,6 +32,7 @@ export default function InputField({
       </S.InputInfo>
       <S.InputWrap>
         <S.InputText id={label} type={type} onChange={onChange} error={error} />
+        {caption && <S.CaptionWrap>{caption}</S.CaptionWrap>}
         {error && (
           <S.ErrorIcon>
             <BsFillExclamationCircleFill />
@@ -41,7 +45,9 @@ export default function InputField({
 }
 
 const S = {
+  ...CommonStyles,
   Container: styled.div`
+    width: 100%;
     margin: 6px auto;
 
     & + & {
@@ -83,6 +89,8 @@ const S = {
     color: var(--color-label-black);
     font-weight: 600;
     align-items: center;
+    margin: 2px 0;
+    line-height: 1.3;
   `,
   Link: styled(Link)`
     color: var(--color-blue-200);
