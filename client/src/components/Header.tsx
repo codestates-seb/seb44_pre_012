@@ -9,7 +9,7 @@ import logoIcon from '../assets/headerlogo.png';
 import { Link } from 'react-router-dom';
 
 const S = {
-  topbarWrapper: styled.header`
+  TopbarWrapper: styled.header`
     max-width: 100%;
     width: 100%;
     height: 52px;
@@ -21,14 +21,15 @@ const S = {
     background: white;
     /* position: absolute; */
   `,
-  topbarContainer: styled.div`
-    width: 1264px;
+  TopbarContainer: styled.div`
+    max-width: 1264px;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     margin: auto;
   `,
-  topbarMenuBtn: styled.div`
+  TopbarMenuBtn: styled.div`
     height: 100%;
     font-size: 20px;
     display: flex;
@@ -39,21 +40,21 @@ const S = {
       background-color: var(--color-navbar-button-hover);
     }
   `,
-  topbarLogoImgContainer: styled.div`
+  TopbarLogoImgContainer: styled.div`
     height: 52px;
     padding: 0px 8px;
     display: flex;
     align-items: center;
   `,
-  topbarLogoImg: styled.img`
+  TopbarLogoImg: styled.img`
     width: 150px;
     height: 28px;
   `,
-  topbarNav: styled.ol`
+  TopbarNav: styled.ol`
     display: flex;
     list-style: none;
   `,
-  navButton: styled.li`
+  NavButton: styled.li`
     color: 	#525960;
     padding: 8px;
     margin: 2px;
@@ -64,12 +65,12 @@ const S = {
       background-color: var(--color-navbar-button-hover);
     }
   `,
-  topForm: styled.form`
+  TopForm: styled.form`
     height: 30px;
     flex-grow: 1;
     padding: 0px 3px 0px 3px;
   `,
-  topFormContainer: styled.div<{ isdown:boolean }>`
+  TopFormContainer: styled.div<{ isdown:boolean }>`
     display: flex;
     align-items: center;
     border: 1px solid ${(props)=>(props.isdown ? "#69b9f7" : "var(--color-ui-border)")};
@@ -77,7 +78,7 @@ const S = {
     border-radius: 3px;
     padding-left: 5px;
   `,
-  topFormInput: styled.input`
+  TopFormInput: styled.input`
     height: 30px;
     display: flex;
     align-items: center;
@@ -85,7 +86,7 @@ const S = {
     padding-left: 5px;
     outline: none;
   `,
-  topSearchPopoverContainer: styled.div<{ isdown:boolean }>`
+  TopSearchPopoverContainer: styled.div<{ isdown:boolean }>`
     background-color: white;
     border: 1px solid var(--color-ui-border);
     box-shadow:0px 1px 3px 3px var(--color-ui-border-shadow);
@@ -107,36 +108,27 @@ const S = {
 	    border-right: 12px solid transparent;
     }
   `,
-  topSearchPopoverWrapper: styled.div`
+  TopSearchPopoverWrapper: styled.div`
     width: 100%;
     height: 130px;
     display: flex;
-  `,
-  topSearchPopoverLeft: styled.div`
-    width: 100%;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding-left: 10px;
+    flex-wrap: wrap;
+    padding-left: 5px;
   `,
-  topSearchPopoverRight: styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  `,
-  topSearchPopoverContent: styled.div`
+  TopSearchPopoverContent: styled.div`
     padding: 3px;
+    width: 50%;
   `,
-  topSearchPopoverContentTitle: styled.span`
+  TopSearchPopoverContentTitle: styled.span`
     font-size: 13px;
     color: black;
     margin-right: 3px;      
   `,
-  topSearchPopoverContentMSG: styled.span`
+  TopSearchPopoverContentMSG: styled.span`
     font-size: 13px;
   `,
-  topSearchPopoverBottom: styled.div`
+  TopSearchPopoverBottom: styled.div`
     height: 51px;
     padding: 0px 12px;
     justify-content: center;
@@ -144,13 +136,12 @@ const S = {
     flex-direction: column;
     border-top: 1px solid var(--color-ui-border);
   `,
-  topSearchPopoverBottomWrapper: styled.div`
+  TopSearchPopoverBottomWrapper: styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-  
   `,
-  topSearchPopoverQuestionBtn: styled.div`
+  TopSearchPopoverQuestionBtn: styled.div`
     border-radius: 3px;
     font-size: 11px;
     padding: 3px;
@@ -162,17 +153,17 @@ const S = {
       background-color: var(--color-button-sky-hover);
     }
   `,
-  topSearchPopoverHelpBtn: styled.div`
+  TopSearchPopoverHelpBtn: styled.div`
     color: var(--color-searchBtn);
     font-size: 11px;
     cursor: pointer;
   `,
-  topbarBtns: styled.ol`
+  TopbarBtns: styled.ol`
     display: flex;
     align-items: center;
     list-style: none;
   `,
-  topbarLoginBtn: styled.li`
+  TopbarLoginBtn: styled.li`
     height: 30px;
     font-size: 13px;
     margin: 3px;
@@ -187,8 +178,8 @@ const S = {
     &:hover {
       background-color: var(--color-button-sky-hover);
     }
-    `,
-  topbarSignupBtn: styled.li`
+  `,
+  TopbarSignupBtn: styled.li`
       height: 30px;
       font-size: 13px;
       margin-right: 3px;
@@ -203,8 +194,8 @@ const S = {
       &:hover {
         background-color: var(--color-button-blue-hover);
       }
-    `,
-  topbarMyAccountBtn: styled.li`
+  `,
+  TopbarBtn: styled.li`
       width: 40px;
       height: 49px;
       font-size: 30px;
@@ -215,15 +206,15 @@ const S = {
       &:hover {
         background-color: var(--color-navbar-button-hover);
       }
-    `,
-  topbarReputation: styled.div`
+  `,
+  TopbarReputation: styled.div`
       width: 6px;
       height: 12px;
       font-size: 12px;
       display: flex;
       align-items: center;
-    `,
-  topbarInboxBtn: styled.li`
+  `,
+  TopbarInboxBtn: styled.li`
       width: 40px;
       height: 49px;
       font-size: 30px;
@@ -235,8 +226,8 @@ const S = {
       &:hover {
         background-color: var(--color-navbar-button-hover);
       }
-    `,
-  topbarAchievementsBtn: styled.li`
+  `,
+  TopbarAchievementsBtn: styled.li`
       width: 40px;
       height: 49px;
       font-size: 30px;
@@ -247,8 +238,8 @@ const S = {
       &:hover {
         background-color: var(--color-navbar-button-hover);
       }
-    `,
-  topbarHelpBtn: styled.li`
+  `,
+  TopbarHelpBtn: styled.li`
       width: 40px;
       height: 49px;
       font-size: 30px;
@@ -259,8 +250,8 @@ const S = {
       &:hover {
         background-color: var(--color-navbar-button-hover);
       }
-    `,
-  topbarExchangeBtn: styled.li`
+  `,
+  TopbarExchangeBtn: styled.li`
       width: 40px;
       height: 49px;
       font-size: 27px;
@@ -271,12 +262,27 @@ const S = {
       &:hover {
         background-color: var(--color-navbar-button-hover);
       }
-    `,
+  `,
 };
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDown, setIsDown] = useState(false);
+  const searchData = [
+    { keyword: '[tag]', description: 'search within a tag' },
+    { keyword: 'user: 1234', description: 'search by author' },
+    { keyword: '"words here"', description: 'exact phrase' },
+    { keyword: 'collective: "Name"', description: 'collective content' },
+    { keyword: 'answers: 0', description: 'unanswered questions' },
+    { keyword: 'score: 3', description: 'posts with a 3+ score' },
+    { keyword: 'is: question', description: 'type of post' },
+    { keyword: 'isaccepted yes', description: 'search within status' }
+  ]
+  const topButton = [
+    { icon: <BsInboxFill/>, title: "Recent inbox messages" },
+    { icon: <GiDiamondTrophy/>, title: "Help Center and other resources" },
+    { icon: <MdHelp/>, title: "Help Center and other resources" }
+  ]
 
   const MenuDropdown = () => {
     setIsOpen(!isOpen)
@@ -289,141 +295,74 @@ export default function Header() {
   }
 
   return (
-  <S.topbarWrapper>
-    <S.topbarContainer>
-      <S.topbarMenuBtn onClick={MenuDropdown}>      
+  <S.TopbarWrapper>
+    <S.TopbarContainer>
+      <S.TopbarMenuBtn onClick={MenuDropdown}>      
         {isOpen ? <AiOutlineClose /> : <MdMenu />}
-      </S.topbarMenuBtn>
-      <S.topbarLogoImgContainer>
+      </S.TopbarMenuBtn>
+      <S.TopbarLogoImgContainer>
           <Link to="/">
-            <S.topbarLogoImg src={logoIcon}/>
+            <S.TopbarLogoImg src={logoIcon}/>
           </Link>
-        </S.topbarLogoImgContainer>
-      <S.topbarNav>
-        <S.navButton>About</S.navButton>
-        <S.navButton>Produts</S.navButton>
-        <S.navButton>For Teams</S.navButton>
-      </S.topbarNav>
-      <S.topForm>
-        <S.topFormContainer 
+        </S.TopbarLogoImgContainer>
+      <S.TopbarNav>
+        <S.NavButton>About</S.NavButton>
+        <S.NavButton>Produts</S.NavButton>
+        <S.NavButton>For Teams</S.NavButton>
+      </S.TopbarNav>
+      <S.TopForm>
+        <S.TopFormContainer 
           onClick={SearchInputDropdown}
           isdown={isDown}>
           <AiOutlineSearch />
-          <S.topFormInput 
+          <S.TopFormInput 
             type="text"
             placeholder="Search..."/>
-        </S.topFormContainer>
-        <S.topSearchPopoverContainer isdown={isDown}>
-          <S.topSearchPopoverWrapper>
-            <S.topSearchPopoverLeft>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  [tag]
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  search within a tag
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  user: 1234
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  search by author
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  "words here"
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  exact phrase
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  collective: "Name"
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  collective content
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-            </S.topSearchPopoverLeft>
-            <S.topSearchPopoverRight>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  answers: 0
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  unanswered questions
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  score: 3
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  posts with a 3+ score
-                </S.topSearchPopoverContentMSG> 
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  is: question
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  type of post
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-              <S.topSearchPopoverContent>
-                <S.topSearchPopoverContentTitle>
-                  isaccepted: yes
-                </S.topSearchPopoverContentTitle>
-                <S.topSearchPopoverContentMSG>
-                  search within status
-                </S.topSearchPopoverContentMSG>
-              </S.topSearchPopoverContent>
-            </S.topSearchPopoverRight>
-          </S.topSearchPopoverWrapper>
-          <S.topSearchPopoverBottom>
-            <S.topSearchPopoverBottomWrapper>
-              <S.topSearchPopoverQuestionBtn>
+        </S.TopFormContainer>
+        <S.TopSearchPopoverContainer isdown={isDown}>
+          <S.TopSearchPopoverWrapper>
+            {searchData.map((el, idx) => (
+              <S.TopSearchPopoverContent key={idx}>
+                <S.TopSearchPopoverContentTitle>{el.keyword}</S.TopSearchPopoverContentTitle>
+                <S.TopSearchPopoverContentMSG>{el.description}</S.TopSearchPopoverContentMSG>
+                </S.TopSearchPopoverContent>
+              ))}
+          </S.TopSearchPopoverWrapper>
+          <S.TopSearchPopoverBottom>
+            <S.TopSearchPopoverBottomWrapper>
+              <S.TopSearchPopoverQuestionBtn>
                 Ask a question
-              </S.topSearchPopoverQuestionBtn>
-              <S.topSearchPopoverHelpBtn>
+              </S.TopSearchPopoverQuestionBtn>
+              <S.TopSearchPopoverHelpBtn>
                 Serch help
-              </S.topSearchPopoverHelpBtn>
-            </S.topSearchPopoverBottomWrapper>
-          </S.topSearchPopoverBottom>
-        </S.topSearchPopoverContainer>
-      </S.topForm>
-      <S.topbarBtns>
+              </S.TopSearchPopoverHelpBtn>
+            </S.TopSearchPopoverBottomWrapper>
+          </S.TopSearchPopoverBottom>
+        </S.TopSearchPopoverContainer>
+      </S.TopForm>
+      <S.TopbarBtns>
         <Link to="users/login">
-          <S.topbarLoginBtn>Log in</S.topbarLoginBtn>
+          <S.TopbarLoginBtn>Log in</S.TopbarLoginBtn>
         </Link>
-        <S.topbarSignupBtn>Sign up</S.topbarSignupBtn>
-        <S.topbarMyAccountBtn role="menuitem" title="User Name">
-          <MdAccountBox></MdAccountBox>
-          <S.topbarReputation>
+        <S.TopbarSignupBtn>Sign up</S.TopbarSignupBtn>
+        <S.TopbarBtn role="menuitem" title="User Name">
+          <MdAccountBox/>
+          <S.TopbarReputation>
             <div>1</div>
-          </S.topbarReputation>
-        </S.topbarMyAccountBtn>
-        <S.topbarInboxBtn role="menuitem" title="Recent inbox messages">
-          <BsInboxFill/>
-        </S.topbarInboxBtn>
-        <S.topbarAchievementsBtn role="menuitem" title="Recent achievements">
-          <GiDiamondTrophy/>
-        </S.topbarAchievementsBtn>
-        <S.topbarHelpBtn role="menuitem" title="Help Center and other resources">
-          <MdHelp/>
-        </S.topbarHelpBtn>
+          </S.TopbarReputation>
+        </S.TopbarBtn>
+        {topButton.map((el, idx) => 
+        <S.TopbarBtn key={idx} title={el.title}>{el.icon}
+        </S.TopbarBtn>
+        )}
         <Link to="users/logout">
-          <S.topbarExchangeBtn role="menuitem" title="A list of all 181 Stack Exchange sites">
+          <S.TopbarBtn role="menuitem" title="A list of all 181 Stack Exchange sites">
             <FaStackExchange/>
-          </S.topbarExchangeBtn>
+          </S.TopbarBtn>
         </Link>
-      </S.topbarBtns>
-    </S.topbarContainer>
-  </S.topbarWrapper>
+      </S.TopbarBtns>
+    </S.TopbarContainer>
+  </S.TopbarWrapper>
   ) 
 }
 
