@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
-
 
 // 목업 서버
 import { worker } from './temp/worker';
@@ -42,12 +40,15 @@ function App() {
     }
   }, [dispatch]);
 
-  let bgColor;
+  let bgColor: string;
+  let showFooter: boolean = true;
+
   switch (location.pathname) {
     case PATHS.LOGIN:
     case PATHS.LOGOUT:
     case PATHS.REGISTER:
       bgColor = 'hsl(210, 8%, 95%)';
+      showFooter = false;
       break;
     default:
       bgColor = 'hsl(0, 0%, 100%)';
@@ -56,15 +57,13 @@ function App() {
   return (
     <>
       <Header />
-      <QueryClientProvider client={queryClient}>
-        <S.Container background={bgColor}>
-          <S.OutletWrapper>
-            <Outlet />
-          </S.OutletWrapper>
-        </S.Container>
+      <S.Container background={bgColor}>
+        <S.OutletWrapper>
+          <Outlet />
+        </S.OutletWrapper>
         <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-      <Footer />
+      </S.Container>
+      {showFooter && <Footer />}
     </>
   );
 }
