@@ -16,8 +16,15 @@
   -webkit-text-size-adjust: 100%;
 
   /* color */
+  --color-ui-border: #d6d9dc;
+  --color-ui-border-shadow:#d6d9dc4c;
+  --color-searchBtn: #0074CC;
+  --color-navbar-button-hover: #E3E6E8;
   --color-button-blue: #0a95ff;
   --color-button-blue-hover: #0073cc;
+  --color-button-border: #7AA7C7;
+  --color--button-login: #39739D;
+  --color--button-signup: #ffffff;
   --color-button-sky: #e1ecf4;
   --color-button-sky-hover: #b3d3ea;
   --color-button-white: #f8f9f9;

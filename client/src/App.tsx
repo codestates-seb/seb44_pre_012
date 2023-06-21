@@ -1,17 +1,22 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from './components/Header';
 import { PATHS } from './constants/paths';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
-// import Header from './components/Header';
+
+
+// 목업 서버
+import { worker } from './temp/worker';
+if (process.env.NODE_ENV === 'development') {
+  worker.start();
+}
 
 const queryClient = new QueryClient();
 // 하단 주석 실제 서버와 연결 후 주석 해제
@@ -50,13 +55,15 @@ function App() {
   }
   return (
     <>
-      {/* 헤더, 푸터 컴포넌트 생성시 주석처리 해제 및 import 필요. */}
-      {/* <Header /> */}
-      <S.Container background={bgColor}>
-        <S.OutletWrapper>
-          <Outlet />
-        </S.OutletWrapper>
-      </S.Container>
+      <Header />
+      <QueryClientProvider client={queryClient}>
+        <S.Container background={bgColor}>
+          <S.OutletWrapper>
+            <Outlet />
+          </S.OutletWrapper>
+        </S.Container>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
       <Footer />
     </>
   );
