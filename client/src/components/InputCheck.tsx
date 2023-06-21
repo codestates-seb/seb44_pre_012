@@ -35,7 +35,6 @@ const S = {
     margin-right: 4px;
 
     &:focus {
-      background-color: var(--color-blue-200);
       border-color: var(--color-blue-200);
       box-shadow: var(--check-fc-box-shadow);
     }

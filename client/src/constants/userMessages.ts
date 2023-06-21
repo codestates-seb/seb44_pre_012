@@ -16,5 +16,6 @@ export const USER_MESSAGES = {
   SIGNUP_CHECK_LABEL:
     'Opt-in to receive occasional product updates, user research invitations, company announcements, and digests.' as const,
   SIGNUP_PASSWORD_CAPTION:
-    'Passwords must contain at least eight characters, including at least 1 letter and 1 number.' as const,
+    'Passwords must contain at least eight characters, including at least 1 letter, 1 number, and 1 special character (!, @, #, $, %, ^, &, *).' as const,
+  ALREADY_ACCOUNT: 'Already have an account?' as const,
 };

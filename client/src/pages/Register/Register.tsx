@@ -4,6 +4,8 @@ import { SOCIALS } from '../../constants/socials';
 import CommonStyles from '../../style/CommonStyles';
 import RegisterForm from './RegisterForm';
 import RegisterBenefits from './RegisterBenefits';
+import { USER_MESSAGES } from '../../constants/userMessages';
+import { Link } from 'react-router-dom';
 
 type Social = {
   label: string;
@@ -12,17 +14,17 @@ type Social = {
 };
 
 export default function Register() {
-  const handleGoogleLogin = () => {};
-  const handleGithubLogin = () => {};
-  const handleFacebookLogin = () => {};
+  const handleGoogleSignUp = () => {};
+  const handleGithubSignUp = () => {};
+  const handleFacebookSignUp = () => {};
   const socialRegister: Social[] = SOCIALS.map(el => ({
     ...el,
     onClick:
       el.platform === 'google'
-        ? handleGoogleLogin
+        ? handleGoogleSignUp
         : el.platform === 'github'
-        ? handleGithubLogin
-        : handleFacebookLogin,
+        ? handleGithubSignUp
+        : handleFacebookSignUp,
   }));
 
   return (
@@ -32,6 +34,12 @@ export default function Register() {
         <S.Inner>
           <SocialButtons socials={socialRegister} />
           <RegisterForm />
+          <S.UserLinkBox>
+            <div>
+              {USER_MESSAGES.ALREADY_ACCOUNT}
+              <Link to="user/register">{USER_MESSAGES.SIGNUP}</Link>
+            </div>
+          </S.UserLinkBox>
         </S.Inner>
       </S.Wrapper>
     </S.UserContainer>

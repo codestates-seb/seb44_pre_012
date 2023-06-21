@@ -31,13 +31,20 @@ export default function InputField({
         </S.Link>
       </S.InputInfo>
       <S.InputWrap>
-        <S.InputText id={label} type={type} onChange={onChange} error={error} />
+        <S.InputBox>
+          <S.InputText
+            id={label}
+            type={type}
+            onChange={onChange}
+            error={error}
+          />
+          {error && (
+            <S.ErrorIcon>
+              <BsFillExclamationCircleFill />
+            </S.ErrorIcon>
+          )}
+        </S.InputBox>
         {caption && <S.CaptionWrap>{caption}</S.CaptionWrap>}
-        {error && (
-          <S.ErrorIcon>
-            <BsFillExclamationCircleFill />
-          </S.ErrorIcon>
-        )}
       </S.InputWrap>
       <S.Error>{error}</S.Error>
     </S.Container>
@@ -112,5 +119,8 @@ const S = {
     svg {
       color: hsl(358, 68%, 59%);
     }
+  `,
+  InputBox: styled.div`
+    position: relative;
   `,
 };

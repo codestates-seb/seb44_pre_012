@@ -53,12 +53,12 @@ export default function Login() {
         <SocialButtons socials={socialLogin} />
         <LoginForm />
       </S.Inner>
-      <S.LinkBox>
+      <S.UserLinkBox>
         <div>
           {USER_MESSAGES.ACCOUNT}
           <Link to="user/register">{USER_MESSAGES.SIGNUP}</Link>
         </div>
-      </S.LinkBox>
+      </S.UserLinkBox>
     </S.UserContainer>
   );
 }
@@ -75,23 +75,5 @@ const S = {
   Logo: styled.img`
     width: 32px;
     height: 37px;
-  `,
-
-  LinkBox: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-
-    > div {
-      font-size: var(--font-s);
-      > a {
-        color: var(--color-blue-200);
-        margin-left: 6px;
-        &:hover {
-          color: var(--color-blue-100);
-        }
-      }
-    }
   `,
 };

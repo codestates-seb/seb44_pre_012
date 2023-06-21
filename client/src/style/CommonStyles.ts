@@ -9,7 +9,7 @@ const CommonStyles = {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100vh - 56px);
+    min-height: calc(100vh - 56px);
     > div {
       margin-bottom: 1.6rem;
     }
@@ -53,6 +53,23 @@ const CommonStyles = {
     display: flex;
     width: 100%;
     margin: 1rem auto 2rem;
+  `,
+  UserLinkBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    > div {
+      font-size: var(--font-s);
+      > a {
+        color: var(--color-blue-200);
+        margin-left: 6px;
+        &:hover {
+          color: var(--color-blue-100);
+        }
+      }
+    }
   `,
 };
 
