@@ -13,7 +13,6 @@ import SkeletonContainer from '../../components/Skeleton';
 
 export default function QuestionList() {
   const { ref, inView } = useInView();
-  console.log(inView);
   const { data, status, fetchNextPage, error, hasNextPage } = useInfiniteQuery(
     ['questionList'],
     ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),

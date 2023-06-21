@@ -12,9 +12,9 @@ export default function QuestionContent({ data }: QuestionContentProps) {
     <S.Li key={data.questionId}>
       <S.SubInfo>
         <div>{data.voteCount} votes</div>
-        <div>
+        <S.AnswerCount className={data.answerCount? 'answer' : ''}>
           {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
-        </div>
+        </S.AnswerCount>
         <div>{data.viewCount} views</div>
       </S.SubInfo>
       <S.Content>
@@ -76,7 +76,16 @@ const S = {
       color: var(--color-content-desc);
     }
   `,
-
+  AnswerCount: styled.span`
+  display: inline-block;
+  margin-bottom: 7px;
+    &.answer {
+      color: #2f6f44;
+      border: 1px solid #2f6f44;
+      border-radius: 3px;
+      padding: 1px 3px;
+    }
+  `,
   BelowInfo: styled.div`
     text-align: left;
     font-size: 12px;

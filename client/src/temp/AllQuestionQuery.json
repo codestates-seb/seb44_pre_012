@@ -58,7 +58,7 @@
     },
     {
       "questionId": 6,
-      "questionTitle": "How can I upload and image using Typescript, fastify-multipart to OracleDB",
+      "questionTitle": "A: How can I upload and image using Typescript, fastify-multipart to OracleDB",
       "questionContent": "This is my question, How can I upload and image to an OracleDB using Typescript and fastify-multipart? I've received an string and a jpeg image from a Postman form-data and i've this code: `const { ...",
       "userName": "3tasdgsg",
       "tag": ["node.js", "typescript"],
@@ -95,7 +95,7 @@
       "questionContent": "귀염둥이 망고",
       "userName": "도유",
       "tag": ["망고", "도유"],
-      "createdAt": "2023-06-19T12:00:00",
+      "createdAt": "2023-06-21T11:00:00",
       "voteCount": 1,
       "answerCount": 1,
       "viewCount": 5

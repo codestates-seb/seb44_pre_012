@@ -39,15 +39,22 @@ export default function FilterButtons({
         setSelectedMenu('Newest');
         break;
       case 'Active':
-        filteredData = [...data];
+        filteredData = [...data].sort((a, b) => {
+          const totalCountA = a.viewCount + a.voteCount + a.answerCount;
+          const totalCountB = b.viewCount + b.voteCount + b.answerCount;
+          return totalCountB - totalCountA;
+        });
         setSelectedMenu('Active');
         break;
       case 'Bountied':
-        filteredData = [...data];
+        filteredData = [...data].sort((a, b) => {
+          return a.questionTitle.localeCompare(b.questionTitle);
+        });
         setSelectedMenu('Bountied');
         break;
       case 'Unanswered':
-        filteredData = data.filter(item => !item.answerCount);
+        // filteredData = [...data].sort((a, b) => a.answerCount - b.answerCount);
+        filteredData = [...data].filter(item => !item.answerCount);
         setSelectedMenu('Unanswered');
         break;
       default:
