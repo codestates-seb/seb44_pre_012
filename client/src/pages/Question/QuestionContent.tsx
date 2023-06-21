@@ -1,62 +1,30 @@
 import { styled } from 'styled-components';
 import { QuestionInfo } from '../../types/types';
 import '../../index.css';
-import monthNames from '../../constants/monthNames';
 import colors from '../../constants/colorNames';
-
+import { formatElapsedTime } from '../../util/formatElapsedTime';
 interface QuestionContentProps {
   data: QuestionInfo;
 }
 
 export default function QuestionContent({ data }: QuestionContentProps) {
-  const tempPostedTime: Date = new Date(data.createdAt);
-  const now: Date = new Date();
-  const elapsedMilliseconds: number = now.getTime() - tempPostedTime.getTime();
-  const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
-  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
-  const elapsedHours = Math.floor(elapsedMinutes / 60);
-  const elapsedDays = Math.floor(elapsedHours / 24);
-
-  let formattedElapsedTime;
-  switch (true) {
-    case elapsedDays > 0:
-      const formattedDate = `${
-        monthNames[tempPostedTime.getMonth()]
-      } ${tempPostedTime.getDate()}, ${tempPostedTime.getFullYear()}`;
-      const formattedTime = `${tempPostedTime.getHours()}:${String(
-        tempPostedTime.getMinutes()
-      ).padStart(2, '0')}`;
-      formattedElapsedTime = `${formattedDate} at ${formattedTime}`;
-      break;
-    case elapsedHours > 1:
-      formattedElapsedTime = `${elapsedHours} hours ago`;
-      break;
-    case elapsedHours === 1:
-      formattedElapsedTime = `${elapsedHours} hour ago`;
-      break;
-    case elapsedMinutes > 0:
-      formattedElapsedTime = `${elapsedMinutes} minute(s) ago`;
-      break;
-    default:
-      formattedElapsedTime = `${elapsedSeconds} seconds ago`;
-      break;
-  }
-
   return (
     <S.Li key={data.questionId}>
       <S.SubInfo>
         <div>{data.voteCount} votes</div>
-        <div>0 answers</div>
+        <S.AnswerCount className={data.answerCount ? 'answer' : ''}>
+          {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
+        </S.AnswerCount>
         <div>{data.viewCount} views</div>
+        <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>{data.bounty ? `+${data.bounty}` : ''} </S.BountyCount>
       </S.SubInfo>
       <S.Content>
         <S.A>{data.questionTitle}</S.A>
         <S.Desc>{data.questionContent}</S.Desc>
         <S.BelowInfo>
           <div>
-            {data.tag.map((item, index) => (
-              <S.Tag key={index}>{item}</S.Tag>
-            ))}
+            {data?.tag &&
+              data.tag.map((item, index) => <S.Tag key={index}>{item}</S.Tag>)}
           </div>
           <div>
             <span>
@@ -64,7 +32,7 @@ export default function QuestionContent({ data }: QuestionContentProps) {
             </span>
             <a>{data.userName}</a>
             <span>12</span>
-            <span>asked {formattedElapsedTime}</span>
+            <span>asked {formatElapsedTime(data.createdAt)}</span>
           </div>
         </S.BelowInfo>
       </S.Content>
@@ -109,7 +77,32 @@ const S = {
       color: var(--color-content-desc);
     }
   `,
+  AnswerCount: styled.span`
+    display: inline-block;
+    margin-bottom: 7px;
+    padding: 1px 3px;
+      font-weight: 500;
+    &.answer {
+      border: 1px solid #2f6f44;
+      color: #2f6f44;
+      border-radius: 3px;
 
+    }
+    &.chose {
+      background: #2f6f44;
+      color: white;
+      border-radius: 3px;
+
+    }
+  `,
+  BountyCount: styled.span`
+  &.hasBounty {
+    color: white;
+    background: #0074cc;
+    border-radius: 3px;
+    padding: 3px 3px;
+    font-weight: 500;}
+  `,
   BelowInfo: styled.div`
     text-align: left;
     font-size: 12px;
@@ -120,6 +113,7 @@ const S = {
       display: flex;
       align-items: center;
       text-align: right;
+
       span {
         margin-left: 5px;
       }
@@ -128,6 +122,9 @@ const S = {
         color: var(--color-content-title);
         &:hover {
           color: var(--color-button-blue);
+        }
+        @media (max-width: 800px) {
+          display: none;
         }
       }
       > span:nth-child(3) {
@@ -166,6 +163,9 @@ const S = {
     &:hover {
       background-color: var(--color-tag-skyblue-hover);
       color: var(--color-tag-blue-hover);
+    }
+    @media (max-width: 800px) {
+      display: none;
     }
   `,
   UserImg: styled.div`
