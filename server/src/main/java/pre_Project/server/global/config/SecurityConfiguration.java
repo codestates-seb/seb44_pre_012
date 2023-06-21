@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -95,7 +96,8 @@ public class SecurityConfiguration { // 보안 설정
             JwtVerificationFiler jwtVerificationFiler = new JwtVerificationFiler(jwtTokenizer, authorityUtills);
 
             builder.addFilter(jwtAuthenticationFiler)
-                    .addFilterAfter(jwtVerificationFiler, JwtAuthenticationFiler.class);
+                    //.addFilterAfter(jwtVerificationFiler, JwtAuthenticationFiler.class)
+                    .addFilterAfter(jwtVerificationFiler, OAuth2LoginAuthenticationFilter.class);
         }
     }
 }
