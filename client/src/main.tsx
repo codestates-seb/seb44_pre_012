@@ -6,6 +6,7 @@ import App from './App';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import QuestionList from './pages/Question/QuestionList';
+import QuestionDetail from './pages/QuestionDetail/QuestionDetail';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
       { path: 'questions', element: <QuestionList /> },
+      { path: 'questiondetail', element: <QuestionDetail /> }
       // { path: 'questions/register', element: <컴포넌트명 /> },
     ],
   },
