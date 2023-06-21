@@ -37,12 +37,15 @@ function App() {
     }
   }, [dispatch]);
 
-  let bgColor;
+  let bgColor: string;
+  let showFooter: boolean = true;
+
   switch (location.pathname) {
     case PATHS.LOGIN:
     case PATHS.LOGOUT:
     case PATHS.REGISTER:
       bgColor = 'hsl(210, 8%, 95%)';
+      showFooter = false;
       break;
     default:
       bgColor = 'hsl(0, 0%, 100%)';
@@ -57,7 +60,7 @@ function App() {
           <Outlet />
         </S.OutletWrapper>
       </S.Container>
-      <Footer />
+      {showFooter && <Footer />}
     </>
   );
 }

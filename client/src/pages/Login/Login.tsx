@@ -35,11 +35,11 @@ export default function Login() {
 
   // 로그인시 메인 페이지로 이동
   // logout 페이지 생성까지 주석처리
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate('/');
-  //   }
-  // }, [isLoggedIn, navigate]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <S.Container>

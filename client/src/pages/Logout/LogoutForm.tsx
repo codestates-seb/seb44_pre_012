@@ -1,12 +1,42 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import CommonStyles from '../../style/CommonStyles';
 import { BsBookmarkHeartFill } from 'react-icons/bs';
 import InputCheck from '../../components/InputCheck';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import FormSubmit from '../../components/FormSubmit';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../store/authSlice';
+import { RootState } from '../../store/store';
 
 export default function LogoutForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.login.isLogin
+  );
+  console.log(isLoggedIn);
+
+  const logoutRequestHandler = e => {
+    e.preventDefault();
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('memberid');
+    dispatch(
+      logout({
+        accessToken: null,
+        memberId: null,
+        isLogin: false,
+        refreshToken: null,
+      })
+    );
+    navigate('/users/login');
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   const teams = [
     { part: 'FE', name: '김가영', github: 'https://github.com/sogood17' },
     { part: 'FE', name: '오은비', github: 'https://github.com/dreamogu' },
@@ -18,32 +48,36 @@ export default function LogoutForm() {
   ];
   return (
     <S.FormContainer>
-      <S.ListWrap>
-        {teams.map((el, idx) => {
-          return (
-            <S.List key={idx}>
-              <BsBookmarkHeartFill
-                color={el.part === 'FE' ? '#5296d5' : '#925cb1'}
-              />
-              <S.Text>
-                {' '}
-                <Link to={el.github}>
-                  [{el.part}] {el.name} Github{' '}
-                </Link>
-              </S.Text>
-            </S.List>
-          );
-        })}
-      </S.ListWrap>
-      <InputCheck
-        id={USER_MESSAGES.LOGOUT_CHECK}
-        label={USER_MESSAGES.LOGOUT_CHECK_LABEL}
-      />
-      <S.ButtonWrap>
-        <FormSubmit text={USER_MESSAGES.LOGOUT} />
-        <S.LinkButton to="/">{USER_MESSAGES.CANCEL}</S.LinkButton>
-      </S.ButtonWrap>
-      <S.CaptionWrap>{USER_MESSAGES.LOGOUT_CAPTION}</S.CaptionWrap>
+      <S.Form onSubmit={logoutRequestHandler}>
+        <S.ListWrap>
+          {teams.map((el, idx) => {
+            return (
+              <S.List key={idx}>
+                <BsBookmarkHeartFill
+                  color={el.part === 'FE' ? '#5296d5' : '#925cb1'}
+                />
+                <S.Text>
+                  {' '}
+                  <Link to={el.github}>
+                    [{el.part}] {el.name} Github{' '}
+                  </Link>
+                </S.Text>
+              </S.List>
+            );
+          })}
+        </S.ListWrap>
+        <InputCheck
+          id={USER_MESSAGES.LOGOUT_CHECK}
+          label={USER_MESSAGES.LOGOUT_CHECK_LABEL}
+        />
+        <S.ButtonWrap>
+          <FormSubmit text={USER_MESSAGES.LOGOUT} />
+          <S.LinkButton onClick={handleGoBack}>
+            {USER_MESSAGES.CANCEL}
+          </S.LinkButton>
+        </S.ButtonWrap>
+        <S.CaptionWrap>{USER_MESSAGES.LOGOUT_CAPTION}</S.CaptionWrap>
+      </S.Form>
     </S.FormContainer>
   );
 }
@@ -74,7 +108,7 @@ const S = {
     width: 100%;
     margin: 1rem auto 2rem;
   `,
-  LinkButton: styled(Link)`
+  LinkButton: styled.button`
     line-height: 1;
     margin: 2px;
     font-weight: 400;

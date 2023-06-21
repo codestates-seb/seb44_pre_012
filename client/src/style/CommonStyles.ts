@@ -38,10 +38,6 @@ const CommonStyles = {
   Form: styled.form`
     width: 100%;
   `,
-  Button: styled.button`
-    margin: 2px auto;
-    border: ;
-  `,
 };
 
 export default CommonStyles;
