@@ -1,5 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import QuestionContent from './QuestionContent';
 import { QuestionInfo } from '../../types/types';
@@ -7,26 +6,25 @@ import FilterButtons from './FilterButtons';
 import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { questionsAPI } from '../../api/QuestionListApi';
 import SkeletonContainer from '../../components/Skeleton';
 
 export default function QuestionList() {
   const { ref, inView } = useInView();
-
-  const { data, status, fetchNextPage, error, isFetchingNextPage } =
-    useInfiniteQuery(
-      ['questionList'],
-      ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
-      {
-        getNextPageParam: lastPage => {
-          if (lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages)
-            return undefined;
-          return lastPage.pageInfo.page + 1;
-        },
-      }
-    );
+  console.log(inView);
+  const { data, status, fetchNextPage, error, hasNextPage } = useInfiniteQuery(
+    ['questionList'],
+    ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
+    {
+      getNextPageParam: lastPage => {
+        if (lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages)
+          return undefined;
+        return lastPage.pageInfo.page + 1;
+      },
+    }
+  );
 
   const [questionData, setQuestionData] = useState<QuestionInfo[]>([]);
   const [originData, setOriginData] = useState<QuestionInfo[]>([]);
@@ -84,35 +82,38 @@ export default function QuestionList() {
                 </S.Filter>
               </S.FilterContainer>
             </S.SubTitle>
-            <S.Ul ref={ref}>
+            <S.Ul>
               {questionData.map((el: QuestionInfo) => (
                 <QuestionContent key={el.questionId} data={el} />
               ))}
             </S.Ul>
+            <S.ScrollBox ref={ref}>
+              <S.Scroll
+                ref={ref}
+                onClick={() => fetchNextPage()}
+                disabled={!hasNextPage}
+              >
+                {hasNextPage ? 'More' : 'Nothing more to load'}{' '}
+              </S.Scroll>
+            </S.ScrollBox>
           </div>
         )}
         <Aside />
       </S.Container>
-
-      <S.Scroll></S.Scroll>
     </S.Main>
   );
 }
 
 const S = {
   Main: styled.main`
-    border: 1px solid yellow;
-    overflow-y: scroll;
-    height: 100vh;
+    height: 100%;
   `,
   Container: styled.div`
     display: flex;
-    border: 1px solid green;
   `,
 
   Title: styled.div`
     padding: 25px 24px 0 24px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -193,9 +194,18 @@ const S = {
   Ul: styled.ul`
     padding: 0 24px 0 0;
   `,
-
-  Scroll: styled.div`
-    border: 1px solid red;
-    height: 30px;
+  ScrollBox: styled.div`
+    height: 75px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  Scroll: styled.button`
+    padding: 5px;
+    margin: 20px;
+    border-radius: 3px;
+    border: 1px solid #aab0b7;
+    background: var(--color-button-white);
   `,
 };

@@ -6,6 +6,7 @@ export const handlers = [
   rest.get('/questions', (req, res, ctx) => {
     const searchParams = new URLSearchParams(req.url.search);
     const size = searchParams.get('size');
+
     const page = searchParams.get('page');
     if (!size || !page) {
       return res(
@@ -20,11 +21,11 @@ export const handlers = [
     const pageInfo = {
       page: parseInt(page),
       totalElements: size,
-      totalPages: Math.ceil(allQuestions.data.length / size),
+      totalPages: Math.ceil(allQuestions.data.length / parseInt(size)),
     };
     return res(
       ctx.status(200),
-      ctx.json({ data: processedData, pageInfo : pageInfo })
+      ctx.json({ data: processedData, pageInfo: pageInfo })
     );
   }),
 ];
