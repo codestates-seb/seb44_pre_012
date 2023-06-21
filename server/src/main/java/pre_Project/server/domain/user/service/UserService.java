@@ -4,28 +4,43 @@ import org.mapstruct.control.MappingControl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtills authorityUtils;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtills authorityUtils) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
     public User createUser(User user){
         verifyExistsEmail(user.getEmail());
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassWord()); // password 암호화
+        user.setPassWord(encryptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(user.getEmail()); // 유저 권한 설정
+        user.setRoles(roles);
+
         User savedUser = userRepository.save(user);
         return savedUser;
     }
