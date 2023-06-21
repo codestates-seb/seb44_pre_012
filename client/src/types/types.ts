@@ -8,5 +8,5 @@ export interface QuestionInfo {
   voteCount: number;
   answerCount: number;
   viewCount: number;
-};
-
+  bounty?: number;
+}
