@@ -145,7 +145,9 @@ export default function LoginForm() {
             message={USER_MESSAGES.ACCOUNT}
             error={error.passwordError}
           />
-          <FormSubmit text={USER_MESSAGES.LOGIN} />
+          <S.ButtonWrap>
+            <FormSubmit size="wide" text={USER_MESSAGES.LOGIN} />
+          </S.ButtonWrap>
         </S.Form>
         {error.loginError && (
           <S.ErrorMessage>{error.loginError}</S.ErrorMessage>
@@ -161,5 +163,10 @@ const S = {
   ErrorMessage: styled.p`
     color: hsl(358, 62%, 52%);
     font-size: var(--font-xs);
+  `,
+  ButtonWrap: styled.div`
+    display: flex;
+    width: 100%;
+    margin: 6px auto;
   `,
 };

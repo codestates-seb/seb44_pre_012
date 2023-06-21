@@ -4,6 +4,7 @@ import CommonStyles from '../../style/CommonStyles';
 import { BsBookmarkHeartFill } from 'react-icons/bs';
 import InputCheck from '../../components/InputCheck';
 import { USER_MESSAGES } from '../../constants/userMessages';
+import FormSubmit from '../../components/FormSubmit';
 
 export default function LogoutForm() {
   const teams = [
@@ -38,6 +39,11 @@ export default function LogoutForm() {
         id={USER_MESSAGES.LOGOUT_CHECK}
         label={USER_MESSAGES.LOGOUT_CHECK_LABEL}
       />
+      <S.ButtonWrap>
+        <FormSubmit text={USER_MESSAGES.LOGOUT} />
+        <S.LinkButton to="/">{USER_MESSAGES.CANCEL}</S.LinkButton>
+      </S.ButtonWrap>
+      <S.CaptionWrap>{USER_MESSAGES.LOGOUT_CAPTION}</S.CaptionWrap>
     </S.FormContainer>
   );
 }
@@ -62,5 +68,32 @@ const S = {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+  `,
+  ButtonWrap: styled.div`
+    display: flex;
+    width: 100%;
+    margin: 1rem auto 2rem;
+  `,
+  LinkButton: styled(Link)`
+    line-height: 1;
+    margin: 2px;
+    font-weight: 400;
+    box-shadow: var(--button-box-shadow);
+    font-size: var(--font-s);
+    color: var(--color-blue-200);
+    padding: var(--pd-10);
+    border-radius: var(--input-border-radius);
+    border: 1px solid rgba(0, 0, 0, 0);
+    &:hover {
+      background: hsl(206, 100%, 97%);
+      color: hsl(209, 100%, 37.5%);
+    }
+    &:focus {
+      box-shadow: 0 0 0 4px hsla(206, 100%, 40%, 0.15);
+    }
+  `,
+  CaptionWrap: styled.div`
+    font-size: var(--font-xs);
+    color: hsl(210, 8%, 45%);
   `,
 };

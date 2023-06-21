@@ -11,5 +11,5 @@ export const USER_MESSAGES = {
   LOGOUT_CAPTION:
     'If you’re on a shared computer, remember to log out of your Open ID provider (Facebook, Google, Stack Exchange, etc.) as well.' as const,
   LOGOUT: 'Log out' as const,
-  CANCEL: 'CANCEL' as const,
+  CANCEL: 'Cancel' as const,
 };
