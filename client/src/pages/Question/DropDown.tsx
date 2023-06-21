@@ -59,7 +59,7 @@ const Menu = styled.div.attrs(() => ({ role: 'dropdown-menu' }))`
   border-radius: 3px;
   opacity: 0;
   visibility: hidden;
-  transform: translate(120%, 70px);
+  transform: translate(120%, 120px);
   z-index: 999;
   background-color: #ffffff;
   display: flex;

@@ -58,13 +58,12 @@ export default function FilterButtons({
             return 0;
           }
         });
-        
 
         setSelectedMenu('Bountied');
         break;
       case 'Unanswered':
-        // filteredData = [...data].sort((a, b) => a.answerCount - b.answerCount);
-        filteredData = [...data].filter(item => !item.answerCount);
+        filteredData = [...data].sort((a, b) => a.answerCount - b.answerCount);
+        // filteredData = [...data].filter(item => !item.answerCount);
         setSelectedMenu('Unanswered');
         break;
       default:
