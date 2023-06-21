@@ -17,10 +17,14 @@ export const handlers = [
     const from = parseInt(page) * parseInt(size);
     const to = (parseInt(page) + 1) * parseInt(size);
     const processedData = allQuestions.data.slice(from, to);
-    console.log(`from ${from} to ${to}`);
+    const pageInfo = {
+      page: parseInt(page),
+      totalElements: size,
+      totalPages: Math.ceil(allQuestions.data.length / size),
+    };
     return res(
       ctx.status(200),
-      ctx.json({ ...allQuestions, data: processedData })
+      ctx.json({ data: processedData, pageInfo : pageInfo })
     );
   }),
 ];
