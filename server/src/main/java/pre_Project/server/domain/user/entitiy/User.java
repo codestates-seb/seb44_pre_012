@@ -5,6 +5,8 @@ import lombok.Setter;
 import pre_Project.server.global.audit.Auditable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,9 +22,11 @@ public class User extends Auditable {
     private String userName;
     @Column(nullable = false)
     private String passWord;
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.STRING) //회원 탈퇴 시 userstatus = USER_QUIT
     @Column(nullable = false)
     private UserStatus userStatus = UserStatus.USER_ACTIVE;
+    @ElementCollection(fetch = FetchType.EAGER) // 사용자 권한 등록을 위한 테이블
+    private List<String> roles = new ArrayList<>();
 
     public enum UserStatus {
         USER_ACTIVE("활동중"),

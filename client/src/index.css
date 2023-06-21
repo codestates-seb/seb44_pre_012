@@ -62,8 +62,10 @@
   --button-fc-box-shadow: 0px 0px 0px 4px hsla(206, 100%, 40%, 0.15);
   --input-border-radius: 3px;
   --input-border-color: hsl(210, 8%, 75%);
+  --input-err-border-color: hsl(358, 68%, 59%);
   --input-fc-border-color: hsl(206, 67%, 61%);
   --input-fc-box-shadow: 0px 0px 0px 4px rgba(0, 116, 204, 0.15);
+  --input-fc-err-box-shadow: 0px 0px 0px 4px hsla(358, 62%, 47%, 0.15);
 
   /* padding */
   --pd-10: 0.667rem;
