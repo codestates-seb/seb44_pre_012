@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
+// import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import QuestionContent from './QuestionContent';
 import { QuestionInfo } from '../../types/types';
@@ -6,14 +7,49 @@ import FilterButtons from './FilterButtons';
 import Aside from './Aside';
 import '../../index.css';
 import { BiFilter } from 'react-icons/bi';
-import { data } from '../../temp/AllQuestionQuery.json';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
+import { questionsAPI } from '../../api/QuestionListApi';
+import SkeletonContainer from '../../components/Skeleton';
 
 export default function QuestionList() {
-  const RecentData = data.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-  const [QuestionData, setQuestionData] = useState<QuestionInfo[]>(RecentData);
+  const { ref, inView } = useInView();
+
+  const { data, status, fetchNextPage, error, isFetchingNextPage } =
+    useInfiniteQuery(
+      ['questionList'],
+      ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
+      {
+        getNextPageParam: lastPage => {
+          if (lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages)
+            return undefined;
+          return lastPage.pageInfo.page + 1;
+        },
+      }
+    );
+
+  const [questionData, setQuestionData] = useState<QuestionInfo[]>([]);
+  const [originData, setOriginData] = useState<QuestionInfo[]>([]);
+
+  useEffect(() => {
+    const incomingData: QuestionInfo[] = [];
+    data?.pages.forEach(page => {
+      page.data.forEach((el: QuestionInfo) => {
+        incomingData.push(el);
+      });
+    });
+    setOriginData(incomingData);
+    setQuestionData(incomingData);
+  }, [data]);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]); //
+
+  const handleFilteredData = (filteredData: QuestionInfo[]) =>
+    setQuestionData(filteredData);
 
   const addCommasToNumber = (number: number) => {
     const formattedNumber = number
@@ -22,45 +58,56 @@ export default function QuestionList() {
     return formattedNumber;
   };
 
-  const handleFilteredData = (filteredData: QuestionInfo[]) =>
-    setQuestionData(filteredData);
-
   return (
     <S.Main>
-      <div>
-        <S.Title>
-          <h1> All Questions </h1>
-          <S.AskButton> Ask Question </S.AskButton>
-        </S.Title>
-        <S.SubTitle>
-          <div> {addCommasToNumber(QuestionData.length)} questions</div>
-          <S.FilterContainer>
-            <FilterButtons
-              data={data}
-              handleFilteredData={handleFilteredData}
-            />
-            <S.Filter>
-              <BiFilter size="21" />
-              <span>Filter</span>
-            </S.Filter>
-          </S.FilterContainer>
-        </S.SubTitle>
-        <S.Ul>
-          {QuestionData.map((el: QuestionInfo) => (
-            <QuestionContent key={el.questionId} data={el} />
-          ))}
-        </S.Ul>
-      </div>
-      <Aside />
+      <S.Container>
+        {status === 'loading' ? (
+          <SkeletonContainer />
+        ) : status === 'error' ? (
+          <span>Error: {(error as Error).message}</span>
+        ) : (
+          <div>
+            <S.Title>
+              <h1> All Questions </h1>
+              <S.AskButton> Ask Question </S.AskButton>
+            </S.Title>
+            <S.SubTitle>
+              <div> {addCommasToNumber(questionData.length)} questions</div>
+              <S.FilterContainer>
+                <FilterButtons
+                  data={originData}
+                  handleFilteredData={handleFilteredData}
+                />
+                <S.Filter>
+                  <BiFilter size="21" />
+                  <span>Filter</span>
+                </S.Filter>
+              </S.FilterContainer>
+            </S.SubTitle>
+            <S.Ul ref={ref}>
+              {questionData.map((el: QuestionInfo) => (
+                <QuestionContent key={el.questionId} data={el} />
+              ))}
+            </S.Ul>
+          </div>
+        )}
+        <Aside />
+      </S.Container>
+
+      <S.Scroll></S.Scroll>
     </S.Main>
   );
 }
 
 const S = {
   Main: styled.main`
+    border: 1px solid yellow;
+    overflow-y: scroll;
+    height: 100vh;
+  `,
+  Container: styled.div`
     display: flex;
-    > div {
-    }
+    border: 1px solid green;
   `,
 
   Title: styled.div`
@@ -145,5 +192,10 @@ const S = {
   `,
   Ul: styled.ul`
     padding: 0 24px 0 0;
+  `,
+
+  Scroll: styled.div`
+    border: 1px solid red;
+    height: 30px;
   `,
 };

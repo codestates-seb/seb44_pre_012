@@ -9,14 +9,12 @@ interface FilterButtonsProps {
   data: QuestionInfo[];
   handleFilteredData: (filteredData: QuestionInfo[]) => void;
 }
-
 export default function FilterButtons({
   data,
   handleFilteredData,
 }: FilterButtonsProps) {
   const [selectedMenu, setSelectedMenu] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
-
   const DropDownHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -28,40 +26,35 @@ export default function FilterButtons({
     { title: 'Unanswered' },
     { title: 'More', icon: <RiArrowDownSFill /> },
   ];
-
   const handleFilterOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    let filteredData;
     const title = event.currentTarget.title;
+    let filteredData: QuestionInfo[] = []; // Initialize with an empty array
+
     switch (title) {
       case 'Newest':
-        filteredData = data.sort(
+        filteredData = [...data].sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
-        handleFilteredData(filteredData);
         setSelectedMenu('Newest');
         break;
       case 'Active':
-        filteredData = data;
-        handleFilteredData(filteredData);
+        filteredData = [...data];
         setSelectedMenu('Active');
-
         break;
       case 'Bountied':
-        filteredData = data;
-        handleFilteredData(filteredData);
+        filteredData = [...data];
         setSelectedMenu('Bountied');
-
         break;
       case 'Unanswered':
         filteredData = data.filter(item => !item.answerCount);
-        handleFilteredData(filteredData);
         setSelectedMenu('Unanswered');
-
         break;
       default:
         break;
     }
+
+    handleFilteredData(filteredData);
   };
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
