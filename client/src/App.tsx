@@ -6,6 +6,12 @@ import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from './components/Footer';
 
+// 목업 서버 
+import { worker } from "./temp/worker";
+if (process.env.NODE_ENV === "development") {
+  worker.start();
+}
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -32,7 +38,7 @@ function App() {
             <Outlet />
           </S.OutletWrapper>
         </S.Container>
-        {/* <ReactQueryDevtools /> */}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
       <Footer />
     </>
