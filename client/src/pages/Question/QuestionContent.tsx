@@ -22,9 +22,8 @@ export default function QuestionContent({ data }: QuestionContentProps) {
         <S.Desc>{data.questionContent}</S.Desc>
         <S.BelowInfo>
           <div>
-            {data?.tag && data.tag.map((item, index) => (
-              <S.Tag key={index}>{item}</S.Tag>
-            ))}
+            {data?.tag &&
+              data.tag.map((item, index) => <S.Tag key={index}>{item}</S.Tag>)}
           </div>
           <div>
             <span>

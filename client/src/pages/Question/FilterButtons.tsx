@@ -28,7 +28,7 @@ export default function FilterButtons({
   ];
   const handleFilterOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const title = event.currentTarget.title;
-    let filteredData: QuestionInfo[] = []; // Initialize with an empty array
+    let filteredData: QuestionInfo[] = [];
 
     switch (title) {
       case 'Newest':
