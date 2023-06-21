@@ -4,12 +4,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './App.css';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from './components/Header';
 import { PATHS } from './constants/paths';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
-// import Header from './components/Header';
+
 
 // 목업 서버
 import { worker } from './temp/worker';
@@ -54,8 +55,7 @@ function App() {
   }
   return (
     <>
-      {/* 헤더, 푸터 컴포넌트 생성시 주석처리 해제 및 import 필요. */}
-      {/* <Header /> */}
+      <Header />
       <QueryClientProvider client={queryClient}>
         <S.Container background={bgColor}>
           <S.OutletWrapper>
