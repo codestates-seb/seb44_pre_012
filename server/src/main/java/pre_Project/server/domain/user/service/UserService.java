@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
-import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
@@ -24,9 +25,9 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CustomAuthorityUtills authorityUtils;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtills authorityUtils) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -43,6 +44,16 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
         return savedUser;
+    }
+
+    public User createOauth2User(User user) {
+        Optional<User> findUser = userRepository.findByEmail(user.getEmail());
+        if(findUser.isPresent()){
+            return findUser.get();
+        }
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+        return userRepository.save(user);
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public User updateUser(User user){
