@@ -18,12 +18,12 @@ export default function QuestionList() {
     ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
     {
       getNextPageParam: lastPage => {
-        return lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages ? undefined : lastPage.pageInfo.page + 1;
-
+        return lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages
+          ? undefined
+          : lastPage.pageInfo.page + 1;
       },
     }
   );
-
   const [questionData, setQuestionData] = useState<QuestionInfo[]>([]);
   const [originData, setOriginData] = useState<QuestionInfo[]>([]);
 
@@ -39,7 +39,7 @@ export default function QuestionList() {
   }, [data]);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView]); //

@@ -26,22 +26,25 @@ export const questionQuery = {
   data: [
     {
       questionId: 1,
-      questionTitle: "망고야~",
-      questionContent: "사랑해. 밥 좀 잘 먹어",
-      userName: "도유",
+      questionTitle: '망고야~',
+      questionContent: '사랑해. 밥 좀 잘 먹어',
+      userName: '도유',
       viewCount: 140,
-      createdAt: "질문 작성 날짜",
-      modifiedAt: "질문 수정 날짜",
+      createdAt: '질문 작성 날짜',
+      modifiedAt: '질문 수정 날짜',
       questionAnswers: [
         {
           questionAnswerId: 1,
-          questionAnswerContent: `I've created this small package, react-use-context-selector, and it just does the job.
-
+          questionAnswerContent: `I've created this sThe following code works only if the minimum value is  It does not work for minimum values other than  
+          If you wanted to get a random integer between 1 (and only 1) and 6, you would calculate:
+          mall package, react-use-context-selector, and it just does the job.
+          Math.random() does not provide cryptographically secure random numbers. Do not use them for anything related to security. Use the Web Crypto API instead, and more precisely the window.crypto.getRandomValues() method.
           I used the same approach as used in Redux's useSelector. It also comes with type declarations and the return type matches the selector function's return type making it suitable for using in TS project.`,
           userId: 1,
-          userName: "망고",
-          createdAt: "2023-06-12T12:00:00",
-          modifiedAt: "2023-06-12T12:00:00"
+          userName: '망고',
+          createdAt: '2023-06-22T12:00:00',
+          modifiedAt: '2023-06-12T12:00:00',
+          voteCount: 4,
         },
         {
           questionAnswerId: 2,
@@ -125,37 +128,40 @@ export const questionQuery = {
           A conference talk from Daishi Kato from React Conf 2021
           A blog post about same conference talk by Chetan Gawai`,
           userId: 1,
-          userName: "도유",
-          createdAt: "2023-06-22T12:00:00",
-          modifiedAt: "2023-06-22T17:00:00"
-        }
-      ]
+          userName: '도유',
+          createdAt: '2019-09-12T12:00:00',
+          modifiedAt: '2023-06-22T17:00:00',
+          voteCount: 1,
+        },
+      ],
     },
     {
       questionId: 2,
-      questionTitle: "질문 제목",
-      questionContent: "질문 내용",
+      questionTitle: '질문 제목',
+      questionContent: '질문 내용',
       viewCount: 0,
-      createdAt: "질문 작성 날짜",
-      modifiedAt: "질문 수정 날짜",
+      createdAt: '질문 작성 날짜',
+      modifiedAt: '질문 수정 날짜',
       questionAnswers: [
         {
           questionAnswerId: 1,
-          questionAnswerContent: "제가 알것 같습니다. 그것은 블라블라네요.",
+          questionAnswerContent: '제가 알것 같습니다. 그것은 블라블라네요.',
           userId: 1,
-          userName: "하하",
-          createdAt: "2023-06-12T14:00:00",
-          modifiedAt: "2023-06-12T14:00:00"
+          userName: '하하',
+          createdAt: '2023-06-12T14:00:00',
+          modifiedAt: '2023-06-12T14:00:00',
+          voteCount: 0,
         },
         {
           questionAnswerId: 2,
-          questionAnswerContent: "와우",
+          questionAnswerContent: '와우',
           userId: 1,
-          userName: "잘 몰겟..ㅋ ",
-          createdAt: "2023-06-12T14:00:00",
-          modifiedAt: "2023-06-12T14:00:00"
-        }
-      ]
-    }
-  ]
+          userName: '잘 몰겟..ㅋ ',
+          createdAt: '2023-06-12T14:00:00',
+          modifiedAt: '2023-06-12T14:00:00',
+          voteCount: 4,
+        },
+      ],
+    },
+  ],
 };
