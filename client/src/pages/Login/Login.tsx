@@ -21,7 +21,9 @@ export default function Login() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.auth.login.isLogin
   );
-  const handleGoogleLogin = () => {};
+  const handleGoogleLogin = () => {
+    window.location.assign(`http://localhost:8080/oauth2/authorization/google`);
+  };
   const handleGithubLogin = () => {};
   const handleFacebookLogin = () => {};
   const socialLogin: Social[] = SOCIALS.map(login => ({
