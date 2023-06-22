@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <NotFound /> },
+      { index: true, element: <QuestionList /> },
       // { index: true, element: <QuestionList /> },
       // 주석 보고 추가해주세요.
       { path: 'users/login', element: <Login /> },

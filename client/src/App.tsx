@@ -11,10 +11,10 @@ import { useEffect } from 'react';
 import Footer from './components/Footer';
 
 // 목업 서버
-// import { worker } from './temp/worker';
-// if (process.env.NODE_ENV === 'development') {
-//   worker.start();
-// }
+import { worker } from './temp/worker';
+if (process.env.NODE_ENV === 'development') {
+  worker.start();
+}
 
 const queryClient = new QueryClient();
 // 하단 주석 실제 서버와 연결 후 주석 해제
