@@ -16,5 +16,6 @@ public class QuestionResponseDto {
     private String questionContent;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private Integer view;
 
 }

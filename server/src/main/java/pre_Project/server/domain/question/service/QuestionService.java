@@ -39,6 +39,10 @@ public class QuestionService {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         Question foundQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
+        foundQuestion.setView(foundQuestion.getView() + 1);
+
+        questionRepository.save(foundQuestion);
+
         return foundQuestion;
     }
 
@@ -54,12 +58,4 @@ public class QuestionService {
 
         questionRepository.delete(foundQuestion);
     }
-
-//    public Question updateView(Question question, long questionId) {
-//        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-//        Question foundQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-//        foundQuestion.setView(foundQuestion.getView() + 1);
-//
-//        return questionRepository.save(foundQuestion);
-//    }
 }

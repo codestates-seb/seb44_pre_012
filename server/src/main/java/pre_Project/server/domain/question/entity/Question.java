@@ -25,6 +25,6 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String questionContent;
 
-//    @Column(nullable = false)
-//    private Integer view;
+    @Column(nullable = false)
+    private int view;
 }

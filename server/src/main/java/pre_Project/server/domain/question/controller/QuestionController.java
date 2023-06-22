@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pre_Project.server.domain.question.dto.QuestionPatchDto;
 import pre_Project.server.domain.question.dto.QuestionPostDto;
-import pre_Project.server.domain.question.dto.QuestionViewDto;
 import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.question.mapper.QuestionMapper;
 import pre_Project.server.domain.question.service.QuestionService;
@@ -74,14 +73,4 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    //View 업데이트
-//    @PatchMapping("/{questionId}")
-//    public ResponseEntity updateViewQuestion(@PathVariable("questionId") long questionId,
-//                                             @RequestBody QuestionViewDto questionViewDto) {
-//        Question question = mapper.questionViewToQuestion(questionViewDto);
-//        Question viewQuestion = questionService.updateView(question, questionId);
-//
-//        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(viewQuestion)), HttpStatus.OK);
-//    }
 }

@@ -13,7 +13,6 @@ public class QuestionPostDto {
 
     @NotBlank
     private String questionTitle;
-
     @NotBlank
     private String questionContent;
 }
