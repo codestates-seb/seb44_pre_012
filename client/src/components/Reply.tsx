@@ -32,7 +32,7 @@ export default function Reply() {
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
-        <div>{query.data ? `${query.data.length} answers` : null}</div>
+        <h4>{query.data ? `${query.data.length} answers` : null}</h4>
         <div>
           <span>sorted by:</span>
           <input />
@@ -103,7 +103,7 @@ const S = {
     border: 1px solid blue;
     padding: 24px;
     width: 100%;
-    height: 100%;
+    height: 2000vh;
     display: flex;
     flex-direction: column;
     > div:first-child {
@@ -117,15 +117,23 @@ const S = {
     align-items: center;
     padding: 5px 45px;
     margin-bottom: 8px;
+    h4{
+      @media (max-width: 600px) {
+      display: none;
+    }
+    }
     span {
       font-size: var(--font-s);
       font-weight: 400;
       margin-right: 5px;
+    
     }
     input {
       width: 250px;
       height: 30px;
     }
+
+ 
   `,
   RenderedAnswers: styled.div`
     width: 100%;

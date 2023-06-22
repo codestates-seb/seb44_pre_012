@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useState } from 'react';
+import RecommendLogin from './RecommendLogin';
 
 export default function AddReply() {
   const isLoggedIn = useSelector(
@@ -75,6 +76,7 @@ export default function AddReply() {
       <S.RenderedPost>
         <div>{parse(renderedData)}</div>
       </S.RenderedPost>
+      {!isLoggedIn ? <RecommendLogin /> : null}
       <S.PostButtonBox>
         <button>Post Your Answer</button>
       </S.PostButtonBox>
@@ -90,7 +92,7 @@ export default function AddReply() {
 
 const S = {
   RenderedReplyContainer: styled.div`
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 100%;
     height: 50px;
   `,
@@ -114,7 +116,7 @@ const S = {
     color: var(--color-page-title);
     > input {
       margin-right: 5px;
-      border: 1px solid red;
+      /* border: 1px solid red; */
     }
     > div {
     }
@@ -144,7 +146,9 @@ const S = {
       color: var(--color-page-title);
       font-size: 1rem;
       font-weight: 500;
-
+      @media (max-width: 600px) {
+        display: none;
+      }
       > a {
         color: var(--color-content-title);
         &:hover {
