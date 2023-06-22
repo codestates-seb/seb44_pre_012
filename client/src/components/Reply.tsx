@@ -1,149 +1,237 @@
 import '../index.css';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from 'html-react-parser';
-import '../index.css';
+import { useQuery } from '@tanstack/react-query';
+import { questionsAPI } from '../api/QuestionListApi';
+import colors from '../constants/colorNames';
+import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
+import AddReply from './AddReply';
 
+import {
+  IoMdArrowDropup,
+  IoMdArrowDropdown,
+  // IoBookmarkOutline,
+} from 'react-icons/io';
+import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 // 유저 아이디 있어야 함.
-
-export default function QuestionList() {
-  const [renderedData, setRenderedData] = useState('');
+interface QuestionAnswer {
+  questionAnswerId: number;
+  questionAnswerContent: string;
+  userId: number;
+  userName: string;
+  voteCount: number;
+  createdAt: string;
+  modifiedAt?: string;
+}
+export default function Reply() {
+  const query = useQuery(['fetchCertainAnswer'], () =>
+    questionsAPI.fetchCertainQuestion('1')
+  );
+  // console.log(query.data);
 
   return (
-    <S.ReplyContainer className="App">
-      <S.H2>Your Answer</S.H2>
-      <CKEditor
-        editor={ClassicEditor}
-        config={{
-          placeholder: '내용을 입력하세요 ✨',
-          toolbar: {
-            items: [
-              // 'fontSize',
-              // 'fontFamily',
-              // 'fontColor',
-              // 'fontBackgroundColor',
-              // 'imageInsert',
-              'bold',
-              'italic',
-              '|',
-              'link',
-              'blockQuote',
-              //
-              'imageUpload',
-              '|',
-              'numberedList',
-              'bulletedList',
-              '|',
-              'heading',
-              'undo',
-              'redo',
-              '|',
-              'CKFinder',
-              'underline',
-              'strikethrough',
-              'highlight',
-              'removeFormat',
-              'alignment',
-              'indent',
-              'outdent',
-              'todoList',
-              'insertTable',
-              'mediaEmbed',
-            ],
-          },
-        }}
-
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setRenderedData(data);
-          // console.log({ event, editor, data });
-        }}
-        onBlur={(event, editor) => {
-          // console.log('Blur.', editor);
-        }}
-        onFocus={(event, editor) => {
-          // console.log('Focus.', editor);
-        }}
-      />
-      <S.InputLabel>
-        <input type="checkbox" />
-        <div>Community wiki</div>
-      </S.InputLabel>
-      <S.RenderedPost>
-        <div>{parse(renderedData)}</div>
-      </S.RenderedPost>
-      <S.PostButtonBox>
-        <button>Post Your Answer</button>
-      </S.PostButtonBox>
-      <S.RecommendSentence>
+    <S.ReplyContainer>
+      <S.TotalAnswers>
+        <div>{query.data ? `${query.data.length} answers` : null}</div>
         <div>
-          Not the answer you're looking for? Browse other questions tagged or
-          <a> ask your own question.</a>
+          <span>sorted by:</span>
+          <input />
         </div>
-      </S.RecommendSentence>
+      </S.TotalAnswers>
+      {query.data
+        ? query.data.map((item: QuestionAnswer) => (
+            <S.RenderedAnswers key={item.questionAnswerId}>
+              <div>
+                <div>
+                  <S.Sidebar>
+                    <S.ArrowBox>
+                      <IoMdArrowDropup size={28} />
+                    </S.ArrowBox>
+                    <div>{item.voteCount}</div>
+                    <S.ArrowBox>
+                      <IoMdArrowDropdown size={28} />
+                    </S.ArrowBox>
+                    <S.Icon>
+                      <FaRegBookmark
+                        style={{ color: 'var(--color-button-lightgray)' }}
+                      />
+                    </S.Icon>
+                    <S.Icon>
+                      <FaHistory
+                        style={{ color: 'var(--color-button-lightgray)' }}
+                      />
+                    </S.Icon>
+                  </S.Sidebar>
+                </div>
+                <S.Mainbar>
+                  <div>{item.questionAnswerContent}</div>
+                  <S.BottomContainer>
+                    <S.SocialBox>
+                      <div>share</div>
+                      <div>follow</div>
+                    </S.SocialBox>
+                    <S.UserBox>
+                      <div>
+                        answered {formatAnswerElapsedTime(item.createdAt)}
+                      </div>
+                      <div>
+                        <div>
+                          <S.UserImg>
+                            {item.userName.slice(0, 1).toUpperCase()}
+                          </S.UserImg>
+                        </div>
+                        <span>{item.userName}</span>
+                      </div>
+                    </S.UserBox>
+                  </S.BottomContainer>
+                  {/* <div>댓글 컴포넌트 렌더링 자리</div> */}
+                </S.Mainbar>
+              </div>
+            </S.RenderedAnswers>
+          ))
+        : null}
+      <AddReply />
     </S.ReplyContainer>
   );
 }
-
+const getUserRandomColor = (): string => {
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+};
 const S = {
-  ReplyContainer: styled.div`
+  ReplyContainer: styled.section`
+    border: 1px solid blue;
     padding: 24px;
-    /* border: 1px solid green; */
-    height: 35rem;
-  `,
-  H2: styled.h2`
-    color: var(--color-page-title);
-    font-size: 19px;
-    font-weight: 500;
-    margin-bottom: 15px;
-  `,
-  InputLabel: styled.label`
-    display: flex;
-    justify-content: flex-end;
-    margin: 7px 0;
-    font-size: 1rem;
-    color: var(--color-page-title);
-    > input {
-      margin-right: 5px;
-      border: 1px solid red;
-    }
-    > div {
-    }
-  `,
-  RenderedPost: styled.div`
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    > div:first-child {
+      border: 1px solid goldenrod;
+      height: 24px;
+    }
   `,
-  PostButtonBox: styled.div`
-    > button {
-      padding: 10.4px;
-      margin: 23px 0;
-      height: 38px;
-      background: var(--color-button-blue);
-      border: 1px solid var(--color-button-blue);
-      font-weight: 500;
-      color: #ffffff;
-      border-radius: 3px;
-      box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
-      font-size: 13px;
-      &:hover {
-        background: var(--color-content-title);
+  TotalAnswers: styled.h3`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 45px;
+    margin-bottom: 8px;
+    span {
+      font-size: var(--font-s);
+      font-weight: 400;
+      margin-right: 5px;
+    }
+    input {
+      width: 250px;
+      height: 30px;
+    }
+  `,
+  RenderedAnswers: styled.div`
+    width: 100%;
+    /* border: 1px solid yellow; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      border-top: 1px solid var(--color-layout-lightgray);
+      padding: 20px 10px 10px 0;
+      width: 90%;
+      display: flex;
+      > div:first-child {
+        margin-right: 20px;
       }
     }
   `,
-  RecommendSentence: styled.div`
-    div {
-      color: var(--color-page-title);
-      font-size: 1rem;
-      font-weight: 500;
-
-      > a {
+  Sidebar: styled.div`
+    flex: 0.9;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    > div {
+      margin-bottom: 11px;
+    }
+    > div:first-child {
+      margin-bottom: 7px;
+    }
+    > div:nth-child(2) {
+      color: var(--color-content-desc);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+  `,
+  ArrowBox: styled.div`
+    border: 1px solid var(--color-button-lightgray);
+    color: var(--color-content-desc);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover{
+      background-color: var(--color-button-orange-hover);
+    }
+  `,
+  Icon: styled.div`
+    cursor: pointer;
+  `,
+  Mainbar: styled.div`
+    flex: 9;
+    color: var(--color-page-title);
+    /* border: 1px solid gray; */
+  `,
+  BottomContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px 20px 0;
+  `,
+  SocialBox: styled.div`
+    display: flex;
+    font-size: var(--font-s);
+    > div {
+      margin-right: 5px;
+      cursor: pointer;
+      color: var(--color-button-gray);
+      &:hover {
+        color: var(--color-subInfo-lightgray);
+      }
+    }
+  `,
+  UserBox: styled.div`
+    border: 1px solid var(--color-layout-lightgray);
+    border-radius: 3px;
+    padding: 4px 7px;
+    font-size: 11px;
+    div:nth-child(2) {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-top: 3px;
+      > div {
+        margin-right: 5px;
+      }
+      > span {
         color: var(--color-content-title);
+        font-size: var(--font-s);
         &:hover {
           color: var(--color-button-blue);
         }
       }
     }
+  `,
+  UserImg: styled.div`
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background-color: ${getUserRandomColor};
+    text-align: center;
+    font-weight: 500;
+    line-height: 16px;
+    font-size: 8px;
+    color: white;
   `,
 };
