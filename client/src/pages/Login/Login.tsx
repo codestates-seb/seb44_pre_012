@@ -7,7 +7,7 @@ import { SOCIAL_LOGINS } from '../../constants/socialLogin';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { RootState } from '../../store/store';
+import { RootState } from '../../redux/store';
 
 type Social = {
   label: string;

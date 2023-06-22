@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import { PATHS } from './constants/paths';
 import { useDispatch } from 'react-redux';
-import { login } from './store/authSlice';
+import { login } from './redux/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
 
@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const queryClient = new QueryClient();
+
+
 // 하단 주석 실제 서버와 연결 후 주석 해제
 // axios.defaults.withCredentials = true;
 

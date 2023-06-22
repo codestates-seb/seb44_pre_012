@@ -3,7 +3,7 @@ import FormSubmit from '../../components/FormSubmit';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from '../../store/authSlice';
+import { login } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { PATHS } from '../../constants/paths';
