@@ -7,4 +7,10 @@ export const questionsAPI = {
     const { pageInfo } = res.data;
     return { data, pageInfo };
   },
+  fetchCertainQuestion: async (questionId: string) => {
+    const res = await axios.get(`/questions/${questionId}`);
+    const { data } = res.data;
+    // console.log(data)
+    return data;
+  },
 };
