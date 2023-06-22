@@ -8,9 +8,10 @@ import { styled } from 'styled-components';
 import { useState } from 'react';
 import { ERROR_MESSAGES } from '../../constants/errorMessage';
 import { registerUser } from '../../api/registerRequest';
+import { AxiosError } from 'axios';
 
 type RegisterInfoType = {
-  displayName: string;
+  userName: string;
   email: string;
   password: string;
 };
@@ -24,7 +25,7 @@ type ErrorType = {
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoType>({
-    displayName: '',
+    userName: '',
     email: '',
     password: '',
   });
@@ -36,7 +37,7 @@ export default function RegisterForm() {
   });
 
   const handleInputValue =
-    (key: 'displayName' | 'email' | 'password') =>
+    (key: 'userName' | 'email' | 'password') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setRegisterInfo(prevState => ({ ...prevState, [key]: e.target.value }));
     };
@@ -59,10 +60,10 @@ export default function RegisterForm() {
      * display name이 비어있음
      * display name이 5글자 미만
      */
-    if (!registerInfo.displayName || registerInfo.displayName.length < 5) {
+    if (!registerInfo.userName || registerInfo.userName.length < 5) {
       newErrorMessage = {
         ...newErrorMessage,
-        nameError: registerInfo.displayName
+        nameError: registerInfo.userName
           ? ERROR_MESSAGES.DISPLAY_NAME_NUMBER_ERROR
           : ERROR_MESSAGES.DISPLAYNAME_EMPTY,
       };
@@ -122,26 +123,32 @@ export default function RegisterForm() {
       return;
     }
 
+    // api 요청
     try {
-      const response = await registerUser(
-        registerInfo.displayName,
-        registerInfo.email,
-        registerInfo.password
-      );
-      console.log(response);
+      await registerUser(registerInfo);
       navigate('/users/login');
-    } catch (error) {
-      console.error(error);
+    } catch (err: unknown) {
+      if (
+        err instanceof AxiosError &&
+        err.response &&
+        err.response.status === 409
+      ) {
+        setError(prevState => ({
+          ...prevState,
+          emailError: ERROR_MESSAGES.EMAIL_DUPLICATION_ERROR,
+        }));
+      } else {
+        console.error(err);
+      }
     }
   };
-
   return (
     <S.FormContainer>
       <S.Form onSubmit={registerRequestHandler}>
         <InputField
           type="text"
           label={USER_MESSAGES.DISPLAY_NAME}
-          onChange={handleInputValue('displayName')}
+          onChange={handleInputValue('userName')}
           error={error.nameError}
         />
         <InputField

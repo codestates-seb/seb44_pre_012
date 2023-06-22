@@ -1,16 +1,20 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { BASE_URL } from '../constants/apiUrl';
-
-export const registerUser = async (displayName, email, password) => {
+interface RegisterInfo {
+  userName: string;
+  email: string;
+  password: string;
+}
+export async function registerUser(
+  registerInfo: RegisterInfo
+): Promise<AxiosResponse> {
   try {
     const response = await axios.post(`${BASE_URL}/users/register`, {
-      name: displayName,
-      email,
-      password,
+      ...registerInfo,
     });
 
     return response.data;
   } catch (error) {
     throw error;
   }
-};
+}
