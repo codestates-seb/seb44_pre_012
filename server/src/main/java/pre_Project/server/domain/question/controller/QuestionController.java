@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pre_Project.server.domain.question.dto.QuestionPatchDto;
+import pre_Project.server.domain.question.dto.QuestionPostDto;
+import pre_Project.server.domain.question.dto.QuestionViewDto;
 import pre_Project.server.domain.question.entity.Question;
+import pre_Project.server.domain.question.mapper.QuestionMapper;
 import pre_Project.server.domain.question.service.QuestionService;
-import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.global.response.MultiResponseDto;
 import pre_Project.server.global.response.SingleResponseDto;
-import pre_Project.server.domain.question.dto.QuestionPostDto;
-import pre_Project.server.domain.question.mapper.QuestionMapper;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,10 +28,10 @@ public class QuestionController {
 
     //질문 만들기
     @PostMapping("/register")
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto, User user) {
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto) {
 
         Question question = mapper.questionPostDtoToQuestion(questionPostDto);
-        Question saveQuestion = questionService.createQuestion(question, user);
+        Question saveQuestion = questionService.createQuestion(question);
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(saveQuestion)), HttpStatus.CREATED);
     }
@@ -40,7 +40,6 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     public ResponseEntity getQuestion(@PathVariable("questionId") long questionId) {
         Question question = questionService.findQuestion(questionId);
-        //viewCount ++
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)), HttpStatus.OK);
     }
@@ -59,7 +58,7 @@ public class QuestionController {
     //질문 업데이트
     @PatchMapping("/edit/{questionId}")
     public ResponseEntity patchQuestion(@Valid @PathVariable("questionId") long questionId,
-                                        @RequestBody QuestionPatchDto questionPatchDto, User user) {
+                                        @RequestBody QuestionPatchDto questionPatchDto) {
 
         questionPatchDto.setQuestionId(questionId);
         Question question = mapper.questionPatchDtoToQuestion(questionPatchDto);
@@ -75,4 +74,14 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //View 업데이트
+//    @PatchMapping("/{questionId}")
+//    public ResponseEntity updateViewQuestion(@PathVariable("questionId") long questionId,
+//                                             @RequestBody QuestionViewDto questionViewDto) {
+//        Question question = mapper.questionViewToQuestion(questionViewDto);
+//        Question viewQuestion = questionService.updateView(question, questionId);
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDto(viewQuestion)), HttpStatus.OK);
+//    }
 }

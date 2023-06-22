@@ -7,10 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.question.repository.QuestionRepository;
-import pre_Project.server.domain.user.entitiy.User;
-import pre_Project.server.domain.user.repository.UserRepository;
-import pre_Project.server.exception.BusinessLogicException;
-import pre_Project.server.exception.ExceptionCode;
+import pre_Project.server.global.exception.BusinessLogicException;
+import pre_Project.server.global.exception.ExceptionCode;
 
 import java.util.Optional;
 
@@ -19,14 +17,8 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final UserRepository userRepository;
 
-    /*
-    user id를 알아낸 다음 질문 엔티티의 user 객체에 넣고 저장
-     */
-    public Question createQuestion(Question question, User user) {
-        userRepository.findById(user.getUserId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        question.setUser(user);
+    public Question createQuestion(Question question) {
 
         return questionRepository.save(question);
     }
@@ -62,4 +54,12 @@ public class QuestionService {
 
         questionRepository.delete(foundQuestion);
     }
+
+//    public Question updateView(Question question, long questionId) {
+//        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+//        Question foundQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+//        foundQuestion.setView(foundQuestion.getView() + 1);
+//
+//        return questionRepository.save(foundQuestion);
+//    }
 }

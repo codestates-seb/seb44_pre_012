@@ -16,10 +16,5 @@ public class QuestionResponseDto {
     private String questionContent;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    
-    //아직 미구현
-    private int viewCount;
-    private String userName;
-    private String userEmail;
 
 }
