@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import pre_Project.server.domain.question.entity.Question;
+import pre_Project.server.domain.user.entitiy.User;
 
 import javax.persistence.*;
 import java.lang.reflect.Member;
@@ -26,10 +27,10 @@ public class Answer extends BaseEntity {
     private AnswerStatus status = AnswerStatus.ANSWER_VALID;
 
     @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-    public void setMember(Member member) {
-        this.member = member;
+    @JoinColumn(name = "USER_ID")
+    private User user;
+    public void setMember(User user) {
+        this.user = user;
     }
 
     @ManyToOne

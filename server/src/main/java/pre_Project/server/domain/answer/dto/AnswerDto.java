@@ -34,8 +34,8 @@ public class AnswerDto {
     public static class Response {
         private long id;
         private long question_id;
-        private long member_id;
-        private String memberName;
+        private long user_id;
+        private String userName;
         private String content;
         private LocalDateTime created_at;
         private LocalDateTime modified_at;

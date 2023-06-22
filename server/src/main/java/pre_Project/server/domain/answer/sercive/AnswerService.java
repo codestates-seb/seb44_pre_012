@@ -8,6 +8,7 @@ import pre_Project.server.domain.answer.entity.Answer;
 import pre_Project.server.domain.answer.repository.AnswerRepository;
 import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.question.repository.QuestionRepository;
+import pre_Project.server.domain.user.repository.UserRepository;
 import pre_Project.server.global.exception.BusinessLogicException;
 
 import java.lang.reflect.Member;
@@ -17,10 +18,10 @@ import java.util.Optional;
 
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final MemberRepository memberRepository;
+    private final UserRepository memberRepository;
     private final QuestionRepository questionRepository;
 
-    public AnswerService(AnswerRepository answerRepository, MemberRepository memberRepository, QuestionRepository questionRepository) {
+    public AnswerService(AnswerRepository answerRepository, UserRepository memberRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
         this.memberRepository = memberRepository;
         this.questionRepository = questionRepository;
@@ -33,7 +34,7 @@ public class AnswerService {
         Answer answer = new Answer();
         answer.setContent(post.getContent());
         answer.setQuestion(question);
-        answer.setMember(member);
+        answer.setUser(user);
 
         return answerRepository.save(answer);
     }
@@ -41,7 +42,7 @@ public class AnswerService {
     public Answer updateAnswer(Answer answer, long id, String email) {
         Answer findAnswer = findAnswer(id);
 
-        if (!findAnswer.getMember().getEmail().equals(email)) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_EDIT);
+        if (!findAnswer.getUser().getEmail().equals(email)) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_EDIT);
 
         Optional.ofNullable(answer.getContent()).ifPresent(content -> findAnswer.setContent(content));
         findAnswer.setModified_at(LocalDateTime.now());
@@ -71,7 +72,7 @@ public class AnswerService {
 
     public void deleteAnswer(long id, String email) {
         Answer findAnswer = findAnswer(id);
-        if (!findAnswer.getMember().getEmail().equals(email)) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_EDIT);
+        if (!findAnswer.getUser().getEmail().equals(email)) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_EDIT);
 
         answerRepository.delete(findAnswer);
     }
