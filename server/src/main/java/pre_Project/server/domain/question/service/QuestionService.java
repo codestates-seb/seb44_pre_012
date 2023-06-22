@@ -9,8 +9,9 @@ import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.question.repository.QuestionRepository;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
-import pre_Project.server.exception.BusinessLogicException;
-import pre_Project.server.exception.ExceptionCode;
+import pre_Project.server.global.exception.BusinessLogicException;
+import pre_Project.server.global.exception.ExceptionCode;
+
 
 import java.util.Optional;
 
