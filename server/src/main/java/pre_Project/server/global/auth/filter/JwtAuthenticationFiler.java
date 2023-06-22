@@ -56,21 +56,24 @@ public class JwtAuthenticationFiler extends UsernamePasswordAuthenticationFilter
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException { //인증에 성공할 경우 호출됨
         User user = (User) authResult.getPrincipal();
-        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
-        User findUser = optionalUser.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Optional<User> optionalUser =
+                userRepository.findById(user.getUserId());
+        User findUser =
+                optionalUser.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
 
         response.setHeader("Authorization", "Bearer" + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.setHeader("Access-Control-Expose-Headers", "Authorization, Refresh, X-Authenticated-User");
+        response.setHeader("Access-Control-Expose-Headers", "Authorization, Refresh");
 
 
         response.setContentType("application/json");
         PrintWriter writer = response.getWriter();
-        writer.println("{\"id\": \"" + user.getUserId() + "\", \"email\": \"" + user.getEmail() + "\", \"displayName\": \"" + findUser.getUserName() + "\"}");
+        writer.println("{\"id\": \"" + user.getUserId() + "\", \"email\": \"" + user.getEmail() //+ "\"}");
+                + "\", \"displayName\": \"" + findUser.getUserName() + "\"}");
         writer.flush();
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);

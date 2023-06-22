@@ -8,7 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pre_Project.server.global.auth.jwt.JwtTokenizer;
-import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,11 +21,11 @@ import java.util.Map;
 
 public class JwtVerificationFiler extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
-    private final CustomAuthorityUtills authorityUtills;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public JwtVerificationFiler(JwtTokenizer jwtTokenizer, CustomAuthorityUtills authorityUtills) {
+    public JwtVerificationFiler(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtills) {
         this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtills = authorityUtills;
+        this.authorityUtils = authorityUtills;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class JwtVerificationFiler extends OncePerRequestFilter {
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("email");
-        List<GrantedAuthority> authorities = authorityUtills.createAuthorities((List) claims.get("roles"));
+        List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List) claims.get("roles"));
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
