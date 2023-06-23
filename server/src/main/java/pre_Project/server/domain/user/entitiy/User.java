@@ -23,7 +23,7 @@ public class User extends Auditable {
     @Column(nullable = false)
     private String userName;
     @Column(nullable = false)
-    private String passWord;
+    private String password;
     @Enumerated(value = EnumType.STRING) //회원 탈퇴 시 userstatus = USER_QUIT
     @Column(nullable = false)
     private UserStatus userStatus = UserStatus.USER_ACTIVE;

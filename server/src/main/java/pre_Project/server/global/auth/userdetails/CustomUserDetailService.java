@@ -38,7 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
         CustomUserDetails(User user) {
             setUserId(user.getUserId());
             setEmail(user.getEmail());
-            setPassWord(user.getPassWord());
+            setPassword(user.getPassword());
             setRoles(user.getRoles());
         }
 
@@ -49,7 +49,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return getPassWord();
+            return super.getPassword();
         }
 
         @Override

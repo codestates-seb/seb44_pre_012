@@ -36,8 +36,8 @@ public class UserService {
     public User createUser(User user){
         verifyExistsEmail(user.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(user.getPassWord()); // password 암호화
-        user.setPassWord(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(user.getPassword()); // password 암호화
+        user.setPassword(encryptedPassword);
 
         List<String> roles = authorityUtils.createRoles(user.getEmail()); // 유저 권한 설정
         user.setRoles(roles);
@@ -61,8 +61,8 @@ public class UserService {
 
         Optional.ofNullable(user.getUserName())
                 .ifPresent(name -> user.setUserName(name));
-        Optional.ofNullable(user.getPassWord())
-                .ifPresent(password -> user.setPassWord(password));
+        Optional.ofNullable(user.getPassword())
+                .ifPresent(password -> user.setPassword(password));
         return userRepository.save(user);
     }
     @Transactional(readOnly = true)

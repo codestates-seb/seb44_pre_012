@@ -42,7 +42,7 @@ public class Oauth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     private void saveUser(String email) {
         User user = User.builder()
                         .email(email)
-                        .passWord("")
+                        .password("")
                         .userName("")
                         .userStatus(User.UserStatus.USER_ACTIVE)
                         .build();
