@@ -17,7 +17,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,32 +35,35 @@ public class Oauth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+
+        String name =  String.valueOf(oAuth2User.getAttributes().get("name"));
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));
         List<String> authorities = authorityUtils.createRoles(email);
 
-        saveUser(email);
-        redirect(request, response, email, authorities);
+        User user = saveUser(email, name);
+
+        redirect(request, response, user, authorities);
     }
 
-    private void saveUser(String email) {
+    private User saveUser(String email, String name) {
         User user = User.builder()
                         .email(email)
-                        .passWord("")
-                        .userName("")
+                        .password("")
+                        .userName(name)
                         .userStatus(User.UserStatus.USER_ACTIVE)
                         .build();
-        userService.createOauth2User(user);
+        return userService.createOauth2User(user);
     }
 
-    private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
-        String accessToken = delegateAccessToken(username, authorities);
-        String refreshToken = delegateRefreshToken(username);
+    private void redirect(HttpServletRequest request, HttpServletResponse response, User user, List<String> authorities) throws IOException {
+        String accessToken = delegateAccessToken(user.getEmail(), authorities);
+        String refreshToken = delegateRefreshToken(user.getEmail());
 
         String headerValue = "Bearer "+ accessToken;
         response.setHeader("Authorization",headerValue);
         response.setHeader("Refresh",refreshToken);
 
-        String uri = createURI(request, accessToken, refreshToken).toString();
+        String uri = createURI(request, accessToken, refreshToken, user).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
     }
 
@@ -86,18 +92,21 @@ public class Oauth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         return refreshToken;
     }
 
-    private URI createURI(HttpServletRequest request, String accessToken, String refreshToken) {
+    private URI createURI(HttpServletRequest request, String accessToken, String refreshToken, User user) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+        queryParams.add("userId", ""+user.getUserId());
+        queryParams.add("userName", URLEncoder.encode(user.getUserName(), StandardCharsets.UTF_8));
+        queryParams.add("email", ""+user.getEmail());
 
         String serverName = request.getServerName();
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
                 .host(serverName)
-//                .port(80)
-                .path("/token.html")
+                .port(5173)
+                .path("/")
                 .queryParams(queryParams)
                 .build()
                 .toUri();

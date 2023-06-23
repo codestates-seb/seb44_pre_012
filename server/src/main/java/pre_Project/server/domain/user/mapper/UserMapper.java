@@ -14,7 +14,7 @@ public interface UserMapper {
         User user = new User();
         user.setEmail(requestBody.getEmail());
         user.setUserName(requestBody.getUserName());
-        user.setPassWord(requestBody.getPassWord());
+        user.setPassword(requestBody.getPassword());
 
         return user;
     }
@@ -24,7 +24,7 @@ public interface UserMapper {
         user.setUserId(requestBody.getUserId());
         user.setEmail(requestBody.getEmail());
         user.setUserName(requestBody.getUserName());
-        user.setPassWord(requestBody.getPassWord());
+        user.setPassword(requestBody.getPassword());
         user.setUserStatus(requestBody.getUserStatus());
 
         return user;

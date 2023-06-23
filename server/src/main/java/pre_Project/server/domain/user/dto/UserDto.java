@@ -19,7 +19,7 @@ public class UserDto {
         @NotBlank
         private String userName;
         @NotBlank
-        private String passWord;
+        private String password;
     }
 
     @Getter
@@ -28,7 +28,7 @@ public class UserDto {
         @NotBlank
         private String email;
         @NotBlank
-        private String passWord;
+        private String password;
     }
 
     @Getter
@@ -37,7 +37,7 @@ public class UserDto {
         private long userId;
         private String email;
         private String userName;
-        private String passWord;
+        private String password;
         private User.UserStatus userStatus;
 
         public void setUserId(long userId) {

@@ -27,5 +27,8 @@ public class Question extends Auditable {
 
     @Column(nullable = false)
     private int view;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
 }

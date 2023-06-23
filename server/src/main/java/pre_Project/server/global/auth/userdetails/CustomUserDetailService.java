@@ -32,13 +32,18 @@ public class CustomUserDetailService implements UserDetailsService {
 
         return new CustomUserDetails(findUser);
     }
+    public User getUser(CustomUserDetails userDetails) throws UsernameNotFoundException {
+        Optional<User> optionalUser = userRepository.findByEmail(userDetails.getEmail());
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
+        return findUser;
+    }
     private final class CustomUserDetails extends User implements UserDetails{
 
         CustomUserDetails(User user) {
             setUserId(user.getUserId());
             setEmail(user.getEmail());
-            setPassWord(user.getPassWord());
+            setPassword(user.getPassword());
             setRoles(user.getRoles());
         }
 
@@ -49,7 +54,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return getPassWord();
+            return super.getPassword();
         }
 
         @Override
