@@ -97,7 +97,10 @@ export default function Header() {
             </S.TopSearchPopoverWrapper>
             <S.TopSearchPopoverBottom>
               <S.TopSearchPopoverBottomWrapper>
-                <S.TopSearchPopoverQuestionBtn>
+                <S.TopSearchPopoverQuestionBtn
+                  to={isLoggedIn ? '/' : '/users/login'}
+                  // 질문작성페이지 완료 후 수정 예정
+                >
                   Ask a question
                 </S.TopSearchPopoverQuestionBtn>
                 <S.TopSearchPopoverHelpBtn>
@@ -284,7 +287,7 @@ const S = {
     align-items: center;
     justify-content: space-between;
   `,
-  TopSearchPopoverQuestionBtn: styled.div`
+  TopSearchPopoverQuestionBtn: styled(Link)`
     border-radius: 3px;
     font-size: 11px;
     padding: 3px;
