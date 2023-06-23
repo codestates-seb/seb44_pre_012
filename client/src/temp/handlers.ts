@@ -35,25 +35,58 @@ export const handlers = [
     const answerData = questionQuery.data.find(
       question => question.questionId === questionId
     )?.questionAnswers;
-
     if (!answerData) {
       return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
     }
-
     return res(ctx.status(200), ctx.json({ data: answerData }));
   }),
 
   // 💜 답변 POST
   rest.post('/answers/register/:questionId', (req, res, ctx) => {
-    const { questionId } = req.params;
-    // const { answerContent, createdAt, userInfo } = req.body;
+    const questionId: number = parseInt(req.params.questionId[0]);
+    const answerData = questionQuery.data.find(
+      question => question.questionId === questionId
+    )?.questionAnswers;
 
-    // const newAnswer = {
-    //   answerId
-    //   answerContent,
-    //   createdAt,
-    //   userInfo,
-    // };
-    return res(ctx.status(200), ctx.json(newAnswer));
+    const { questionAnswerContent, userName, createdAt }: any | undefined =
+      req.body;
+    const questionAnswerId = Math.floor(Math.random() * 1000);
+
+    const newAnswer = {
+      questionAnswerId,
+      questionAnswerContent,
+      createdAt,
+      userName,
+      userId: 0,
+      modifiedAt: '',
+      voteCount: 0,
+    };
+
+    answerData?.push(newAnswer);
+    const responseBody = JSON.stringify(newAnswer);
+    return res(ctx.status(201), ctx.json(responseBody));
+  }),
+
+  // 💜 답변 DELETE
+  rest.delete('/answers/', (req, res, ctx) => {
+    const searchParams = new URLSearchParams(req.url.search);
+    const questionId = Number(searchParams.get('questionId'));
+    const questionAnswerId = Number(searchParams.get('answerId'));
+
+    const certainQuestionIndex = questionQuery.data.findIndex(question => {
+      return question.questionId === questionId;
+    });
+    const certainAnswerIndex = questionQuery.data[
+      certainQuestionIndex
+    ].questionAnswers.findIndex(
+      answer => answer.questionAnswerId === questionAnswerId
+    );
+    let newQuestionAnswerData;
+    if (certainQuestionIndex !== -1 && certainAnswerIndex !== -1) {
+      newQuestionAnswerData = questionQuery.data[
+        certainQuestionIndex
+      ].questionAnswers.splice(certainAnswerIndex, 1);
+    }
+    return res(ctx.status(200));
   }),
 ];
