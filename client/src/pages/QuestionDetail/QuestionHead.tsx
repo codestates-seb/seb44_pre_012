@@ -1,19 +1,24 @@
 import { styled } from 'styled-components';
-import { data } from '../../temp/questionQuery.json';
+// import { data } from '../../temp/questionQuery.json';
 import QuestionDetailnfo from './QuestionDetailInfo';
 import '../../index.css';
+import { QuestionData } from '../../types/types';
 
-const QuestionHead=()=>{
+interface QuestionDataProps {
+    questionData: QuestionData;
+  }
+
+const QuestionHead=({questionData}:QuestionDataProps)=>{
     return (
         <div>
             <S.TitleDiv>
-                <S.Title>{data[0].question.questionTitle}</S.Title>
+                <S.Title>{questionData.questionTitle}</S.Title>
                 <S.AskDiv><S.AskButton>Ask Question</S.AskButton></S.AskDiv>
             </S.TitleDiv>
             <S.InfoContainer>
-                <QuestionDetailnfo title={"Asked"} content={"date?"}/>
-                <QuestionDetailnfo title={"Modified"} content={"date?"}/>
-                <QuestionDetailnfo title={"Viewed"} content={"date?"}/>
+                <QuestionDetailnfo title={"Asked"} content={questionData.createdAt}/>
+                <QuestionDetailnfo title={"Modified"} content={questionData.modifiedAt}/>
+                <QuestionDetailnfo title={"Viewed"} content={questionData.viewCount}/>
             </S.InfoContainer>
         </div>
     )

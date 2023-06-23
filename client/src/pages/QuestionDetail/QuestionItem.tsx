@@ -1,34 +1,29 @@
 import { styled } from 'styled-components';
-import { data } from '../../temp/questionQuery.json';
+// import { data } from '../../temp/questionQuery.json';
 import QuestionHead from './QuestionHead';
 import Aside from '../Question/Aside';
 import VoteCell from '../../components/VoteCell';
-import { data as dataAll } from '../../temp/AllQuestionQuery.json';
+// import { data as dataAll } from '../../temp/AllQuestionQuery.json';
 import '../../index.css';
 import Signature from './Signature';
+import { QuestionData } from '../../types/types';
 
-// import { QuestionInfo } from '../../types/types';
+interface QuestionDataProps {
+    questionData: QuestionData;
+  }
 
-// interface QuestionContentProps {
-//     dataAll: QuestionInfo;
-//   }
+const QuestionItem=({questionData}:QuestionDataProps)=>{
 
-const QuestionItem=()=>{
     return (
         <S.Section>
-            <QuestionHead />
-            <S.Div>
-                <S.ContentLayout>
-                    <VoteCell />
-                    <S.PostCell>
-                        <article>
-                            <p>{data[0].question.questionContent}</p>
-                        </article>
-                        <S.TagList>
-                            {dataAll[0].tag.map((item:string, index:number) => (
-                            <S.Tag key={index}>{item}</S.Tag>
-                            ))}
-                        </S.TagList>
+            <QuestionHead questionData={questionData}/>
+             <S.Div>
+                 <S.ContentLayout>
+                     <VoteCell />
+                     <S.PostCell>
+                         <article>
+                             <p>{questionData.questionTitle}</p>
+                         </article>
                         <S.PostEnd>
                             <S.FlexWrap>
                                 <S.PostMenu>
@@ -36,7 +31,7 @@ const QuestionItem=()=>{
                                     <button>Follow</button>
                                 </S.PostMenu>
                                 <S.Signature>
-                                    <Signature />
+                                    <Signature questionData={questionData}/>
                                 </S.Signature>
                             </S.FlexWrap>
                         </S.PostEnd>

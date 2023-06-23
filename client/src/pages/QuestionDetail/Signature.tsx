@@ -1,10 +1,15 @@
 import { styled } from 'styled-components';
-import { data } from '../../temp/questionQuery.json';
+// import { data } from '../../temp/questionQuery.json';
 import '../../index.css';
 
 import colors from '../../constants/colorNames';
+import { QuestionData } from '../../types/types';
 
-const Signature=()=>{
+interface QuestionDataProps {
+    questionData: QuestionData;
+  }
+
+const Signature=({questionData}:QuestionDataProps)=>{
     return (
     <S.FlexWrap>
         <div>
@@ -17,14 +22,14 @@ const Signature=()=>{
                 </span>
             </S.UserAction>
             <S.UserDiv>
-                <S.UserImg>{data[0].question.userName.slice(0, 1).toUpperCase()}</S.UserImg>
+                <S.UserImg>{questionData?.userName.slice(0, 1).toUpperCase()}</S.UserImg>
                 <S.UserDetail>
                     <S.UserName>
-                        <span>{data[0].question.userName}</span>
+                        <span>{questionData.userName}</span>
                     </S.UserName>
                     <S.Wrap>
                         <S.UserReputation>
-                            <span>{data[0].question.reputationScore}</span>
+                            <span>{getRandomNumber()}</span>
                         </S.UserReputation>
                         <S.UserBadge>
                             <button></button>
@@ -44,6 +49,10 @@ const getRandomColor = (): string => {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
 };
+const getRandomNumber = (): number => {
+    return Math.floor(Math.random() * 100);
+};
+
 const S= {
     FlexWrap:styled.div`
     display: flex;

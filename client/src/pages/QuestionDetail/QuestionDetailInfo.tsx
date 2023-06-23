@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 type Props = {
     title: string;
-    content: string;
+    content: string | number;
   };
 
 const QuestionDetailInfo=({title, content}: Props)=>{
