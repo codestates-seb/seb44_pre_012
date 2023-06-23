@@ -12,14 +12,14 @@ export interface QuestionInfo {
 }
 
 export interface QuestionData {
-  questionId:number|undefined|string;
+  questionId:number;
   questionTitle:string;
   questionContent:string;
   userName:string;
   viewCount:number;
   createdAt:string;
   modifiedAt:string;
-  questionAnswers:AnswerData;
+  questionAnswers?:AnswerData;
 }
 
 export interface AnswerData {
