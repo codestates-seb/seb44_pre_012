@@ -2,17 +2,53 @@ import '../index.css';
 import { styled } from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from 'html-react-parser';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RecommendLogin from './RecommendLogin';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { questionsAPI } from '../api/QuestionListApi';
 
 export default function AddReply() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.auth.login.isLogin
   );
   const [renderedData, setRenderedData] = useState('');
+  const [nameData, setNameData] = useState('');
+  const [emailData, setEmailData] = useState('');
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (emailData.includes('@')) {
+      setIsValid(true);
+    }
+  }, [emailData]);
+
+  const userName = nameData; // temp 
+  const createdAt = new Date();
+  const questionAnswerContent = renderedData;
+
+  const requestBody = {
+    questionAnswerContent,
+    userName,
+    createdAt,
+  };
+  const queryClient = useQueryClient();
+
+  const { mutateAsync } = useMutation(() =>
+    questionsAPI.postAnswerQuestion(1, requestBody)
+  );
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async e => {
+    if (!userName || !emailData || !isValid) {
+      return;
+    }
+    await mutateAsync();
+    setRenderedData('');
+    queryClient.invalidateQueries(['fetchCertainAnswer']);
+    setEmailData('');
+    setNameData('');
+    setIsValid(false);
+  };
 
   return (
     <S.ReplyContainer className="App">
@@ -60,7 +96,7 @@ export default function AddReply() {
         onChange={(event, editor) => {
           const data = editor.getData();
           setRenderedData(data);
-          // console.log({ event, editor, data });
+          console.log({ event, editor, data });
         }}
         onBlur={(event, editor) => {
           // console.log('Blur.', editor);
@@ -73,12 +109,18 @@ export default function AddReply() {
         <input type="checkbox" />
         <div>Community wiki</div>
       </S.InputLabel>
-      <S.RenderedPost>
-        <div>{parse(renderedData)}</div>
-      </S.RenderedPost>
-      {!isLoggedIn ? <RecommendLogin /> : null}
+      {!isLoggedIn ? (
+        <RecommendLogin
+          nameData={nameData}
+          setNameData={setNameData}
+          emailData={emailData}
+          setEmailData={setEmailData}
+          isValid={isValid}
+          setIsValid={setIsValid}
+        />
+      ) : null}
       <S.PostButtonBox>
-        <button>Post Your Answer</button>
+        <button onClick={handleSubmit}>Post Your Answer</button>
       </S.PostButtonBox>
       <S.RecommendSentence>
         <div>
@@ -92,14 +134,12 @@ export default function AddReply() {
 
 const S = {
   RenderedReplyContainer: styled.div`
-    /* border: 1px solid red; */
     width: 100%;
     height: 50px;
   `,
 
   ReplyContainer: styled.div`
     padding: 24px;
-    /* border: 1px solid green; */
     height: 35rem;
   `,
   H2: styled.h2`
@@ -116,7 +156,6 @@ const S = {
     color: var(--color-page-title);
     > input {
       margin-right: 5px;
-      /* border: 1px solid red; */
     }
     > div {
     }
@@ -125,9 +164,11 @@ const S = {
     width: 100%;
   `,
   PostButtonBox: styled.div`
+    display: flex;
+    justify-content: center;
     > button {
       padding: 10.4px;
-      margin: 23px 0;
+      margin-bottom: 23px;
       height: 38px;
       background: var(--color-button-blue);
       border: 1px solid var(--color-button-blue);
@@ -142,10 +183,11 @@ const S = {
     }
   `,
   RecommendSentence: styled.div`
+    padding: 0 10px;
     div {
       color: var(--color-page-title);
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 400;
       @media (max-width: 600px) {
         display: none;
       }
