@@ -32,7 +32,12 @@ public class CustomUserDetailService implements UserDetailsService {
 
         return new CustomUserDetails(findUser);
     }
+    public User getUser(CustomUserDetails userDetails) throws UsernameNotFoundException {
+        Optional<User> optionalUser = userRepository.findByEmail(userDetails.getEmail());
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
+        return findUser;
+    }
     private final class CustomUserDetails extends User implements UserDetails{
 
         CustomUserDetails(User user) {

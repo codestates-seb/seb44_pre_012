@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
+import pre_Project.server.global.auth.userdetails.CustomUserDetailService;
 import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 import pre_Project.server.global.exception.BusinessLogicException;
@@ -94,5 +96,11 @@ public class UserService {
         }
     }
 
+    public User getUserByToken(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetailService userDetails = (CustomUserDetailService) principal;
+
+         return null;
+    }
 
 }
