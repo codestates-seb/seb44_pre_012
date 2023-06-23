@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { SOCIAL_LOGINS } from '../constants/socialLogin';
+import { SOCIALS } from '../constants/socials';
 import SocialButtons from './SocialButtons';
 import '../index.css';
 interface RecommendLoginProps {
@@ -28,7 +28,7 @@ export default function RecommendLogin({
   const handleGoogleLogin = () => {};
   const handleGithubLogin = () => {};
   const handleFacebookLogin = () => {};
-  const socialLogin: Social[] = SOCIAL_LOGINS.map(login => ({
+  const socialLogin: Social[] = SOCIALS.map(login => ({
     ...login,
     onClick:
       login.platform === 'google'
