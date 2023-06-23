@@ -1,4 +1,10 @@
 import axios from 'axios';
+interface AnswerData {
+  questionAnswerContent: string | undefined;
+  userName: string | undefined;
+  createdAt: string | object | undefined;
+  answerId?: number | undefined;
+}
 
 export const questionsAPI = {
   fetchQuestions: async (size: number, pageParam: number) => {
@@ -7,10 +13,32 @@ export const questionsAPI = {
     const { pageInfo } = res.data;
     return { data, pageInfo };
   },
-  fetchCertainQuestion: async (questionId: string) => {
+  fetchCertainQuestion: async (questionId: number) => {
     const res = await axios.get(`/questions/${questionId}`);
     const { data } = res.data;
-    // console.log(data)
     return data;
+  },
+  postAnswerQuestion: async (questionId: number, requestBody: AnswerData) => {
+    try {
+      const res = await axios.post(
+        `/answers/register/${questionId}`,
+        requestBody
+      );
+      const { data } = res.data;
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  deleteAnswerQuestion: async (questionId: number, answerId: number) => {
+    try {
+      await axios.delete(
+        `/answers/?questionId=${questionId}&answerId=${answerId}`
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 };
