@@ -10,9 +10,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { questionsAPI } from '../api/QuestionListApi';
 
 export default function AddReply() {
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.auth.login.isLogin
-  );
+  // const isLoggedIn = useSelector(
+  //   (state: RootState) => state.auth.login.isLogin
+  // );
+  const isLoggedIn = true;
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
   const [emailData, setEmailData] = useState('');
@@ -24,7 +25,7 @@ export default function AddReply() {
     }
   }, [emailData]);
 
-  const userName = nameData; // temp 
+  const userName = nameData; // temp
   const createdAt = new Date();
   const questionAnswerContent = renderedData;
 
@@ -38,7 +39,7 @@ export default function AddReply() {
   const { mutateAsync } = useMutation(() =>
     questionsAPI.postAnswerQuestion(1, requestBody)
   );
-  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async e => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     if (!userName || !emailData || !isValid) {
       return;
     }
@@ -59,11 +60,6 @@ export default function AddReply() {
           placeholder: '내용을 입력하세요 ✨',
           toolbar: {
             items: [
-              // 'fontSize',
-              // 'fontFamily',
-              // 'fontColor',
-              // 'fontBackgroundColor',
-              // 'imageInsert',
               'bold',
               'italic',
               '|',
@@ -80,14 +76,9 @@ export default function AddReply() {
               'redo',
               '|',
               'CKFinder',
-              'underline',
-              'strikethrough',
-              'highlight',
-              'removeFormat',
-              'alignment',
+         
               'indent',
               'outdent',
-              'todoList',
               'insertTable',
               'mediaEmbed',
             ],
@@ -96,14 +87,8 @@ export default function AddReply() {
         onChange={(event, editor) => {
           const data = editor.getData();
           setRenderedData(data);
-          console.log({ event, editor, data });
         }}
-        onBlur={(event, editor) => {
-          // console.log('Blur.', editor);
-        }}
-        onFocus={(event, editor) => {
-          // console.log('Focus.', editor);
-        }}
+        data={renderedData}
       />
       <S.InputLabel>
         <input type="checkbox" />
