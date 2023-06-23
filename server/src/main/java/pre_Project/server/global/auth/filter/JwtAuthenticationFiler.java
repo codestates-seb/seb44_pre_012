@@ -72,8 +72,7 @@ public class JwtAuthenticationFiler extends UsernamePasswordAuthenticationFilter
 
         response.setContentType("application/json");
         PrintWriter writer = response.getWriter();
-        writer.println("{\"id\": \"" + user.getUserId() + "\", \"email\": \"" + user.getEmail() //+ "\"}");
-                + "\", \"displayName\": \"" + findUser.getUserName() + "\"}");
+        writer.println("{\"id\": \"" + user.getUserId() + "\", \"email\": \"" + user.getEmail() + "\", \"displayName\": \"" + findUser.getUserName() + "\"}");
         writer.flush();
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
