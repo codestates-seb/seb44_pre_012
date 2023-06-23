@@ -152,6 +152,7 @@ const S = {
       align-items: center;
       font-size: 11px;
       margin: 1rem 0 4px 0;
+      padding-left: 8px;
       & > div {
         padding-left: 4px;
       }
@@ -184,6 +185,7 @@ const S = {
   SubMenuLi: styled.li`
     display: flex;
     align-items: center;
+    padding-left: 8px;
     & > a {
       padding: 8px 8px 8px 30px;
       width: 100%;
