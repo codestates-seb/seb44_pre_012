@@ -13,7 +13,7 @@ export default function AddReply() {
   // const isLoggedIn = useSelector(
   //   (state: RootState) => state.auth.login.isLogin
   // );
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
   const [emailData, setEmailData] = useState('');

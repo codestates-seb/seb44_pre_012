@@ -17,13 +17,14 @@ import { QuestionAnswer } from '../types/types';
 export default function Reply() {
   const [isDeleteClicked, setIsDeleteClicked] = useState(0);
   const [inputData, setInputData] = useState('');
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true);
   const query = useQuery(['fetchCertainAnswer'], () =>
     questionsAPI.fetchCertainQuestion(1)
   );
   // const isLoggedIn = useSelector(
   //   (state: RootState) => state.auth.login.isLogin
   // );
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
     questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
@@ -42,9 +43,10 @@ export default function Reply() {
       return;
     }
     e.preventDefault();
-    setIsDeleteClicked(0);
+    // setIsDeleteClicked(0);
     console.log('이메일이 유효하지 않습니다.');
     setInputData('');
+    setIsCorrectEmail(false);
     return;
   };
 
@@ -112,16 +114,27 @@ export default function Reply() {
                       {!isLoggedIn &&
                         isDeleteClicked === item.questionAnswerId && (
                           <S.DeleteConfirmForm>
-                            <S.FormInform>
-                              Please enter the email address you used.
-                            </S.FormInform>
+                            {isCorrectEmail ? (
+                              <S.FormInform>
+                                Please enter the email address you used.
+                              </S.FormInform>
+                            ) : (
+                              <S.FormInform className="warning">
+                                The email does not match.
+                              </S.FormInform>
+                            )}
                             <S.FormInput
+                              value={inputData}
                               onChange={e => setInputData(e.target.value)}
                               placeholder=" 아무 키나 입력 후 Submit을 누르고 콘솔창을 확인해주세요."
                             />
                             <S.ButtonBox>
                               <S.FormCancelButton
-                                onClick={() => setIsDeleteClicked(0)}
+                                onClick={() => {
+                                  setIsDeleteClicked(0);
+                                  setIsCorrectEmail(true);
+                                  setInputData('');
+                                }}
                               >
                                 Cancel
                               </S.FormCancelButton>
@@ -321,7 +334,11 @@ const S = {
     justify-content: space-between;
     align-items: center;
   `,
-  FormInform: styled.div``,
+  FormInform: styled.div`
+    &.warning {
+      color: var(--input-err-border-color);
+    }
+  `,
   FormInput: styled.input`
     height: 32px;
     padding-left: 5px;

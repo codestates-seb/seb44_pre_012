@@ -91,7 +91,7 @@ export default function QuestionList() {
                 onClick={() => fetchNextPage()}
                 disabled={!hasNextPage}
               >
-                {hasNextPage ? 'More' : 'Nothing more to load'}{' '}
+                {hasNextPage ? 'More' : 'Nothing more to load'}
               </S.Scroll>
             </S.ScrollBox>
           </div>
