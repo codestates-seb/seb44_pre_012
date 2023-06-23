@@ -77,6 +77,7 @@ const CommonStyles = {
     justify-content: center;
     flex-direction: column;
     width: 100%;
+    flex: 1;
   `,
   ErrorImg: styled.img`
     display: block;
