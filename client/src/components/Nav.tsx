@@ -28,7 +28,6 @@ interface Page {
 export default function Nav() {
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath);
 
   const pages: Page[] = [
     { title: 'Home', path: '/' },

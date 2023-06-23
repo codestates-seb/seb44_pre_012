@@ -126,6 +126,8 @@ export default function AppWrapper() {
 
 const S = {
   Container: styled.div<{ background: string }>`
+    display: flex;
+    flex: 1;
     min-height: 100%;
     background: ${props => props.background};
   `,
@@ -134,7 +136,8 @@ const S = {
     flex: 1;
     max-width: 1264px;
     width: 100%;
-    margin: auto;
+    margin: 0 auto;
+    min-height: 100%;
     > main {
       flex: 1;
     }

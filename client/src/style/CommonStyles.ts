@@ -71,6 +71,32 @@ const CommonStyles = {
       }
     }
   `,
+  ErrorWrap: styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  `,
+  ErrorImg: styled.img`
+    display: block;
+    width: 400px;
+  `,
+  ErrorTextWrap: styled.div`
+    margin: 4rem auto;
+  `,
+  ErrorText: styled.div`
+    color: var(--color-label-black);
+    text-align: center;
+    > a {
+      color: var(--color-blue-200);
+      transition-duration: 0.5s;
+      &:hover {
+        color: var(--color-blue-100);
+        border-bottom: 2px solid var(--color-blue-100);
+      }
+    }
+  `,
 };
 
 export default CommonStyles;
