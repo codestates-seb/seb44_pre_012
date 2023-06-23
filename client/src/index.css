@@ -17,13 +17,13 @@
 
   /* color */
   --color-ui-border: #d6d9dc;
-  --color-ui-border-shadow:#d6d9dc4c;
-  --color-searchBtn: #0074CC;
-  --color-navbar-button-hover: #E3E6E8;
+  --color-ui-border-shadow: #d6d9dc4c;
+  --color-searchBtn: #0074cc;
+  --color-navbar-button-hover: #e3e6e8;
   --color-button-blue: #0a95ff;
   --color-button-blue-hover: #0073cc;
-  --color-button-border: #7AA7C7;
-  --color--button-login: #39739D;
+  --color-button-border: #7aa7c7;
+  --color--button-login: #39739d;
   --color--button-signup: #ffffff;
   --color-button-sky: #e1ecf4;
   --color-button-sky-hover: #b3d3ea;
@@ -55,6 +55,7 @@
   --color-blue-100: hsl(206, 100%, 52%);
   --color-blue-200: hsl(206, 100%, 40%);
   --color-blue-300: hsl(206, 100%, 40%);
+  --color-blue-400: hsl(209, 100%, 26%);
 
   --color-white: hsl(0, 0%, 100%);
   --color-black: hsl(210, 8%, 15%);
@@ -153,4 +154,5 @@ html {
 
 body {
   min-height: 100%;
+  padding-top: 52px;
 }

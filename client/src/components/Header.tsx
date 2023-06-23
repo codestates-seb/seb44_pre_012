@@ -141,7 +141,9 @@ const S = {
     border-top: 3px solid var(--color-layout-orange);
     border-bottom: 1px solid var(--color-ui-border);
     background: white;
-    /* position: absolute; */
+    position: fixed;
+    z-index: 99;
+    top: 0;
   `,
   TopbarContainer: styled.div`
     max-width: 1264px;
