@@ -45,7 +45,7 @@ export default function Header() {
   };
 
   const SearchInputDropdown = () => {
-    setIsDown(!isDown);
+    setIsDown(prev => !prev);
   };
 
   return (
@@ -83,33 +83,36 @@ export default function Header() {
             <S.TopFormInput type="text" placeholder="Search..." />
           </S.TopFormContainer>
           {isDown && (
-            <S.TopSearchPopoverContainer>
-              <S.TopSearchPopoverWrapper>
-                {searchData.map((el, idx) => (
-                  <S.TopSearchPopoverContent key={idx}>
-                    <S.TopSearchPopoverContentTitle>
-                      {el.keyword}
-                    </S.TopSearchPopoverContentTitle>
-                    <S.TopSearchPopoverContentMSG>
-                      {el.description}
-                    </S.TopSearchPopoverContentMSG>
-                  </S.TopSearchPopoverContent>
-                ))}
-              </S.TopSearchPopoverWrapper>
-              <S.TopSearchPopoverBottom>
-                <S.TopSearchPopoverBottomWrapper>
-                  <S.TopSearchPopoverQuestionBtn
-                    to={isLoggedIn ? '/' : '/users/login'}
-                    // 질문작성페이지 완료 후 수정 예정
-                  >
-                    Ask a question
-                  </S.TopSearchPopoverQuestionBtn>
-                  <S.TopSearchPopoverHelpBtn>
-                    Serch help
-                  </S.TopSearchPopoverHelpBtn>
-                </S.TopSearchPopoverBottomWrapper>
-              </S.TopSearchPopoverBottom>
-            </S.TopSearchPopoverContainer>
+            <>
+              <S.TopSearchPopoverContainer>
+                <S.TopSearchPopoverWrapper>
+                  {searchData.map((el, idx) => (
+                    <S.TopSearchPopoverContent key={idx}>
+                      <S.TopSearchPopoverContentTitle>
+                        {el.keyword}
+                      </S.TopSearchPopoverContentTitle>
+                      <S.TopSearchPopoverContentMSG>
+                        {el.description}
+                      </S.TopSearchPopoverContentMSG>
+                    </S.TopSearchPopoverContent>
+                  ))}
+                </S.TopSearchPopoverWrapper>
+                <S.TopSearchPopoverBottom>
+                  <S.TopSearchPopoverBottomWrapper>
+                    <S.TopSearchPopoverQuestionBtn
+                      to={isLoggedIn ? '/' : '/users/login'}
+                      // 질문작성페이지 완료 후 수정 예정
+                    >
+                      Ask a question
+                    </S.TopSearchPopoverQuestionBtn>
+                    <S.TopSearchPopoverHelpBtn>
+                      Serch help
+                    </S.TopSearchPopoverHelpBtn>
+                  </S.TopSearchPopoverBottomWrapper>
+                </S.TopSearchPopoverBottom>
+              </S.TopSearchPopoverContainer>
+              <S.TopSearchPopoverLayer onClick={SearchInputDropdown} />
+            </>
           )}
         </S.TopForm>
         <S.TopbarBtns>
@@ -250,6 +253,7 @@ const S = {
     position: relative;
     margin-top: 10px;
     filter: drop-shadow(0px 0px 5px var(--color-ui-border));
+    z-index: 1;
     &::before {
       content: '';
       position: absolute;
@@ -310,6 +314,13 @@ const S = {
     color: var(--color-searchBtn);
     font-size: 11px;
     cursor: pointer;
+  `,
+  TopSearchPopoverLayer: styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   `,
   TopbarBtns: styled.ol`
     display: flex;
