@@ -2,10 +2,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { BASE_URL } from '../constants/apiUrl';
-interface LoginInfo {
-  email: string;
-  password: string;
-}
+import { LoginInfo } from '../types/types';
 
 export async function loginRequest(
   loginInfo: LoginInfo

@@ -11,11 +11,7 @@ import { ERROR_MESSAGES } from '../../constants/errorMessage';
 import { AxiosError, AxiosResponse } from 'axios';
 import { loginRequest } from '../../api/loginRequest';
 import CommonStyles from '../../style/CommonStyles';
-
-type LoginInfoType = {
-  email: string;
-  password: string;
-};
+import { LoginInfo } from '../../types/types';
 
 type ErrorType = {
   emailError: string;
@@ -26,7 +22,7 @@ type ErrorType = {
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
+  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     email: '',
     password: '',
   });

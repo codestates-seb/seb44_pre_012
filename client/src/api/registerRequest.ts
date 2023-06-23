@@ -1,10 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { BASE_URL } from '../constants/apiUrl';
-interface RegisterInfo {
-  userName: string;
-  email: string;
-  password: string;
-}
+import { RegisterInfo } from '../types/types';
+
 export async function registerUser(
   registerInfo: RegisterInfo
 ): Promise<AxiosResponse> {
