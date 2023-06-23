@@ -1,11 +1,13 @@
 import '../index.css';
 import { styled } from 'styled-components';
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import parse from 'html-react-parser';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { questionsAPI } from '../api/QuestionListApi';
 import colors from '../constants/colorNames';
 import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
 import AddReply from './AddReply';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 import {
   IoMdArrowDropup,
@@ -25,17 +27,33 @@ interface QuestionAnswer {
 }
 export default function Reply() {
   const query = useQuery(['fetchCertainAnswer'], () =>
-    questionsAPI.fetchCertainQuestion('1')
+    questionsAPI.fetchCertainQuestion(1)
   );
-  // console.log(query.data);
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.login.isLogin
+  );
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation(() =>
+    questionsAPI.deleteAnswerQuestion(1, 2)
+  );
+  const handleDelete = async () => {
+    await mutateAsync();
+    queryClient.invalidateQueries(['fetchCertainAnswer']);
+
+  };
 
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
-        <h4>{query.data ? `${query.data.length} answers` : null}</h4>
+        <div>{query.data ? `${query.data.length} answers` : null}</div>
         <div>
           <span>sorted by:</span>
-          <input />
+          <select defaultValue="highestScore">
+            <option value="highestScore">Highest score (default)</option>
+            <option value="trending">Trending (recent votes count more)</option>
+            <option value="modified">Date modified (newest first) </option>
+            <option value="created">Date created (oldest first) </option>
+          </select>
         </div>
       </S.TotalAnswers>
       {query.data
@@ -44,11 +62,11 @@ export default function Reply() {
               <div>
                 <div>
                   <S.Sidebar>
-                    <S.ArrowBox>
+                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
                       <IoMdArrowDropup size={28} />
                     </S.ArrowBox>
                     <div>{item.voteCount}</div>
-                    <S.ArrowBox>
+                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
                       <IoMdArrowDropdown size={28} />
                     </S.ArrowBox>
                     <S.Icon>
@@ -64,11 +82,11 @@ export default function Reply() {
                   </S.Sidebar>
                 </div>
                 <S.Mainbar>
-                  <div>{item.questionAnswerContent}</div>
+                  <div>{parse(item.questionAnswerContent)}</div>
                   <S.BottomContainer>
                     <S.SocialBox>
                       <div>share</div>
-                      <div>follow</div>
+                      <div onClick={handleDelete}>delete</div>
                     </S.SocialBox>
                     <S.UserBox>
                       <div>
@@ -100,7 +118,6 @@ const getUserRandomColor = (): string => {
 };
 const S = {
   ReplyContainer: styled.section`
-    border: 1px solid blue;
     padding: 24px;
     width: 100%;
     height: 2000vh;
@@ -117,23 +134,21 @@ const S = {
     align-items: center;
     padding: 5px 45px;
     margin-bottom: 8px;
-    h4{
+    div:first-child {
       @media (max-width: 600px) {
-      display: none;
-    }
+        display: none;
+      }
     }
     span {
       font-size: var(--font-s);
       font-weight: 400;
       margin-right: 5px;
-    
     }
-    input {
+    select {
       width: 250px;
       height: 30px;
+      padding: 0 5px;
     }
-
- 
   `,
   RenderedAnswers: styled.div`
     width: 100%;
@@ -171,6 +186,9 @@ const S = {
     }
   `,
   ArrowBox: styled.div`
+    &.isNotLoggedIn {
+      opacity: 0.4;
+    }
     border: 1px solid var(--color-button-lightgray);
     color: var(--color-content-desc);
     width: 40px;
@@ -180,7 +198,7 @@ const S = {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    &:hover{
+    &:hover {
       background-color: var(--color-button-orange-hover);
     }
   `,
