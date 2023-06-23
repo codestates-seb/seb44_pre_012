@@ -65,12 +65,12 @@ export default function LogoutForm() {
           id={USER_MESSAGES.LOGOUT_CHECK}
           label={USER_MESSAGES.LOGOUT_CHECK_LABEL}
         />
-        <S.ButtonWrap>
+        <S.FormButtonWrap>
           <FormSubmit text={USER_MESSAGES.LOGOUT} />
           <S.LinkButton onClick={handleGoBack}>
             {USER_MESSAGES.CANCEL}
           </S.LinkButton>
-        </S.ButtonWrap>
+        </S.FormButtonWrap>
         <S.CaptionWrap>{USER_MESSAGES.LOGOUT_CAPTION}</S.CaptionWrap>
       </S.Form>
     </S.FormContainer>
@@ -98,11 +98,7 @@ const S = {
       -webkit-text-fill-color: transparent;
     }
   `,
-  ButtonWrap: styled.div`
-    display: flex;
-    width: 100%;
-    margin: 1rem auto 2rem;
-  `,
+
   LinkButton: styled.button`
     line-height: 1;
     margin: 2px;
@@ -120,9 +116,5 @@ const S = {
     &:focus {
       box-shadow: 0 0 0 4px hsla(206, 100%, 40%, 0.15);
     }
-  `,
-  CaptionWrap: styled.div`
-    font-size: var(--font-xs);
-    color: hsl(210, 8%, 45%);
   `,
 };

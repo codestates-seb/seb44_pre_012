@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { PATHS } from '../../constants/paths';
 import { ERROR_MESSAGES } from '../../constants/errorMessage';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { loginRequest } from '../../api/loginRequest';
 import CommonStyles from '../../style/CommonStyles';
 
@@ -42,7 +42,7 @@ export default function LoginForm() {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
     };
 
-  const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const loginRequestHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 에러 상태 초기화
     setError({
@@ -76,55 +76,69 @@ export default function LoginForm() {
       return;
     }
 
-    return loginRequest(loginInfo)
-      .then((res: AxiosResponse<any>) => {
-        if (res.status === 200) {
-          const accessToken = res.headers['authorization'];
-          const refreshToken = res.headers['refresh'];
-          const memberId = res.data.id;
-          // 로컬 스토리지에 저장
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          localStorage.setItem('memberId', memberId);
+    // api 요청
+    try {
+      const response = await loginRequest(loginInfo);
+      if (response.status === 200) {
+        const accessToken = response.headers['authorization'];
+        const refreshToken = response.headers['refresh'];
+        const userId = response.data.id;
+        const userName = response.data.displayName;
+        const userEmail = response.data.email;
 
-          setError(prevError => ({
-            ...prevError,
-            emailError: '',
-            passwordError: '',
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('userEmail', userEmail);
+        setError(prevError => ({
+          ...prevError,
+          emailError: '',
+          passwordError: '',
+        }));
+
+        dispatch(
+          login({
+            accessToken,
+            userId,
+            isLogin: true,
+            refreshToken,
+            userName,
+            userEmail,
+          })
+        );
+
+        setLoginInfo({
+          email: '',
+          password: '',
+        });
+
+        navigate(`/`);
+      }
+    } catch (err: unknown) {
+      if (
+        err instanceof AxiosError &&
+        err.response &&
+        err.response.status === 401
+      ) {
+        const error = err.response.data;
+        if (error?.errorMessage === 'INVALID_EMAIL') {
+          setError(prev => ({
+            ...prev,
+            emailError: ERROR_MESSAGES.INVALID_EMAIL,
+            loginError: ERROR_MESSAGES.LOGIN_ERROR,
           }));
-
-          dispatch(
-            login({ accessToken, memberId, isLogin: true, refreshToken })
-          );
-
-          setLoginInfo({
-            email: '',
-            password: '',
-          });
-
-          navigate(`/`);
+        } else if (error?.errorMessage === 'INVALID_PASSWORD') {
+          setError(prev => ({
+            ...prev,
+            emailError: ERROR_MESSAGES.INVALID_PASSWORD,
+            passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
+          }));
+        } else {
+          return;
         }
-      })
-      .catch(err => {
-        if (err.response && err.response.status === 401) {
-          const error = err.response.data;
-          if (error?.errorMessage === 'INVALID_EMAIL') {
-            setError(prev => ({
-              ...prev,
-              emailError: ERROR_MESSAGES.INVALID_EMAIL,
-              loginError: ERROR_MESSAGES.LOGIN_ERROR,
-            }));
-          } else if (error?.errorMessage === 'INVALID_PASSWORD') {
-            setError(prev => ({
-              ...prev,
-              emailError: ERROR_MESSAGES.INVALID_PASSWORD,
-              passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
-            }));
-          } else {
-            return;
-          }
-        }
-      });
+      }
+    }
   };
   return (
     <>

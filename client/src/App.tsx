@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './App.css';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
 import { PATHS } from './constants/paths';
@@ -24,20 +24,60 @@ const queryClient = new QueryClient();
 // axios.defaults.withCredentials = true;
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
+  // Oauth 로그인
+  const searchParamsToken = new URLSearchParams(window.location.search);
+  const oauthAccessToken = searchParamsToken.get('access_token');
+  const oauthRefreshToken = searchParamsToken.get('refresh_token');
+  const oauthUserrId = searchParamsToken.get('userId');
+  const oauthUserEmail = searchParamsToken.get('email') || '';
+  const oauthUserNameRaw = searchParamsToken.get('userName');
+  const oauthUserName = oauthUserNameRaw
+    ? decodeURIComponent(oauthUserNameRaw)
+    : '';
+
+  useEffect(() => {
+    if (oauthAccessToken && oauthRefreshToken && oauthUserrId) {
+      localStorage.setItem('accessToken', oauthAccessToken);
+      localStorage.setItem('refreshToken', oauthRefreshToken);
+      localStorage.setItem('userId', oauthUserrId);
+      localStorage.setItem('userName', oauthUserName);
+      localStorage.setItem('userEmail', oauthUserEmail);
+
+      // 상태 저장
+      dispatch(
+        login({
+          oauthAccessToken,
+          oauthUserrId,
+          oauthUserName,
+          oauthUserEmail,
+          isLogin: true,
+        })
+      );
+      navigate('/');
+    }
+  }, [oauthAccessToken, oauthUserrId]);
+
+  // 로그인 상태 유지
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    const memberId = localStorage.getItem('memberId');
     const refreshToken = localStorage.getItem('refreshToken');
-    if (accessToken && memberId && refreshToken) {
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
+    const userEmail = localStorage.getItem('userEmail');
+
+    if (accessToken && userId && refreshToken) {
       dispatch(
         login({
           accessToken,
-          memberId,
-          isLogin: true,
+          userId,
           refreshToken,
+          userName,
+          userEmail,
+          isLogin: true,
         })
       );
     }
@@ -81,8 +121,8 @@ export default function AppWrapper() {
 
 const S = {
   Container: styled.div<{ background: string }>`
+    min-height: 100%;
     background: ${props => props.background};
-    min-height: 100vh;
   `,
   OutletWrapper: styled.div`
     flex: 1;

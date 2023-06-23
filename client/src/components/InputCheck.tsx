@@ -21,7 +21,7 @@ export default function InputCheck({
 const S = {
   CheckWrap: styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
   `,
   Check: styled.input`
@@ -35,7 +35,6 @@ const S = {
     margin-right: 4px;
 
     &:focus {
-      background-color: var(--color-blue-200);
       border-color: var(--color-blue-200);
       box-shadow: var(--check-fc-box-shadow);
     }
@@ -49,5 +48,7 @@ const S = {
   Label: styled.label`
     font-size: var(--font-xs);
     color: var(--color-label-black);
+    flex: 1;
+    line-height: 1.2;
   `,
 };
