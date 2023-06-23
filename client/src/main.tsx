@@ -10,6 +10,7 @@ import { store } from './store/store';
 import QuestionList from './pages/Question/QuestionList';
 import Logout from './pages/Logout/Logout';
 import Register from './pages/Register/Register';
+import EmptyPage from './components/EmptyPage';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,13 @@ const router = createBrowserRouter([
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
       { path: 'questions', element: <QuestionList /> },
-      // { path: 'questions/register', element: <컴포넌트명 /> },
+
+      // 빈 페이지
+      { path: 'users', element: <EmptyPage /> },
+      { path: 'collectives', element: <EmptyPage /> },
+      { path: 'companies', element: <EmptyPage /> },
+      { path: 'team', element: <EmptyPage /> },
+      { path: 'tags', element: <EmptyPage /> },
     ],
   },
 ]);

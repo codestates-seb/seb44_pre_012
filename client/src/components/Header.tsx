@@ -6,14 +6,21 @@ import { GiDiamondTrophy } from 'react-icons/gi';
 import { FaStackExchange } from 'react-icons/fa';
 import { useState } from 'react';
 import logoIcon from '../assets/headerlogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import Nav from './Nav';
+import { PATHS } from '../constants/paths';
 
 export default function Header() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.auth.login.isLogin
   );
+  const location = useLocation();
+  const isUserRelatedPath =
+    location.pathname === PATHS.LOGIN ||
+    location.pathname === PATHS.LOGOUT ||
+    location.pathname === PATHS.REGISTER;
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDown, setIsDown] = useState(false);
@@ -35,21 +42,30 @@ export default function Header() {
 
   const MenuDropdown = () => {
     setIsOpen(!isOpen);
-    console.log('작동한다');
   };
 
   const SearchInputDropdown = () => {
     setIsDown(!isDown);
-    console.log('작동한다1');
   };
 
   return (
     <S.TopbarWrapper>
       <S.TopbarContainer>
-        {!isLoggedIn && (
-          <S.TopbarMenuBtn onClick={MenuDropdown}>
-            {isOpen ? <AiOutlineClose /> : <MdMenu />}
-          </S.TopbarMenuBtn>
+        {isUserRelatedPath && (
+          <>
+            <S.TopbarMenuBtn onClick={MenuDropdown}>
+              {isOpen ? (
+                <>
+                  <AiOutlineClose />
+                  <S.NavWrap>
+                    <Nav />
+                  </S.NavWrap>
+                </>
+              ) : (
+                <MdMenu />
+              )}
+            </S.TopbarMenuBtn>
+          </>
         )}
         <S.TopbarLogoImgContainer>
           <Link to="/">
@@ -160,6 +176,7 @@ const S = {
     align-items: center;
     justify-content: center;
     padding: 0px 12px 0px 12px;
+    position: relative;
     &:hover {
       background-color: var(--color-navbar-button-hover);
     }
@@ -387,6 +404,19 @@ const S = {
     align-items: center;
     &:hover {
       background-color: var(--color-navbar-button-hover);
+    }
+  `,
+  NavWrap: styled.div`
+    background: #fff;
+    position: absolute;
+    width: 240px;
+    top: 48px;
+    left: 0;
+    border: 1px solid hsl(210, 8%, 90%);
+    border-top: none;
+    box-shadow: var(--bs-sm);
+    > div {
+      padding: 0;
     }
   `,
 };

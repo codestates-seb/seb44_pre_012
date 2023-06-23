@@ -102,7 +102,6 @@ function App() {
       <Header />
       <S.Container background={bgColor}>
         <S.OutletWrapper>
-          <Nav />
           {showNav && (
             <S.NavWrapper>
               <Nav />
@@ -144,6 +143,7 @@ const S = {
     position: sticky;
     top: 52px;
     border-right: 1px solid hsl(210, 8%, 85%);
+    width: 164px;
     max-height: calc(100vh - 52px);
   `,
 };

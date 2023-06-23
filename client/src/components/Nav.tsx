@@ -6,7 +6,7 @@ import {
 } from 'react-icons/ai';
 import { BsStarFill } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { PATHS } from '../constants/paths';
 
 interface SubMenuLi {
   title: string;
@@ -28,6 +28,7 @@ interface Page {
 export default function Nav() {
   const location = useLocation();
   const currentPath = location.pathname;
+  console.log(currentPath);
 
   const pages: Page[] = [
     { title: 'Home', path: '/' },
@@ -35,9 +36,13 @@ export default function Nav() {
       title: 'PUBLIC',
 
       subMenu: [
-        { title: 'Questions', path: '/questions', icon: <AiOutlineGlobal /> },
-        { title: 'Tags', path: '/tags' },
-        { title: 'Users', path: '/user' },
+        {
+          title: 'Questions',
+          path: PATHS.QUESTIONS,
+          icon: <AiOutlineGlobal />,
+        },
+        { title: 'Tags', path: PATHS.TAG },
+        { title: 'Users', path: PATHS.USER },
         { title: 'Companies', path: '/companies' },
       ],
     },
@@ -47,21 +52,25 @@ export default function Nav() {
       subMenu: [
         {
           title: 'Explore Collectives',
-          path: '/collectives',
+          path: PATHS.COLLECTIVE,
           icon: <BsStarFill color={'rgb(244, 130, 37)'} />,
         },
       ],
     },
     {
-      title: 'COLLECTIVES',
+      title: 'TEAMS',
       tooltip: { icon: <AiFillCheckCircle />, modal: '' },
       subMenu: [
         {
           title: 'Create free Team',
-          path: '/team',
+          path: PATHS.TEAM,
           icon: <AiFillShopping color={'rgb(244, 130, 37)'} />,
         },
-        { title: 'Looking for your Teams?', path: '/team', uniqueDesign: true },
+        {
+          title: 'Looking for your Teams?',
+          path: PATHS.TEAM,
+          uniqueDesign: true,
+        },
       ],
     },
   ];
@@ -71,7 +80,11 @@ export default function Nav() {
       <S.Nav>
         <ol>
           {pages.map((page, idx) => {
-            const isSelectedPage = currentPath === page.path;
+            const isSelectedPage = page.path
+              ? page.path === '/'
+                ? currentPath === '/'
+                : currentPath.startsWith(page.path)
+              : false;
             return (
               <S.Li key={idx} className={isSelectedPage ? 'selected' : ''}>
                 <div>
@@ -85,11 +98,13 @@ export default function Nav() {
                 {page.subMenu && (
                   <ol>
                     {page.subMenu.map((subItem, idx) => {
-                      const isSelectedSubItem = currentPath === subItem.path;
+                      const isSelectedSubItem = subItem.path
+                        ? currentPath.startsWith(subItem.path)
+                        : false;
+
                       return (
                         <S.SubMenuLi
                           key={idx}
-                          hasIcon={!!subItem.icon}
                           className={`${
                             subItem.uniqueDesign ? 'uniqueDesign' : ''
                           } ${isSelectedSubItem ? 'selected' : ''}`}
@@ -97,7 +112,10 @@ export default function Nav() {
                           {subItem.uniqueDesign ? (
                             <button>{subItem.title}</button>
                           ) : (
-                            <S.Link to={subItem.path}>
+                            <S.Link
+                              to={subItem.path}
+                              className={subItem.icon && 'icon'}
+                            >
                               {subItem.icon}
                               {subItem.title}
                             </S.Link>
@@ -126,7 +144,7 @@ const S = {
   Nav: styled.nav`
     display: flex;
     flex-direction: column;
-    width: 164px;
+    width: 100%;
   `,
   Li: styled.li`
     & > div {
@@ -160,42 +178,43 @@ const S = {
       background-color: hsl(210, 8%, 95%);
       color: var(--color-label-black);
       border-right: 3px solid rgb(244, 130, 37);
+      font-weight: 600;
     }
   `,
 
-  SubMenuLi: styled.li<{ hasIcon?: boolean }>`
+  SubMenuLi: styled.li`
     display: flex;
     align-items: center;
     & > a {
       padding: 8px 8px 8px 30px;
       width: 100%;
+
+      & > svg:first-child {
+        width: 30px;
+      }
     }
+    & > a.icon {
+      padding: 8px 8px 8px 0;
+    }
+
     &.selected {
       background-color: hsl(210, 8%, 95%);
       color: var(--color-label-black);
       border-right: 3px solid rgb(244, 130, 37);
+      font-weight: 600;
     }
-    ${props =>
-      props.hasIcon &&
-      `
-      & > a {
-        padding: 8px 8px 8px 0;
-        & > svg {
-          width: 30px;
-        }
-      }
-    }
-    
-  `}
+
     &.uniqueDesign {
       & > button {
         padding: 8px;
-        margin: 8px 8px 0 1px;
+        margin: 8px 0 0 1px;
         line-height: 1;
         color: var(--color-blue-200);
         background: hsl(208, 100%, 97%);
         font-size: var(--font-xs);
         border-radius: 5px;
+        width: 100%;
+        text-align: left;
       }
       &:hover > button {
         color: var(--color-blue-400);
