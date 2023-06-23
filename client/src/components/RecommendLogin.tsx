@@ -1,11 +1,25 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logoIcon from '../assets/logoIcon.png';
 import { SOCIAL_LOGINS } from '../constants/socialLogin';
 import SocialButtons from './SocialButtons';
 import '../index.css';
+interface RecommendLoginProps {
+  nameData: string;
+  setNameData: (name: string) => void;
+  emailData: string;
+  setEmailData: (name: string) => void;
+  isValid: boolean;
+  setIsValid: (name: boolean) => void;
+}
 
-export default function RecommendLogin() {
+export default function RecommendLogin({
+  nameData,
+  setNameData,
+  emailData,
+  setEmailData,
+  isValid,
+  setIsValid
+}: RecommendLoginProps) {
   type Social = {
     label: string;
     onClick: () => void;
@@ -24,24 +38,46 @@ export default function RecommendLogin() {
         : handleFacebookLogin,
   }));
 
+  const handleNameInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setNameData(event.target.value);
+  };
+
+  const handleEmailInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEmailData(event.target.value);
+  };
+
+
+
   return (
     <S.RecommendLoginContainer>
       <S.LoginGuestBox>
         <S.Title>
-          Sign up or <a>log in</a>
+          Sign up or <Link to="/users/login">log in</Link>
         </S.Title>
         <SocialButtons socials={socialLogin} />
       </S.LoginGuestBox>
       <S.LoginGuestBox>
         <S.Title>Post as a guest</S.Title>
         <S.Label>
-          <div className="name">Name </div>
-          <input></input>
+          <span className="name">Name </span>
+          {!nameData ? (
+            <S.WarningSpan>: Please enter your name</S.WarningSpan>
+          ) : null}
+          <input value={nameData} onChange={handleNameInputChange} />
         </S.Label>
         <S.Label>
-          <div className="email">Email</div>
-          <div>Required, but never shown</div>
-          <input></input>
+          <span className="email">Email</span>
+          {!emailData ? (
+            <S.WarningSpan>: Please enter your email.</S.WarningSpan>
+          ) : !isValid ? (
+            <S.WarningSpan>This is not a proper email address</S.WarningSpan>
+          ) : null}
+          <div className="inform">Required, but never shown</div>
+          <input value={emailData} onChange={handleEmailInputChange} />
         </S.Label>
       </S.LoginGuestBox>
     </S.RecommendLoginContainer>
@@ -85,14 +121,16 @@ const S = {
     .email,
     .name {
       margin-top: 5px;
+      display: inline-block;
     }
-    > div:nth-child(2) {
+    .inform {
       color: var(--color-content-desc);
       font-size: var(--font-xs);
       font-weight: 400;
     }
     > input {
       height: 32px;
+      padding-left: 5px;
       width: 100%;
       -webkit-border-radius: 0;
       border: 1.4px solid var(--color-ui-border);
@@ -104,5 +142,11 @@ const S = {
         border: 1px solid var(--color-button-blue);
       }
     }
+  `,
+  WarningSpan: styled.span`
+    margin-left: 5px;
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--input-err-border-color);
   `,
 };
