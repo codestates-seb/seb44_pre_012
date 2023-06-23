@@ -111,7 +111,9 @@ export default function Header() {
                   </S.TopSearchPopoverBottomWrapper>
                 </S.TopSearchPopoverBottom>
               </S.TopSearchPopoverContainer>
-              <S.TopSearchPopoverLayer onClick={SearchInputDropdown} />
+              {isDown && (
+                <S.TopSearchPopoverLayer onClick={SearchInputDropdown} />
+              )}
             </>
           )}
         </S.TopForm>
