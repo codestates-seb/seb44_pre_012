@@ -1,6 +1,6 @@
 // 목업 서버 (나중에 쉽게 삭제하게 한 파일에 다 넣어두면 좋을 것 같아요)
 import allQuestions from './AllQuestionQuery.json';
-import { questionQuery } from './questionQuery';
+import  questionQuery  from './questionQuery.json';
 import { rest } from 'msw';
 
 export const handlers = [

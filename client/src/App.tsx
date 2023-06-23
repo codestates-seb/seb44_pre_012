@@ -20,7 +20,6 @@ if (process.env.NODE_ENV === 'development') {
 
 const queryClient = new QueryClient();
 
-
 // 하단 주석 실제 서버와 연결 후 주석 해제
 // axios.defaults.withCredentials = true;
 

@@ -8,38 +8,44 @@ import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
 import AddReply from './AddReply';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-
-import {
-  IoMdArrowDropup,
-  IoMdArrowDropdown,
-  // IoBookmarkOutline,
-} from 'react-icons/io';
+import { useState } from 'react';
+import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
+import { QuestionAnswer } from '../types/types';
 // 유저 아이디 있어야 함.
-interface QuestionAnswer {
-  questionAnswerId: number;
-  questionAnswerContent: string;
-  userId: number;
-  userName: string;
-  voteCount: number;
-  createdAt: string;
-  modifiedAt?: string;
-}
+
 export default function Reply() {
+  const [isDeleteClicked, setIsDeleteClicked] = useState(0);
+  const [inputData, setInputData] = useState('');
   const query = useQuery(['fetchCertainAnswer'], () =>
     questionsAPI.fetchCertainQuestion(1)
   );
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.auth.login.isLogin
-  );
+  // const isLoggedIn = useSelector(
+  //   (state: RootState) => state.auth.login.isLogin
+  // );
+  const isLoggedIn = true;
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, 2)
+    questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
   );
-  const handleDelete = async () => {
-    await mutateAsync();
-    queryClient.invalidateQueries(['fetchCertainAnswer']);
-
+  const handleDelete = async (e: React.FormEvent) => {
+    console.log(
+      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${isDeleteClicked} (을)를 입력해주세요.`
+    );
+    if (Number(inputData) === isDeleteClicked) {
+      e.preventDefault();
+      await mutateAsync();
+      queryClient.invalidateQueries(['fetchCertainAnswer']);
+      setIsDeleteClicked(0);
+      console.log('삭제되었습니다');
+      setInputData('');
+      return;
+    }
+    e.preventDefault();
+    setIsDeleteClicked(0);
+    console.log('이메일이 유효하지 않습니다.');
+    setInputData('');
+    return;
   };
 
   return (
@@ -81,12 +87,50 @@ export default function Reply() {
                     </S.Icon>
                   </S.Sidebar>
                 </div>
-                <S.Mainbar>
+                <S.MainBar>
                   <div>{parse(item.questionAnswerContent)}</div>
                   <S.BottomContainer>
                     <S.SocialBox>
                       <div>share</div>
-                      <div onClick={handleDelete}>delete</div>
+                      {!isLoggedIn ? (
+                        <div
+                          onClick={() =>
+                            setIsDeleteClicked(item.questionAnswerId)
+                          }
+                        >
+                          delete
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() =>
+                            setIsDeleteClicked(item.questionAnswerId)
+                          }
+                        >
+                          delete
+                        </div>
+                      )}
+                      {!isLoggedIn &&
+                        isDeleteClicked === item.questionAnswerId && (
+                          <S.DeleteConfirmForm>
+                            <S.FormInform>
+                              Please enter the email address you used.
+                            </S.FormInform>
+                            <S.FormInput
+                              onChange={e => setInputData(e.target.value)}
+                              placeholder=" 아무 키나 입력 후 Submit을 누르고 콘솔창을 확인해주세요."
+                            />
+                            <S.ButtonBox>
+                              <S.FormCancelButton
+                                onClick={() => setIsDeleteClicked(0)}
+                              >
+                                Cancel
+                              </S.FormCancelButton>
+                              <S.FormSubmitButton onClick={handleDelete}>
+                                Submit
+                              </S.FormSubmitButton>
+                            </S.ButtonBox>
+                          </S.DeleteConfirmForm>
+                        )}
                     </S.SocialBox>
                     <S.UserBox>
                       <div>
@@ -103,7 +147,7 @@ export default function Reply() {
                     </S.UserBox>
                   </S.BottomContainer>
                   {/* <div>댓글 컴포넌트 렌더링 자리</div> */}
-                </S.Mainbar>
+                </S.MainBar>
               </div>
             </S.RenderedAnswers>
           ))
@@ -205,10 +249,9 @@ const S = {
   Icon: styled.div`
     cursor: pointer;
   `,
-  Mainbar: styled.div`
+  MainBar: styled.div`
     flex: 9;
     color: var(--color-page-title);
-    /* border: 1px solid gray; */
   `,
   BottomContainer: styled.div`
     display: flex;
@@ -232,6 +275,7 @@ const S = {
     border-radius: 3px;
     padding: 4px 7px;
     font-size: 11px;
+    height: 52px;
     div:nth-child(2) {
       display: flex;
       align-items: center;
@@ -248,6 +292,9 @@ const S = {
         }
       }
     }
+    @media (max-width: 800px) {
+      display: none;
+    }
   `,
   UserImg: styled.div`
     width: 16px;
@@ -259,5 +306,63 @@ const S = {
     line-height: 16px;
     font-size: 8px;
     color: white;
+  `,
+
+  DeleteConfirmForm: styled.form`
+    border: 1px solid var(--color-button-lightgray);
+    width: 313px;
+    height: 130px;
+    margin-left: 10px;
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.1));
+    padding: 10px 5px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  `,
+  FormInform: styled.div``,
+  FormInput: styled.input`
+    height: 32px;
+    padding-left: 5px;
+    width: 100%;
+    font-size: 12px;
+    -webkit-border-radius: 0;
+    border: 1.4px solid var(--color-ui-border);
+    border-radius: 3px;
+    &:focus {
+      outline: 3.5px solid rgba(179, 211, 234, 0.5);
+      -webkit-border-radius: 0;
+      border-radius: 3px;
+      border: 1px solid var(--color-button-blue);
+    }
+  `,
+  ButtonBox: styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
+  `,
+  FormCancelButton: styled.button`
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-button-orange-hover);
+    background: var(--color-button-white);
+    color: var(--color-layout-orange);
+    &:hover {
+      background: var(--color-aside-lightyellow);
+    }
+  `,
+  FormSubmitButton: styled.button`
+    padding: 5px;
+    border-radius: 3px;
+    background: var(--color-button-blue);
+    border: 1px solid var(--color-button-blue);
+    font-weight: 500;
+    color: #ffffff;
+    border-radius: 3px;
+    box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
+    &:hover {
+      background: var(--color-content-title);
+    }
   `,
 };
