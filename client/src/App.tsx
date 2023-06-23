@@ -13,7 +13,9 @@ import Footer from './components/Footer';
 // 목업 서버
 import { worker } from './temp/worker';
 if (process.env.NODE_ENV === 'development') {
-  worker.start();
+  worker.start({
+    onUnhandledRequest: 'bypass',
+  });
 }
 
 const queryClient = new QueryClient();
