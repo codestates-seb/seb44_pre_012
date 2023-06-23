@@ -82,19 +82,31 @@ export default function LoginForm() {
       if (response.status === 200) {
         const accessToken = response.headers['authorization'];
         const refreshToken = response.headers['refresh'];
-        const memberId = response.data.id;
+        const userId = response.data.id;
+        const userName = response.data.displayName;
+        const userEmail = response.data.email;
 
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('memberId', memberId);
-
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('userEmail', userEmail);
         setError(prevError => ({
           ...prevError,
           emailError: '',
           passwordError: '',
         }));
 
-        dispatch(login({ accessToken, memberId, isLogin: true, refreshToken }));
+        dispatch(
+          login({
+            accessToken,
+            userId,
+            isLogin: true,
+            refreshToken,
+            userName,
+            userEmail,
+          })
+        );
 
         setLoginInfo({
           email: '',
