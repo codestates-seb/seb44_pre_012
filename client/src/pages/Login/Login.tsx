@@ -7,7 +7,7 @@ import { SOCIALS } from '../../constants/socials';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { RootState } from '../../store/store';
+import { RootState } from '../../redux/store';
 import CommonStyles from '../../style/CommonStyles';
 
 type Social = {
