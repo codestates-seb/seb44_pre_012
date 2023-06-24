@@ -61,6 +61,7 @@ const S = {
     top: 0;
     left: 0;
     cursor: auto;
+    z-index: 1;
   `,
   ShareContainer: styled.div`
     position: relative;
@@ -79,7 +80,7 @@ const S = {
     left: 0%;
     display: flex;
     flex-direction: column;
-    z-index: 1;
+    z-index: 2;
     justify-content: center;
     align-items: center;
     margin-bottom: 16px;

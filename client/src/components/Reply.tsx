@@ -1,3 +1,5 @@
+// 질문 컴포넌트에서 질문 아이디 받아와야함.
+
 import '../index.css';
 import { styled } from 'styled-components';
 import parse from 'html-react-parser';
@@ -13,6 +15,7 @@ import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer } from '../types/types';
 import SocialShare from './Share';
+import GuestDelete from './GuestDelete';
 // 유저 아이디 있어야 함.
 
 export default function Reply() {
@@ -50,6 +53,8 @@ export default function Reply() {
     setIsCorrectEmail(false);
     return;
   };
+
+  console.log(typeof inputData);
 
   return (
     <S.ReplyContainer>
@@ -96,13 +101,17 @@ export default function Reply() {
                     <S.SocialBox>
                       <SocialShare />
                       {!isLoggedIn ? (
-                        <div
-                          onClick={() =>
-                            setIsDeleteClicked(item.questionAnswerId)
-                          }
-                        >
-                          delete
-                        </div>
+                        <GuestDelete
+                          isLoggedIn={isLoggedIn}
+                          isDeleteClicked={isDeleteClicked}
+                          inputData={inputData}
+                          setInputData={setInputData}
+                          setIsDeleteClicked={setIsDeleteClicked}
+                          handleDelete={handleDelete}
+                          item={item}
+                          isCorrectEmail={isCorrectEmail}
+                          setIsCorrectEmail={setIsCorrectEmail}
+                        />
                       ) : (
                         <div
                           onClick={() =>
@@ -112,39 +121,6 @@ export default function Reply() {
                           delete
                         </div>
                       )}
-                      {!isLoggedIn &&
-                        isDeleteClicked === item.questionAnswerId && (
-                          <S.DeleteConfirmForm>
-                            {isCorrectEmail ? (
-                              <S.FormInform>
-                                Please enter the email address you used.
-                              </S.FormInform>
-                            ) : (
-                              <S.FormInform className="warning">
-                                The email does not match.
-                              </S.FormInform>
-                            )}
-                            <S.FormInput
-                              value={inputData}
-                              onChange={e => setInputData(e.target.value)}
-                              placeholder=" 아무 키나 입력 후 Submit을 누르고 콘솔창을 확인해주세요."
-                            />
-                            <S.ButtonBox>
-                              <S.FormCancelButton
-                                onClick={() => {
-                                  setIsDeleteClicked(0);
-                                  setIsCorrectEmail(true);
-                                  setInputData('');
-                                }}
-                              >
-                                Cancel
-                              </S.FormCancelButton>
-                              <S.FormSubmitButton onClick={handleDelete}>
-                                Submit
-                              </S.FormSubmitButton>
-                            </S.ButtonBox>
-                          </S.DeleteConfirmForm>
-                        )}
                     </S.SocialBox>
                     <S.UserBox>
                       <div>
@@ -320,67 +296,5 @@ const S = {
     line-height: 16px;
     font-size: 8px;
     color: white;
-  `,
-
-  DeleteConfirmForm: styled.form`
-    border: 1px solid var(--color-button-lightgray);
-    width: 313px;
-    height: 130px;
-    margin-left: 10px;
-    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.1));
-    padding: 10px 5px;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-  `,
-  FormInform: styled.div`
-    &.warning {
-      color: var(--input-err-border-color);
-    }
-  `,
-  FormInput: styled.input`
-    height: 32px;
-    padding-left: 5px;
-    width: 100%;
-    font-size: 12px;
-    -webkit-border-radius: 0;
-    border: 1.4px solid var(--color-ui-border);
-    border-radius: 3px;
-    &:focus {
-      outline: 3.5px solid rgba(179, 211, 234, 0.5);
-      -webkit-border-radius: 0;
-      border-radius: 3px;
-      border: 1px solid var(--color-button-blue);
-    }
-  `,
-  ButtonBox: styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 45%;
-  `,
-  FormCancelButton: styled.button`
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid var(--color-button-orange-hover);
-    background: var(--color-button-white);
-    color: var(--color-layout-orange);
-    &:hover {
-      background: var(--color-aside-lightyellow);
-    }
-  `,
-  FormSubmitButton: styled.button`
-    padding: 5px;
-    border-radius: 3px;
-    background: var(--color-button-blue);
-    border: 1px solid var(--color-button-blue);
-    font-weight: 500;
-    color: #ffffff;
-    border-radius: 3px;
-    box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
-    &:hover {
-      background: var(--color-content-title);
-    }
   `,
 };
