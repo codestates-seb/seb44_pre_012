@@ -12,11 +12,19 @@ export interface QuestionInfo {
 }
 
 export interface QuestionAnswer {
-  questionAnswerId: number;
   questionAnswerContent: string;
-  userId: number;
+  createdAt: Date | string;
   userName: string;
-  voteCount: number;
-  createdAt: string;
+  userId?: number;
+  voteCount?: number;
   modifiedAt?: string;
+  questionAnswerId: number;
+}
+
+export interface QuestionPostAnswer {
+  questionAnswerContent: string;
+  createdAt: Date | string;
+  userName: string;
+  userId?: number;
+
 }
