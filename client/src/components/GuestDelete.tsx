@@ -6,50 +6,37 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { questionsAPI } from '../api/QuestionListApi';
 
 interface GuestDeleteProps {
-  setIsDeleteClicked: React.Dispatch<React.SetStateAction<any>>; //
   item: QuestionAnswer;
-  isLoggedIn: boolean;
-  inputData: string;
-  setInputData: React.Dispatch<React.SetStateAction<string>>;
-  isDeleteClicked: number;
-  handleDelete: (e: React.FormEvent) => void;
-  isCorrectEmail: boolean;
-  setIsCorrectEmail: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function GuestDelete({
-  setIsDeleteClicked,
   item,
-  isLoggedIn,
-  isDeleteClicked,
-  inputData,
-  setInputData,
-  setIsCorrectEmail,
-  isCorrectEmail,
-}: // handleDelete,
+}: 
 GuestDeleteProps) {
+
+  const [numberDeleteClicked, setNumberIsDeleteClicked] = useState(0);
+  const [inputData, setInputData] = useState('');
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true);
+
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
+    questionsAPI.deleteAnswerQuestion(1, numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
 
   const handleDelete = async (e: React.FormEvent) => {
     console.log(
-      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${isDeleteClicked} (을)를 입력해주세요.`
+      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${numberDeleteClicked} (을)를 입력해주세요.`
     );
-    if (Number(inputData) === isDeleteClicked) {
+    if (Number(inputData) === numberDeleteClicked) {
       e.preventDefault();
       await mutateAsync();
       queryClient.invalidateQueries(['fetchCertainAnswer']);
-      setIsDeleteClicked(0);
-      console.log('삭제되었습니다');
+      setNumberIsDeleteClicked(0);
       setInputData('');
       return;
     }
     e.preventDefault();
-    // setIsDeleteClicked(0);
-    console.log('이메일이 유효하지 않습니다.');
     setInputData('');
     setIsCorrectEmail(false);
     return;
@@ -59,13 +46,13 @@ GuestDeleteProps) {
     <S.DeleteContainer>
       <S.DeleteButton
         onClick={() => {
-          setIsDeleteClicked(item.questionAnswerId);
+          setNumberIsDeleteClicked(item.questionAnswerId);
           setIsLayoutClicked(prev => !prev);
         }}
       >
-        delete
+        Delete
       </S.DeleteButton>
-      {isDeleteClicked === item.questionAnswerId && isLayoutClicked && (
+      {numberDeleteClicked === item.questionAnswerId && isLayoutClicked && (
         <div>
           <S.DeleteConfirmForm>
             {isCorrectEmail ? (
@@ -85,7 +72,7 @@ GuestDeleteProps) {
             <S.ButtonBox>
               <S.FormCancelButton
                 onClick={() => {
-                  setIsDeleteClicked(0);
+                  setNumberIsDeleteClicked(0);
                   setIsCorrectEmail(true);
                   setInputData('');
                 }}
@@ -93,7 +80,7 @@ GuestDeleteProps) {
                 Cancel
               </S.FormCancelButton>
               <S.FormSubmitButton onClick={handleDelete}>
-                Submit
+                Delete
               </S.FormSubmitButton>
             </S.ButtonBox>
           </S.DeleteConfirmForm>
@@ -130,8 +117,9 @@ const S = {
     width: 313px;
     height: 130px;
     margin-left: 10px;
-box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px 0px,
-      rgba(0, 0, 0, 0.06) 0px 2px 6px 0px, rgba(0, 0, 0, 0.09) 0px 3px 8px 0px;    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px 0px,
+      rgba(0, 0, 0, 0.06) 0px 2px 6px 0px, rgba(0, 0, 0, 0.09) 0px 3px 8px 0px;
+    background-color: white;
     padding: 13px 5px;
     border-radius: 3px;
     display: flex;
