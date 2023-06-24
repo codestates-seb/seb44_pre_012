@@ -1,9 +1,7 @@
 import { styled } from 'styled-components';
-// import { data } from '../../temp/questionQuery.json';
 import QuestionHead from './QuestionHead';
 import Aside from '../Question/Aside';
 import VoteCell from '../../components/VoteCell';
-// import { data as dataAll } from '../../temp/AllQuestionQuery.json';
 import '../../index.css';
 import Signature from './Signature';
 import { QuestionData } from '../../types/types';

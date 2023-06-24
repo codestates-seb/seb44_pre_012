@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-// import { data } from '../../temp/questionQuery.json';
 
 type Props = {
     title: string;

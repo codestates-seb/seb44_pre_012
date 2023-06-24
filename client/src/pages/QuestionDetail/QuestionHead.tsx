@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-// import { data } from '../../temp/questionQuery.json';
 import QuestionDetailnfo from './QuestionDetailInfo';
 import '../../index.css';
 import { QuestionData } from '../../types/types';
