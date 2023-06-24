@@ -8,12 +8,19 @@ import { useState, useEffect } from 'react';
 import RecommendLogin from './RecommendLogin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { questionsAPI } from '../api/QuestionListApi';
+import { QuestionPostAnswer } from '../types/types';
+
 
 export default function AddReply() {
-  // const isLoggedIn = useSelector(
-  //   (state: RootState) => state.auth.login.isLogin
+
+  // const {isLoggedIn, userName, userId} = useSelector(
+  //   (state: RootState) => state.auth.login
   // );
+  const userId = 77; // temp
+  const userName = 'Mango' // temp
   const isLoggedIn = true;
+
+
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
   const [emailData, setEmailData] = useState('');
@@ -25,22 +32,33 @@ export default function AddReply() {
     }
   }, [emailData]);
 
-  const userName = nameData; // temp
   const createdAt = new Date();
   const questionAnswerContent = renderedData;
 
-  const requestBody = {
+  const guestRequestBody = {
     questionAnswerContent,
-    userName,
+    userName : nameData,
     createdAt,
   };
+
+  const loginRequestBody = {
+    questionAnswerContent,
+    userName ,
+    createdAt,
+    userId
+  };
+
+  let requestBody:QuestionPostAnswer;
+  if(isLoggedIn) {requestBody=loginRequestBody} else {requestBody = guestRequestBody}
+  
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation(() =>
     questionsAPI.postAnswerQuestion(1, requestBody)
   );
-  const handleSubmit = async (e: React.MouseEvent) => {
-    if (!userName || !emailData || !isValid) {
+
+  const handleSubmit = async () => {
+    if (!isLoggedIn && (!userName || !emailData || !isValid)) {
       return;
     }
     await mutateAsync();
@@ -76,7 +94,7 @@ export default function AddReply() {
               'redo',
               '|',
               'CKFinder',
-         
+
               'indent',
               'outdent',
               'insertTable',

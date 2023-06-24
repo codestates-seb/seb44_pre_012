@@ -3,7 +3,7 @@
 import '../index.css';
 import { styled } from 'styled-components';
 import parse from 'html-react-parser';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { questionsAPI } from '../api/QuestionListApi';
 import colors from '../constants/colorNames';
 import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
@@ -16,46 +16,13 @@ import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer } from '../types/types';
 import SocialShare from './Share';
 import GuestDelete from './GuestDelete';
-import LoginDelete from './LoginDelete'
-// 유저 아이디 있어야 함.
+import LoginDelete from './LoginDelete';
 
 export default function Reply() {
-  const [isDeleteClicked, setIsDeleteClicked] = useState(0);
-  const [inputData, setInputData] = useState('');
-  const [isCorrectEmail, setIsCorrectEmail] = useState(true);
   const query = useQuery(['fetchCertainAnswer'], () =>
     questionsAPI.fetchCertainQuestion(1)
   );
-  // const isLoggedIn = useSelector(
-  //   (state: RootState) => state.auth.login.isLogin
-  // );
   const isLoggedIn = true;
-  const queryClient = useQueryClient();
-  const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
-  );
-  const handleDelete = async (e: React.FormEvent) => {
-    console.log(
-      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${isDeleteClicked} (을)를 입력해주세요.`
-    );
-    if (Number(inputData) === isDeleteClicked) {
-      e.preventDefault();
-      await mutateAsync();
-      queryClient.invalidateQueries(['fetchCertainAnswer']);
-      setIsDeleteClicked(0);
-      console.log('삭제되었습니다');
-      setInputData('');
-      return;
-    }
-    e.preventDefault();
-    // setIsDeleteClicked(0);
-    console.log('이메일이 유효하지 않습니다.');
-    setInputData('');
-    setIsCorrectEmail(false);
-    return;
-  };
-
-  console.log(typeof inputData);
 
   return (
     <S.ReplyContainer>
@@ -102,34 +69,15 @@ export default function Reply() {
                     <S.SocialBox>
                       <SocialShare />
                       {!isLoggedIn ? (
-                        <GuestDelete
-                          isLoggedIn={isLoggedIn}
-                          isDeleteClicked={isDeleteClicked}
-                          inputData={inputData}
-                          setInputData={setInputData}
-                          setIsDeleteClicked={setIsDeleteClicked}
-                          handleDelete={handleDelete}
-                          item={item}
-                          isCorrectEmail={isCorrectEmail}
-                          setIsCorrectEmail={setIsCorrectEmail}
-                        />
+                        <GuestDelete item={item} />
                       ) : (
-                        <LoginDelete
-                          isLoggedIn={isLoggedIn}
-                          isDeleteClicked={isDeleteClicked}
-                          inputData={inputData}
-                          setInputData={setInputData}
-                          setIsDeleteClicked={setIsDeleteClicked}
-                          handleDelete={handleDelete}
-                          item={item}
-                          isCorrectEmail={isCorrectEmail}
-                          setIsCorrectEmail={setIsCorrectEmail}
-                        />
+                        <LoginDelete item={item} />
                       )}
                     </S.SocialBox>
                     <S.UserBox>
                       <div>
-                        answered {formatAnswerElapsedTime(item.createdAt)}
+                        answered{' '}
+                        {formatAnswerElapsedTime(item.createdAt.toString())}
                       </div>
                       <div>
                         <div>
