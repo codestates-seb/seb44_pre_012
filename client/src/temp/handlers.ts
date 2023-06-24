@@ -89,4 +89,16 @@ export const handlers = [
     }
     return res(ctx.status(200));
   }),
+
+  // 질문 디테일 Get
+  rest.get('/questions/:questionId', (req, res, ctx) => {
+    const questionId: number = parseInt(req.params.questionId[0]); //
+    const questionData = questionQuery.data.filter(question => question.questionId === questionId);
+
+    if (!questionData) {
+      return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
+    }
+
+    return res(ctx.status(200), ctx.json({ data: questionData }));
+  }),
 ];
