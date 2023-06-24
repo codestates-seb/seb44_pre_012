@@ -1,4 +1,4 @@
-import { styled, css } from 'styled-components';
+import { styled } from 'styled-components';
 import { useRef, useEffect } from 'react';
 
 interface DropdownMenuProps {

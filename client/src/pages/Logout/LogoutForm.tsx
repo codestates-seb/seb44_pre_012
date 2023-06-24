@@ -6,7 +6,7 @@ import InputCheck from '../../components/InputCheck';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import FormSubmit from '../../components/FormSubmit';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../store/authSlice';
+import { logout } from '../../redux/authSlice';
 
 export default function LogoutForm() {
   const dispatch = useDispatch();

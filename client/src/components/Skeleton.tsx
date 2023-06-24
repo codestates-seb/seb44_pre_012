@@ -12,10 +12,8 @@ export function Skeleton({ width, height }: SkeletonProps): React.ReactNode {
 export default function SkeletonContainer() {
   return (
     <S.SkeletonContainer>
-      <div>
-        <Skeleton width="630px" height="30px" />
-        <Skeleton width="630px" height="30px" />
-      </div>
+      <Skeleton width="630px" height="30px" />
+      <Skeleton width="630px" height="30px" />
       <Skeleton width="600px" height="80px" />
       <Skeleton width="600px" height="80px" />
       <Skeleton width="600px" height="80px" />
@@ -25,25 +23,29 @@ export default function SkeletonContainer() {
 
 const S = {
   SkeletonContainer: styled.div`
-  height: 100%;
-  padding: 24px 24px 0 24px;
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  > div {
+    height: 100%;
+    padding: 24px 24px 0 24px;
+    width: 100%;
     display: flex;
+    gap: 10px;
     flex-direction: column;
-    margin: 20px 0;
-  }
-`,
+    justify-content: center;
+    align-items: center;
+    > div {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0;
+
+    }
+    > div:nth-child(2) {
+        margin-bottom: 25px;
+      }
+  `,
   StyledSkeleton: styled.div<SkeletonProps>`
     position: relative;
     overflow: hidden;
     height: ${({ height }) => height};
-    width: ${({ width }) => width};
+    width: 90%;
     background-color: #f3f3f3;
     border-radius: 5px;
 
@@ -69,6 +71,4 @@ const S = {
       animation: skeleton 1.6s infinite ease-in-out;
     }
   `,
-
-
 };
