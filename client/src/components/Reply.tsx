@@ -16,6 +16,7 @@ import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer } from '../types/types';
 import SocialShare from './Share';
 import GuestDelete from './GuestDelete';
+import LoginDelete from './LoginDelete'
 // 유저 아이디 있어야 함.
 
 export default function Reply() {
@@ -28,7 +29,7 @@ export default function Reply() {
   // const isLoggedIn = useSelector(
   //   (state: RootState) => state.auth.login.isLogin
   // );
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
     questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
@@ -113,13 +114,17 @@ export default function Reply() {
                           setIsCorrectEmail={setIsCorrectEmail}
                         />
                       ) : (
-                        <div
-                          onClick={() =>
-                            setIsDeleteClicked(item.questionAnswerId)
-                          }
-                        >
-                          delete
-                        </div>
+                        <LoginDelete
+                          isLoggedIn={isLoggedIn}
+                          isDeleteClicked={isDeleteClicked}
+                          inputData={inputData}
+                          setInputData={setInputData}
+                          setIsDeleteClicked={setIsDeleteClicked}
+                          handleDelete={handleDelete}
+                          item={item}
+                          isCorrectEmail={isCorrectEmail}
+                          setIsCorrectEmail={setIsCorrectEmail}
+                        />
                       )}
                     </S.SocialBox>
                     <S.UserBox>

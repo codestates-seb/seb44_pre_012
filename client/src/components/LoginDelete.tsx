@@ -119,22 +119,23 @@ const S = {
   DeleteContainer: styled.div`
     position: relative;
     height: 21px;
-    z-index: 0;
   `,
   DeleteConfirmForm: styled.form`
+    width: 313px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px 0px,
+      rgba(0, 0, 0, 0.06) 0px 2px 6px 0px, rgba(0, 0, 0, 0.09) 0px 3px 8px 0px;
+    background-color: white;
+    height: 130px;
+    border: 1px solid var(--color-button-lightgray);
     position: absolute;
-    z-index: 9;
     top: 150%;
     left: -25%;
-    border: 1px solid var(--color-button-lightgray);
-    width: 313px;
-    height: 130px;
     margin-left: 10px;
-box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px 0px,
-      rgba(0, 0, 0, 0.06) 0px 2px 6px 0px, rgba(0, 0, 0, 0.09) 0px 3px 8px 0px;    background-color: white;
     padding: 13px 5px;
     border-radius: 3px;
     display: flex;
+    z-index: 10;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
