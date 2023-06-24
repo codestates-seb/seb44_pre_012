@@ -6,12 +6,13 @@ import { questionsAPI } from '../api/QuestionListApi';
 import colors from '../constants/colorNames';
 import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
 import AddReply from './AddReply';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
 import { useState } from 'react';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer } from '../types/types';
+import SocialShare from './Share';
 // 유저 아이디 있어야 함.
 
 export default function Reply() {
@@ -93,7 +94,7 @@ export default function Reply() {
                   <div>{parse(item.questionAnswerContent)}</div>
                   <S.BottomContainer>
                     <S.SocialBox>
-                      <div>share</div>
+                      <SocialShare />
                       {!isLoggedIn ? (
                         <div
                           onClick={() =>
