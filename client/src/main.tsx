@@ -12,6 +12,7 @@ import Logout from './pages/Logout/Logout';
 import Reply from './components/Reply';
 import Register from './pages/Register/Register';
 import EmptyPage from './components/EmptyPage';
+import QuestionDetail from './pages/QuestionDetail/QuestionDetail';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
       { path: 'questions', element: <QuestionList /> },
+      { path: 'questions/:questionId', element: <QuestionDetail /> },
       { path: 'reply', element: <Reply /> },
       // { path: 'questions/register', element: <컴포넌트명 /> },
 
