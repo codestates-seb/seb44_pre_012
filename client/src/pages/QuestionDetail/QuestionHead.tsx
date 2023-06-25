@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import QuestionDetailnfo from './QuestionDetailInfo';
 import '../../index.css';
 import { QuestionData } from '../../types/types';
+import timeForToday from '../../components/dateFunction';
 
 interface QuestionDataProps {
     questionData: QuestionData;
@@ -16,9 +17,9 @@ const QuestionHead=({questionData}:QuestionDataProps)=>{
                 <S.AskDiv><S.AskButton>Ask Question</S.AskButton></S.AskDiv>
             </S.TitleDiv>
             <S.InfoContainer>
-                <QuestionDetailnfo title={"Asked"} content={questionData.createdAt}/>
-                {questionData.modifiedAt &&<QuestionDetailnfo title={"Modified"} content={questionData.modifiedAt}/>}
-                <QuestionDetailnfo title={"Viewed"} content={questionData.viewCount}/>
+                <QuestionDetailnfo title={"Asked"} content={timeForToday(questionData.createdAt)}/>
+                {questionData.modifiedAt &&<QuestionDetailnfo title={"Modified"} content={timeForToday(questionData.modifiedAt)}/>}
+                <QuestionDetailnfo title={"Viewed"} content={`${questionData.viewCount} times`}/>
             </S.InfoContainer>
         </div>
     )

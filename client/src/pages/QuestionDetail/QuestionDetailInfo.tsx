@@ -3,8 +3,10 @@ import { styled } from 'styled-components';
 
 type Props = {
     title: string;
-    content: string | number | undefined;
+    content: string | number;
   };
+
+
 
 const QuestionDetailInfo=({title, content}: Props)=>{
     return (
