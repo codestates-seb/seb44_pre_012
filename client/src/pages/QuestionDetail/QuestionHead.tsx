@@ -17,7 +17,7 @@ const QuestionHead=({questionData}:QuestionDataProps)=>{
             </S.TitleDiv>
             <S.InfoContainer>
                 <QuestionDetailnfo title={"Asked"} content={questionData.createdAt}/>
-                <QuestionDetailnfo title={"Modified"} content={questionData.modifiedAt}/>
+                {questionData.modifiedAt &&<QuestionDetailnfo title={"Modified"} content={questionData.modifiedAt}/>}
                 <QuestionDetailnfo title={"Viewed"} content={questionData.viewCount}/>
             </S.InfoContainer>
         </div>

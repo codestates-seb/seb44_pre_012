@@ -22,7 +22,7 @@ const QuestionItem=({questionData}:QuestionDataProps)=>{
                      <VoteCell />
                      <S.PostCell>
                          <article>
-                             <p>{questionData.questionTitle}</p>
+                             <p>{questionData.questionContent}</p>
                          </article>
                         <S.PostEnd>
                             <S.FlexWrap>

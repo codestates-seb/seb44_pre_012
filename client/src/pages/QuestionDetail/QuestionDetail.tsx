@@ -5,28 +5,26 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { questionDetailAPI } from '../../api/QuestionDetailApi';
 
-import { QuestionData } from '../../types/types';
-
-// interface RouteParams {
-//     questionId: string;
-//   }
 const QuestionDetail=()=>{
 
     const { questionId } = useParams();
-    const {data} = useQuery(['getQuestionDetail',questionId], () => questionDetailAPI.fetchCertainQuestion(questionId));
+    const { data, isLoading } = useQuery(['getQuestionDetail',questionId], () => questionDetailAPI.fetchCertainQuestion(questionId));
 
-    const questionData = data[0];
-    console.log(data[0]);
+    if (isLoading) {
+        return <>Loading...</>
+    }
+
+    if(data[0]) {
 
     return (
         <S.Container>
             <section>
-                <QuestionItem questionData={questionData}/>
-                {/* <Sample questionData={questionData} /> */}
+                <QuestionItem questionData={data[0]}/>
             </section>
             
         </S.Container>
     )
+}
 }
 
 const S = {
