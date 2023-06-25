@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import QuestionList from './pages/Question/QuestionList';
 import Logout from './pages/Logout/Logout';
-import Reply from './components/Reply';
+import Reply from './components/reply/Reply';
 import Register from './pages/Register/Register';
 
 const router = createBrowserRouter([

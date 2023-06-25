@@ -1,29 +1,29 @@
 // 질문 컴포넌트에서 질문 아이디 받아와야함.
 
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
 import parse from 'html-react-parser';
 import { useQuery } from '@tanstack/react-query';
-import { questionsAPI } from '../api/QuestionListApi';
-import colors from '../constants/colorNames';
-import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
+import { questionsAPI } from '../../api/QuestionListApi';
+import colors from '../../constants/colorNames';
+import { formatAnswerElapsedTime } from '../../util/formatElapsedTime';
 import AddReply from './AddReply';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../redux/store';
 import { useState } from 'react';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
-import { QuestionAnswer } from '../types/types';
+import { QuestionAnswer } from '../../types/types';
 import SocialShare from './Share';
 import GuestDelete from './GuestDelete';
 import LoginDelete from './LoginDelete';
+import VoteCount from './VoteCount';
 
 export default function Reply() {
   const query = useQuery(['fetchCertainAnswer'], () =>
     questionsAPI.fetchCertainQuestion(1)
   );
   const isLoggedIn = true;
-
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
@@ -44,13 +44,7 @@ export default function Reply() {
               <div>
                 <div>
                   <S.Sidebar>
-                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
-                      <IoMdArrowDropup size={28} />
-                    </S.ArrowBox>
-                    <div>{item.voteCount}</div>
-                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
-                      <IoMdArrowDropdown size={28} />
-                    </S.ArrowBox>
+                    <VoteCount item={item} isLoggedIn={isLoggedIn} />
                     <S.Icon>
                       <FaRegBookmark
                         style={{ color: 'var(--color-button-lightgray)' }}
@@ -139,7 +133,6 @@ const S = {
   `,
   RenderedAnswers: styled.div`
     width: 100%;
-    /* border: 1px solid yellow; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -166,27 +159,8 @@ const S = {
       margin-bottom: 7px;
     }
     > div:nth-child(2) {
-      color: var(--color-content-desc);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 7px;
-    }
-  `,
-  ArrowBox: styled.div`
-    &.isNotLoggedIn {
-      opacity: 0.4;
-    }
-    border: 1px solid var(--color-button-lightgray);
-    color: var(--color-content-desc);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      background-color: var(--color-button-orange-hover);
+      font-size: 1.2rem;
+      margin: 3px 0 7px 0;
     }
   `,
   Icon: styled.div`

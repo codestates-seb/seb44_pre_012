@@ -1,11 +1,10 @@
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
-import { QuestionAnswer } from '../types/types';
-import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { questionsAPI } from '../api/QuestionListApi';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { QuestionAnswer } from '../../types/types';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { questionsAPI } from '../../api/QuestionListApi';
+
 interface GuestDeleteProps {
   item: QuestionAnswer;
 }
@@ -13,21 +12,36 @@ interface GuestDeleteProps {
 export default function GuestDelete({ item }: GuestDeleteProps) {
   const [numberDeleteClicked, setNumberIsDeleteClicked] = useState(0);
   const [inputData, setInputData] = useState('');
-  const [isCorrectSentence, setIsCorrectSentence] = useState(true);
-
-  // const userName = useSelector(
-  //   (state: RootState) => state.auth.login.userName);
-  const userName = 'Mango';
-  const isUserCreated = item.userName === userName;
+  const [isCorrectEmail, setIsCorrectEmail] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
     questionsAPI.deleteAnswerQuestion(1, numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
-
+  function handleEnterKey(this: HTMLInputElement, event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const button = document.getElementById("submitButton");
+      if (button) {
+        button.click();
+      }
+    }
+  }
+  useEffect(() => {
+    if (inputRef.current) {
+    inputRef.current.addEventListener("keypress", handleEnterKey )};
+    return () => {
+      if (inputRef.current) {
+      inputRef.current.removeEventListener("keypress", handleEnterKey);}
+    };
+  }, [handleEnterKey]);
   const handleDelete = async (e: React.FormEvent) => {
-    if (inputData === 'I Love Mango') {
+    console.log(
+      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${numberDeleteClicked} (을)를 입력해주세요.`
+    );
+    if (Number(inputData) === numberDeleteClicked) {
       e.preventDefault();
       await mutateAsync();
       queryClient.invalidateQueries(['fetchCertainAnswer']);
@@ -37,50 +51,50 @@ export default function GuestDelete({ item }: GuestDeleteProps) {
     }
     e.preventDefault();
     setInputData('');
-    setIsCorrectSentence(false);
+    setIsCorrectEmail(false);
     return;
   };
 
   return (
     <S.DeleteContainer>
-      {isUserCreated && (
-        <S.DeleteButton
-          onClick={() => {
-            setNumberIsDeleteClicked(item.questionAnswerId);
-            setIsLayoutClicked(prev => !prev);
-          }}
-        >
-          Delete
-        </S.DeleteButton>
-      )}
+      <S.DeleteButton
+        onClick={() => {
+          setNumberIsDeleteClicked(item.questionAnswerId);
+          setIsLayoutClicked(prev => !prev);
+        }}
+      >
+        Delete
+      </S.DeleteButton>
       {numberDeleteClicked === item.questionAnswerId && isLayoutClicked && (
         <div>
           <S.DeleteConfirmForm>
-            {isCorrectSentence ? (
+            {isCorrectEmail ? (
               <S.FormInform>
-                To confirm, type "I Love Mango" in the box below
+                Please enter the email address you used.
               </S.FormInform>
             ) : (
               <S.FormInform className="warning">
-                The sentence you entered does not match.
+                The email does not match.
               </S.FormInform>
             )}
             <S.FormInput
+                        ref={inputRef}
+
               value={inputData}
               onChange={e => setInputData(e.target.value)}
-              placeholder="망고 사랑해 💛"
+              placeholder=" 아무 키나 입력 후 Submit을 누르고 콘솔창을 확인해주세요."
             />
             <S.ButtonBox>
               <S.FormCancelButton
                 onClick={() => {
                   setNumberIsDeleteClicked(0);
-                  setIsCorrectSentence(true);
+                  setIsCorrectEmail(true);
                   setInputData('');
                 }}
               >
                 Cancel
               </S.FormCancelButton>
-              <S.FormSubmitButton onClick={handleDelete}>
+              <S.FormSubmitButton onClick={handleDelete} id="submitButton">
                 Delete
               </S.FormSubmitButton>
             </S.ButtonBox>
@@ -109,21 +123,20 @@ const S = {
     height: 21px;
   `,
   DeleteConfirmForm: styled.form`
+    position: absolute;
+    z-index: 9;
+    top: 150%;
+    left: -25%;
+    border: 1px solid var(--color-button-lightgray);
     width: 313px;
-    background-color: white;
+    height: 130px;
+    margin-left: 10px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px 0px,
       rgba(0, 0, 0, 0.06) 0px 2px 6px 0px, rgba(0, 0, 0, 0.09) 0px 3px 8px 0px;
     background-color: white;
-    height: 130px;
-    border: 1px solid var(--color-button-lightgray);
-    position: absolute;
-    top: 150%;
-    left: -25%;
-    margin-left: 10px;
     padding: 13px 5px;
     border-radius: 3px;
     display: flex;
-    z-index: 10;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;

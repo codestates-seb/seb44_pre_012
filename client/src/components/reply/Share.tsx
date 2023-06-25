@@ -1,4 +1,4 @@
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 

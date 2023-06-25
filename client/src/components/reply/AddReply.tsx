@@ -1,25 +1,22 @@
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { useState, useEffect } from 'react';
-import RecommendLogin from './RecommendLogin';
+import RecommendLogin from '../RecommendLogin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { questionsAPI } from '../api/QuestionListApi';
-import { QuestionPostAnswer } from '../types/types';
-
+import { questionsAPI } from '../../api/QuestionListApi';
+import { QuestionPostAnswer } from '../../types/types';
 
 export default function AddReply() {
-
   // const {isLoggedIn, userName, userId} = useSelector(
   //   (state: RootState) => state.auth.login
   // );
   const userId = 77; // temp
-  const userName = 'Mango' // temp
+  const userName = 'Mango'; // temp
   const isLoggedIn = true;
-
 
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
@@ -37,20 +34,24 @@ export default function AddReply() {
 
   const guestRequestBody = {
     questionAnswerContent,
-    userName : nameData,
+    userName: nameData,
     createdAt,
   };
 
   const loginRequestBody = {
     questionAnswerContent,
-    userName ,
+    userName,
     createdAt,
-    userId
+    userId,
   };
 
-  let requestBody:QuestionPostAnswer;
-  if(isLoggedIn) {requestBody=loginRequestBody} else {requestBody = guestRequestBody}
-  
+  let requestBody: QuestionPostAnswer;
+  if (isLoggedIn) {
+    requestBody = loginRequestBody;
+  } else {
+    requestBody = guestRequestBody;
+  }
+
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation(() =>
