@@ -31,3 +31,10 @@ export interface QuestionAnswer {
   createdAt: string;
   modifiedAt?: string;
 }
+
+export interface Comment {
+  commentId: number;
+  commentContent: string;
+  createdAt: string;
+  modifiedAt?: string;
+}
