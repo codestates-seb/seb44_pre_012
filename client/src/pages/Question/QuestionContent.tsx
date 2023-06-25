@@ -3,6 +3,7 @@ import { QuestionInfo } from '../../types/types';
 import '../../index.css';
 import colors from '../../constants/colorNames';
 import { formatElapsedTime } from '../../util/formatElapsedTime';
+import { Link } from 'react-router-dom';
 interface QuestionContentProps {
   data: QuestionInfo;
 }
@@ -19,7 +20,7 @@ export default function QuestionContent({ data }: QuestionContentProps) {
         <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>{data.bounty ? `+${data.bounty}` : ''} </S.BountyCount>
       </S.SubInfo>
       <S.Content>
-        <S.A>{data.questionTitle}</S.A>
+        <S.A to={`/questions/${data.questionId}`}>{data.questionTitle}</S.A>
         <S.Desc>{data.questionContent}</S.Desc>
         <S.BelowInfo>
           <div>
@@ -134,7 +135,7 @@ const S = {
     }
   `,
 
-  A: styled.a`
+  A: styled(Link)`
     color: var(--color-content-title);
     font-size: 17px;
     margin-bottom: 2px;

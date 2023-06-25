@@ -11,15 +11,15 @@ export interface QuestionInfo {
   bounty?: number;
 }
 
-export interface LoginInfo {
-  email: string;
-  password: string;
-}
-
-export interface RegisterInfo {
+export interface QuestionData {
+  questionId: number | undefined | string;
+  questionTitle: string;
+  questionContent: string;
   userName: string;
-  email: string;
-  password: string;
+  viewCount: number;
+  createdAt: string;
+  modifiedAt?: string;
+  questionAnswers: QuestionAnswer;
 }
 
 export interface QuestionAnswer {
@@ -30,4 +30,15 @@ export interface QuestionAnswer {
   voteCount: number;
   createdAt: string;
   modifiedAt?: string;
+}
+
+export interface LoginInfo {
+  email: string;
+  password: string;
+}
+
+export interface RegisterInfo {
+  userName: string;
+  email: string;
+  password: string;
 }
