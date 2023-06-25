@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { login } from './redux/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
+import Nav from './components/Nav';
 
 // 목업 서버
 import { worker } from './temp/worker';
@@ -84,6 +85,7 @@ function App() {
   }, [dispatch]);
 
   let bgColor: string;
+  let showNav: boolean = true;
   let showFooter: boolean = true;
 
   switch (location.pathname) {
@@ -91,6 +93,7 @@ function App() {
     case PATHS.LOGOUT:
     case PATHS.REGISTER:
       bgColor = 'hsl(210, 8%, 95%)';
+      showNav = false;
       showFooter = false;
       break;
     default:
@@ -102,6 +105,11 @@ function App() {
       <Header />
       <S.Container background={bgColor}>
         <S.OutletWrapper>
+          {showNav && (
+            <S.NavWrapper>
+              <Nav />
+            </S.NavWrapper>
+          )}
           <Outlet />
         </S.OutletWrapper>
         <ReactQueryDevtools initialIsOpen={false} />
@@ -121,13 +129,27 @@ export default function AppWrapper() {
 
 const S = {
   Container: styled.div<{ background: string }>`
+    display: flex;
+    flex: 1;
     min-height: 100%;
     background: ${props => props.background};
   `,
   OutletWrapper: styled.div`
+    display: flex;
     flex: 1;
     max-width: 1264px;
     width: 100%;
-    margin: auto;
+    margin: 0 auto;
+    min-height: 100%;
+    > main {
+      flex: 1;
+    }
+  `,
+  NavWrapper: styled.aside`
+    position: sticky;
+    top: 52px;
+    border-right: 1px solid hsl(210, 8%, 85%);
+    width: 164px;
+    max-height: calc(100vh - 52px);
   `,
 };

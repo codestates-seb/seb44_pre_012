@@ -29,17 +29,32 @@ export const handlers = [
     );
   }),
 
-  // 💜 답변 GET
+  // 💜 답변 GET , 질문 상세 페이지 GET
   rest.get('/questions/:questionId', (req, res, ctx) => {
     const questionId: number = parseInt(req.params.questionId[0]); //
+    const questionData = questionQuery.data.filter(question => question.questionId === questionId); // 질문 상세페이지
+
     const answerData = questionQuery.data.find(
       question => question.questionId === questionId
     )?.questionAnswers;
-    if (!answerData) {
+
+    if (!answerData||!questionData) {
       return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
     }
-    return res(ctx.status(200), ctx.json({ data: answerData }));
+    return res(ctx.status(200), ctx.json({ data: answerData, questionData: questionData }));
+
   }),
+
+  // 질문 디테일 Get
+  // rest.get('/questions/:questionId', (req, res, ctx) => {
+  //   const questionId: number = parseInt(req.params.questionId[0]); //
+  //   const questionData = questionQuery.data.filter(question => question.questionId === questionId);
+
+  //   if (!questionData) {
+  //     return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
+  //   }
+  //   return res(ctx.status(200), ctx.json({ data: questionData }));
+  // }),
 
   // 💜 답변 POST
   rest.post('/answers/register/:questionId', (req, res, ctx) => {
@@ -89,4 +104,6 @@ export const handlers = [
     }
     return res(ctx.status(200));
   }),
+
+
 ];
