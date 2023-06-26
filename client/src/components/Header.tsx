@@ -99,12 +99,14 @@ export default function Header() {
                 </S.TopSearchPopoverWrapper>
                 <S.TopSearchPopoverBottom>
                   <S.TopSearchPopoverBottomWrapper>
+                  <Link to="questions/ask">
                     <S.TopSearchPopoverQuestionBtn
                       to={isLoggedIn ? '/' : '/users/login'}
                       // 질문작성페이지 완료 후 수정 예정
                     >
                       Ask a question
                     </S.TopSearchPopoverQuestionBtn>
+                    </Link>
                     <S.TopSearchPopoverHelpBtn>
                       Serch help
                     </S.TopSearchPopoverHelpBtn>

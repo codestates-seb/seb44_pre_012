@@ -10,6 +10,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { questionsAPI } from '../../api/QuestionListApi';
 import SkeletonContainer from '../../components/Skeleton';
+import { Link } from 'react-router-dom';
 
 export default function QuestionList() {
   const { ref, inView } = useInView();
@@ -65,7 +66,9 @@ export default function QuestionList() {
           <div>
             <S.Title>
               <h1> All Questions </h1>
+              <Link to="questions/ask">
               <S.AskButton> Ask Question </S.AskButton>
+              </Link>
             </S.Title>
             <S.SubTitle>
               <div> {addCommasToNumber(questionData.length)} questions</div>

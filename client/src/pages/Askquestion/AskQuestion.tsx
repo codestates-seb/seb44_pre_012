@@ -3,6 +3,16 @@ import askquestionbackgroundimg from '../../assets/askquestionbackgroundimg.svg'
 import { useState, useRef } from "react";
 import { TfiPencil } from "react-icons/tfi";
 import { TbBellRinging2Filled } from "react-icons/tb"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+// import { BASE_URL } from "../../constants/apiUrl";
+
+export interface QuestionPost {
+  questionContents: object;
+  createdAt: Date | string;
+  userName: string;
+} 
+
 
 interface IsFocusProps {
   isFocus: boolean;
@@ -13,15 +23,104 @@ interface QuestionSidebarProps {
   text: string[];
 }
 
+type InputValue = {
+ title?: string | undefined;
+ content?: string | undefined;
+ expection?: string | undefined;
+ tag?: string[] | undefined; 
+ createdAt?: string | object | undefined;
+}
+
+
 export default function Askquestion() {
+  // const isLoggedIn = useSelector(
+  //   (state: RootState) => state.auth.login.isLogin
+  // ); //이거 같이 넣어주기
   const editorRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
+  const [inputValue, setInputValue] = useState<InputValue>({ 
+    title : "", 
+    content: "", 
+    expection: "", 
+    tag: ["Javascript"]
+  });
+
+  const questionsAPI = {
+    postAskQuestion: async (requestBody: InputValue) => {
+      try {
+        const res = await axios.post(
+          `/questions/register`,
+          requestBody
+        );
+        const { data } = res.data;
+        return data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
+  }
+
+
+  const createdAt = new Date(); //글을 생성한 날짜 넣어주기
+  const questionContents = inputValue;
+
+  const requestBody = {
+    questionContents,
+    userName: "임시",
+    createdAt,
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync } = useMutation(() =>
+    questionsAPI.postAskQuestion(requestBody)
+  );
+
+  const handleSubmit = async (e: React.MouseEvent) => {
+    await mutateAsync();
+    setInputValue(prevState => ({
+      ...prevState,
+      title: "",
+      content: "",
+      expectation: ""
+    }));
+    queryClient.invalidateQueries(['questionList']); //쿼리를 유지를 취소하고 다시 퀴리하겠다
+  };
 
   const handleNextStep = () => {
     //버튼의 타입에 Teaxtar라면 인풋의 벨류값이 20글자가 넘으면 작동
     setCurrentStep((prevStep) => prevStep + 1);
     setIsFocus(true);
+  };
+
+  const handleInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(prevState => ({
+    ...prevState,
+    title: e.target.value
+  }));
+  };
+
+  const handleInputContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(prevState => ({
+      ...prevState,
+      content: e.target.value
+    }));
+  };
+
+  const handleInputExpection = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(prevState => ({
+      ...prevState,
+      expection: e.target.value
+    }));
+  };
+
+  const handleInputTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(prevState => ({
+      ...prevState,
+      tag: e.target.value.split("")
+    }));
   };
 
   const stepsList = [
@@ -68,6 +167,8 @@ export default function Askquestion() {
                 <S.InputContainer>
                   <S.Input 
                   isFocus={isFocus}
+                  value={inputValue.title}
+                  onChange={handleInputTitle}
                   type="text"
                   placeholder="e.g. is there an R function for finding the index of an element in a vector?"></S.Input>
                 </S.InputContainer>
@@ -96,7 +197,10 @@ export default function Askquestion() {
                 Introduce the problem and expand on what you put in the title. Minimum 20 characters.
                 </p>
                 <S.EditorContainer>
-                  <S.Editortextarea ref={editorRef}/>
+                  <S.Editortextarea 
+                  ref={editorRef}
+                  value={inputValue.content}
+                  onChange={handleInputContent}/>
                 </S.EditorContainer>
                 {currentStep > 0 && <S.NextBtn onClick={handleNextStep}>Next</S.NextBtn>}
               </S.Leftcontainerwrapper>
@@ -122,7 +226,10 @@ export default function Askquestion() {
                 Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters.
                 </p>
                 <S.EditorContainer>
-                  <S.Editortextarea ref={editorRef}/>
+                  <S.Editortextarea 
+                  ref={editorRef}                  
+                  value={inputValue.expection}
+                  onChange={handleInputExpection}/>
                 </S.EditorContainer>
                 {currentStep > 1 && <S.NextBtn onClick={handleNextStep}>Next</S.NextBtn>}
               </S.Leftcontainerwrapper>
@@ -152,6 +259,8 @@ export default function Askquestion() {
                 </p>
                 <S.InputContainer>
                   <S.Input 
+                  value={inputValue.tag?.join("")}
+                  onChange={handleInputTag}
                   isFocus={isFocus}
                   type="text"
                   placeholder="e.g. (angular regex django)"></S.Input>
@@ -186,7 +295,7 @@ export default function Askquestion() {
                   type="text"
                   placeholder="e.g. is there an R function for finding the index of an element in a vector?"></S.Input>
                 </S.InputContainer>
-                {currentStep > 3 && <S.NextBtn onClick={handleNextStep}>Review your question</S.NextBtn>}
+                {currentStep > 3 && <S.NextBtn onClick={handleSubmit}>Review your question</S.NextBtn>}
               </S.Leftcontainerwrapper>
             </S.Leftcontainer>
           </S.Leftside>
@@ -197,10 +306,7 @@ export default function Askquestion() {
             "Please make sure your question isn’t already answered before posting, or your question might be closed as a duplicate."
             ]}
             isFocus={currentStep === 4}/>
-            {/* 인풋을 누르면 그에 해당하는 사이드바로 이동 */}
-        </S.AskquestionInputComponent>     
-
-       
+        </S.AskquestionInputComponent>
       </S.AskquestionMain>
     </S.AskQuestionPage>
   )
@@ -399,4 +505,6 @@ const S = {
       font-size: 12px;
     }
   `,
+
+  
 }
