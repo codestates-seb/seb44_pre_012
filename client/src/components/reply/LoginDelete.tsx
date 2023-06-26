@@ -49,7 +49,8 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
     if (inputData === 'I Love Mango') {
       e.preventDefault();
       await mutateAsync();
-      queryClient.invalidateQueries(['getQuestionDetail', `${questionItem.questionId})`]); //temp
+      const questionID = questionItem.questionId;
+      queryClient.invalidateQueries(['getQuestionDetail', String(questionID)]);
       setNumberIsDeleteClicked(0);
       setInputData('');
       return;

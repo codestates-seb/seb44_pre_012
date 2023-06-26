@@ -47,7 +47,8 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
     if (Number(inputData) === numberDeleteClicked) {
       e.preventDefault();
       await mutateAsync();
-      queryClient.invalidateQueries(['getQuestionDetail', `${questionItem.questionId})`]);
+      const questionID = questionItem.questionId;
+      queryClient.invalidateQueries(['getQuestionDetail', String(questionID)]);
       setNumberIsDeleteClicked(0);
       setInputData('');
       return;
