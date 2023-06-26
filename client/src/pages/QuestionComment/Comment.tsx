@@ -13,7 +13,7 @@ const Comment =() => {
 
 const S={
   Container:styled.div`
-    display: flex;
+    display: block;
   `
 }
 

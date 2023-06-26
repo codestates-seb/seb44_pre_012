@@ -8,7 +8,7 @@ import { useState } from 'react';
 import logoIcon from '../assets/headerlogo.png';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '../redux/store';
 import Nav from './Nav';
 import { PATHS } from '../constants/paths';
 
@@ -45,7 +45,7 @@ export default function Header() {
   };
 
   const SearchInputDropdown = () => {
-    setIsDown(!isDown);
+    setIsDown(prev => !prev);
   };
 
   return (
@@ -78,37 +78,44 @@ export default function Header() {
           <S.NavButton>For Teams</S.NavButton>
         </S.TopbarNav>
         <S.TopForm>
-          <S.TopFormContainer onClick={SearchInputDropdown} isdown={isDown}>
+          <S.TopFormContainer onClick={SearchInputDropdown}>
             <AiOutlineSearch />
             <S.TopFormInput type="text" placeholder="Search..." />
           </S.TopFormContainer>
-          <S.TopSearchPopoverContainer isdown={isDown}>
-            <S.TopSearchPopoverWrapper>
-              {searchData.map((el, idx) => (
-                <S.TopSearchPopoverContent key={idx}>
-                  <S.TopSearchPopoverContentTitle>
-                    {el.keyword}
-                  </S.TopSearchPopoverContentTitle>
-                  <S.TopSearchPopoverContentMSG>
-                    {el.description}
-                  </S.TopSearchPopoverContentMSG>
-                </S.TopSearchPopoverContent>
-              ))}
-            </S.TopSearchPopoverWrapper>
-            <S.TopSearchPopoverBottom>
-              <S.TopSearchPopoverBottomWrapper>
-                <S.TopSearchPopoverQuestionBtn
-                  to={isLoggedIn ? '/' : '/users/login'}
-                  // 질문작성페이지 완료 후 수정 예정
-                >
-                  Ask a question
-                </S.TopSearchPopoverQuestionBtn>
-                <S.TopSearchPopoverHelpBtn>
-                  Serch help
-                </S.TopSearchPopoverHelpBtn>
-              </S.TopSearchPopoverBottomWrapper>
-            </S.TopSearchPopoverBottom>
-          </S.TopSearchPopoverContainer>
+          {isDown && (
+            <>
+              <S.TopSearchPopoverContainer>
+                <S.TopSearchPopoverWrapper>
+                  {searchData.map((el, idx) => (
+                    <S.TopSearchPopoverContent key={idx}>
+                      <S.TopSearchPopoverContentTitle>
+                        {el.keyword}
+                      </S.TopSearchPopoverContentTitle>
+                      <S.TopSearchPopoverContentMSG>
+                        {el.description}
+                      </S.TopSearchPopoverContentMSG>
+                    </S.TopSearchPopoverContent>
+                  ))}
+                </S.TopSearchPopoverWrapper>
+                <S.TopSearchPopoverBottom>
+                  <S.TopSearchPopoverBottomWrapper>
+                    <S.TopSearchPopoverQuestionBtn
+                      to={isLoggedIn ? '/' : '/users/login'}
+                      // 질문작성페이지 완료 후 수정 예정
+                    >
+                      Ask a question
+                    </S.TopSearchPopoverQuestionBtn>
+                    <S.TopSearchPopoverHelpBtn>
+                      Serch help
+                    </S.TopSearchPopoverHelpBtn>
+                  </S.TopSearchPopoverBottomWrapper>
+                </S.TopSearchPopoverBottom>
+              </S.TopSearchPopoverContainer>
+              {isDown && (
+                <S.TopSearchPopoverLayer onClick={SearchInputDropdown} />
+              )}
+            </>
+          )}
         </S.TopForm>
         <S.TopbarBtns>
           {!isLoggedIn ? (
@@ -214,25 +221,31 @@ const S = {
     flex-grow: 1;
     padding: 0px 3px 0px 3px;
   `,
-  TopFormContainer: styled.div<{ isdown: boolean }>`
-    display: flex;
-    align-items: center;
-    border: 1px solid
-      ${props => (props.isdown ? '#69b9f7' : 'var(--color-ui-border)')};
-    box-shadow: ${props =>
-      props.isdown ? '0px 0px 0px 4px rgba(105, 185, 247, 0.3)' : 'none'};
-    border-radius: 3px;
-    padding-left: 5px;
+  TopFormContainer: styled.div`
+    position: relative;
+    flex: 1;
+    > svg {
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   `,
   TopFormInput: styled.input`
-    height: 30px;
     display: flex;
-    align-items: center;
+    width: 100%;
+    height: 30px;
     border: none;
-    padding-left: 5px;
+    padding-left: 30px;
+    border: 1px solid var(--color-ui-border);
+    border-radius: 3px;
     outline: none;
+    &:focus {
+      border-color: #69b9f7;
+      box-shadow: 0px 0px 0px 4px rgba(105, 185, 247, 0.3);
+    }
   `,
-  TopSearchPopoverContainer: styled.div<{ isdown: boolean }>`
+  TopSearchPopoverContainer: styled.div`
     background-color: white;
     border: 1px solid var(--color-ui-border);
     box-shadow: 0px 1px 3px 3px var(--color-ui-border-shadow);
@@ -242,7 +255,7 @@ const S = {
     position: relative;
     margin-top: 10px;
     filter: drop-shadow(0px 0px 5px var(--color-ui-border));
-    display: ${props => (props.isdown ? 'block' : 'none')};
+    z-index: 1;
     &::before {
       content: '';
       position: absolute;
@@ -303,6 +316,13 @@ const S = {
     color: var(--color-searchBtn);
     font-size: 11px;
     cursor: pointer;
+  `,
+  TopSearchPopoverLayer: styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   `,
   TopbarBtns: styled.ol`
     display: flex;

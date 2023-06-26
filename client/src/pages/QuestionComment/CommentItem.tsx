@@ -3,16 +3,19 @@ import { Comment } from '../../types/types';
 
 
 interface CommentProps {
-  content: Comment;
+  commentData: Comment;
 }
 
-const CommentItem =({content}:CommentProps) => {
-  const timeValue = new Date(content.createdAt);
+const CommentItem =({commentData}:CommentProps) => {
+  const timeValue = new Date(commentData.createdAt);
 
   return (
     <S.Container>
-      <S.Content>{content.commentContent}</S.Content>
-      <S.CommentDate>{content.createdAt}</S.CommentDate>
+      <S.Div>
+        <S.Content>{commentData.commentContent+' - '}</S.Content>
+        <S.CommentName>{"UserName"}</S.CommentName>
+        <S.CommentDate>{commentData.createdAt}</S.CommentDate>
+      </S.Div>
     </S.Container>
   )
 }
@@ -20,15 +23,30 @@ const CommentItem =({content}:CommentProps) => {
 
 const S={
   Container:styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: inline-block;
+    padding: 0 20px;
+  `,
+  Div:styled.div`
+    display: inline-block;
+    /* border: 1px solid hsl(210, 8%, 95%);; */
+    /* border-right: #ffffff; */
+    border-bottom: 1px solid hsl(210, 8%, 95%);
+    padding: 6px;
   `,
   Content:styled.span`
-    font-size: 14px;
+    font-size: 13px;
     color: hsl(210, 8%, 15%);
   `,
+  CommentName:styled.span`
+    font-size: 13px;
+    color: #0074C2;
+    &:hover {
+      color: hsl(206, 100%, 52%)
+    }
+  `,
   CommentDate:styled.span`
-    
+    font-size: 13px;
+    color: #9199a1;
   `
 }
 

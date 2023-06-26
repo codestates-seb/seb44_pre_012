@@ -17,10 +17,11 @@ const S={
     display: flex;
   `,
   Form:styled.form`
-    width: 300px;
+    width: 95%;
   `,
   Input:styled.input`
-    width: 280px;
+    width: 90%;
+    font-size: 14px;
   `,
 
 }
