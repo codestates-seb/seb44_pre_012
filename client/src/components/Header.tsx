@@ -8,7 +8,7 @@ import { useState } from 'react';
 import logoIcon from '../assets/headerlogo.png';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '../redux/store';
 import Nav from './Nav';
 import { PATHS } from '../constants/paths';
 
