@@ -25,6 +25,7 @@ const QuestionDetail = () => {
 
   if (data[0]) {
     const questionData = data[0];
+    // console.log(questionData)
     return (
       <S.Container>
         <section>
