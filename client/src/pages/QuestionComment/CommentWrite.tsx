@@ -47,7 +47,7 @@ const S={
     margin-top:10px;
     font-size: 13px;
     &:hover {
-      color:hsl(206, 100%, 52%);
+      color:#0A95FF;
       cursor: pointer;
     }
   `,
@@ -60,10 +60,11 @@ const S={
     height: 30px;
     font-size: 14px;
     border: none;
+    margin-top:-4px;
   `,
   Btn:styled.button`
-    margin: 16px 4px -12px 8px;
-    padding: 5px;
+    margin: 16px 4px -18px 8px;
+    padding: 4px 10px;
     height: 30px;
     background: var(--color-button-blue);
     border: 1px solid var(--color-button-blue);

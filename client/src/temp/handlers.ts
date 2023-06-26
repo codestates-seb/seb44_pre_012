@@ -2,7 +2,7 @@
 // import allQuestions from './AllQuestionQuery.json';
 import  questionQuery  from './questionQuery.json';
 import { rest } from 'msw';
-
+import CommentQuery from './CommentQuery.json'
 
 
 export const handlers = [
@@ -47,17 +47,6 @@ export const handlers = [
 
 
   }),
-
-  // 질문 디테일 Get
-  // rest.get('/questions/:questionId', (req, res, ctx) => {
-  //   const questionId: number = parseInt(req.params.questionId[0]); //
-  //   const questionData = questionQuery.data.filter(question => question.questionId === questionId);
-
-  //   if (!questionData) {
-  //     return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
-  //   }
-  //   return res(ctx.status(200), ctx.json({ data: questionData }));
-  // }),
 
   // 💜 답변 POST
   rest.post('/answers/register/:questionId', (req, res, ctx) => {
@@ -141,4 +130,19 @@ export const handlers = [
     questionQuery.data.push(newQuestion);
     return res(ctx.status(201), ctx.json(newQuestion));
   }),
+
+
+  /*질문 디테일 Get
+  rest.get('/questions/:questionId', (req, res, ctx) => {
+    const questionId: number = parseInt(req.params.questionId[0]); //
+    const questionData = questionQuery.data.filter(question => question.questionId === questionId);
+
+    if (!questionData) {
+      return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
+    }
+    return res(ctx.status(200), ctx.json({ data: questionData }));
+  }),
+  */
+
+
 ];

@@ -6,6 +6,33 @@ interface CommentProps {
   commentData: Comment;
 }
 
+//날짜를 계산하는 함수 ((comment)
+const timeForComment = (value:Date)=> {
+  const today = new Date();
+  const timeValue = new Date(value);
+  const hours =`${timeValue.getHours() < 10 ? `0${timeValue.getHours()}` : `${timeValue.getHours()}`}:${timeValue.getMinutes() < 10 ? `0${timeValue.getMinutes()}` : `${timeValue.getMinutes()}`}`;
+  const monthName = timeValue.toLocaleString('en-US', { month: 'long' });
+  const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+  
+  if (betweenTime < 1) return 'a few minutes ago';
+  if (betweenTime < 60) {
+    return `${betweenTime}mins ago`;
+  }
+  if (betweenTime < 120) {
+    return `${betweenTime}hour ago`;
+  }
+  const betweenTimeHour = Math.floor(betweenTime / 60);
+  if (betweenTimeHour < 24) {
+    return `${betweenTime}hours ago`;
+  }
+  if (betweenTimeHour < 36) {
+    return `${betweenTimeHour}days ago`
+  } else {
+    return ` ${monthName} ${timeValue.getDate()} at ${hours}`
+  }
+}
+
+
 //댓글 한 개를 그려주는 컴포넌트
 const CommentItem =({commentData}:CommentProps) => {
   const timeValue = new Date(commentData.createdAt);
@@ -15,7 +42,7 @@ const CommentItem =({commentData}:CommentProps) => {
       <S.Div>
         <S.Content>{commentData.commentContent+' - '}</S.Content>
         <S.CommentName>{"UserName"}</S.CommentName>
-        <S.CommentDate>{commentData.createdAt}</S.CommentDate>
+        <S.CommentDate>{timeForComment(timeValue)}</S.CommentDate>
       </S.Div>
     </S.Container>
   )
