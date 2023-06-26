@@ -137,7 +137,7 @@ const S = {
       }
       &:nth-child(2),
       &:nth-child(3) {
-        @media (max-width: 650px) {
+        @media (max-width: 800px) {
           display: none;
         }
       }
