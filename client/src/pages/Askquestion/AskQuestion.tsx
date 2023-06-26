@@ -5,7 +5,7 @@ import { TfiPencil } from "react-icons/tfi";
 import { TbBellRinging2Filled } from "react-icons/tb"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { BASE_URL } from "../../constants/apiUrl";
+// import { BASE_URL } from "../../constants/apiUrl";
 
 export interface QuestionPost {
   questionContents: object;
@@ -505,4 +505,6 @@ const S = {
       font-size: 12px;
     }
   `,
+
+  
 }
