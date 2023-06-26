@@ -6,6 +6,7 @@ interface CommentProps {
   commentData: Comment;
 }
 
+//댓글 한 개를 그려주는 컴포넌트
 const CommentItem =({commentData}:CommentProps) => {
   const timeValue = new Date(commentData.createdAt);
 
@@ -24,14 +25,11 @@ const CommentItem =({commentData}:CommentProps) => {
 const S={
   Container:styled.div`
     display: inline-block;
-    padding: 0 20px;
+    border-bottom: 1px solid hsl(210, 8%, 95%);
   `,
   Div:styled.div`
     display: inline-block;
-    /* border: 1px solid hsl(210, 8%, 95%);; */
-    /* border-right: #ffffff; */
-    border-bottom: 1px solid hsl(210, 8%, 95%);
-    padding: 6px;
+    padding: 6px 6px 6px 24px;
   `,
   Content:styled.span`
     font-size: 13px;

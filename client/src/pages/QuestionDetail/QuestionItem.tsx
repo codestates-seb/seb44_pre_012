@@ -7,6 +7,7 @@ import VoteCell from '../../components/VoteCell';
 import '../../index.css';
 import Signature from './Signature';
 import { QuestionData } from '../../types/types';
+import Comment from '../QuestionComment/Comment';
 
 interface QuestionDataProps {
   questionData: QuestionData;
@@ -34,6 +35,7 @@ const QuestionItem = ({ questionData }: QuestionDataProps) => {
                 </S.Signature>
               </S.FlexWrap>
             </S.PostEnd>
+            <Comment />
           </S.PostCell>
         </S.ContentLayout>
         <S.AsideWrap>

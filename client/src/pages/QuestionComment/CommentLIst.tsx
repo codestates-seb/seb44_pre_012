@@ -2,10 +2,7 @@ import { styled } from 'styled-components';
 import {data as commentData} from '../../temp/AllCommentQuery.json';
 import CommentItem from './CommentItem';
 
-// interface CommentProps {
-//   commentData: Comment;
-// }
-
+//댓글 리스트를 그려주는 컴포넌트
 const CommentList =() => {
   return (
     <S.Container>
