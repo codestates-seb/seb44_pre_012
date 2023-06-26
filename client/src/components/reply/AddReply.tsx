@@ -8,15 +8,17 @@ import { useState, useEffect } from 'react';
 import RecommendLogin from '../RecommendLogin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { questionsAPI } from '../../api/QuestionListApi';
-import { QuestionPostAnswer } from '../../types/types';
-
-export default function AddReply() {
+import { QuestionPostAnswer, QuestionData } from '../../types/types';
+interface ReplyProps {
+  item: QuestionData;
+}
+export default function AddReply({ item }: ReplyProps) {
   // const {isLoggedIn, userName, userId} = useSelector(
   //   (state: RootState) => state.auth.login
   // );
   const userId = 77; // temp
   const userName = 'Mango'; // temp
-  const isLoggedIn = true;
+  const isLoggedIn = true; // temp
 
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
@@ -54,9 +56,12 @@ export default function AddReply() {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation(() =>
-    questionsAPI.postAnswerQuestion(1, requestBody)
-  );
+  const { mutateAsync } = useMutation(() => {
+    return questionsAPI.postAnswerQuestion(
+      Number(item.questionId),
+      requestBody
+    );
+  });
 
   const handleSubmit = async () => {
     if (!isLoggedIn && (!userName || !emailData || !isValid)) {
@@ -64,7 +69,7 @@ export default function AddReply() {
     }
     await mutateAsync();
     setRenderedData('');
-    queryClient.invalidateQueries(['fetchCertainAnswer']);
+    queryClient.invalidateQueries(['getQuestionDetail']);
     setEmailData('');
     setNameData('');
     setIsValid(false);
@@ -137,14 +142,8 @@ export default function AddReply() {
 }
 
 const S = {
-  RenderedReplyContainer: styled.div`
-    width: 100%;
-    height: 50px;
-  `,
-
   ReplyContainer: styled.div`
     padding: 24px;
-    height: 35rem;
   `,
   H2: styled.h2`
     color: var(--color-page-title);

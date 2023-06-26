@@ -1,23 +1,26 @@
 import '../../index.css';
 import { styled } from 'styled-components';
-import { QuestionAnswer } from '../../types/types';
+import { QuestionAnswer, QuestionData } from '../../types/types';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { questionsAPI } from '../../api/QuestionListApi';
 
 interface GuestDeleteProps {
   item: QuestionAnswer;
+  questionItem: QuestionData;
+
 }
 
-export default function GuestDelete({ item }: GuestDeleteProps) {
+export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
   const [numberDeleteClicked, setNumberIsDeleteClicked] = useState(0);
   const [inputData, setInputData] = useState('');
   const [isCorrectEmail, setIsCorrectEmail] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
 
+
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, numberDeleteClicked)
+    questionsAPI.deleteAnswerQuestion(Number(questionItem.questionId), numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   function handleEnterKey(this: HTMLInputElement, event: KeyboardEvent) {
@@ -44,7 +47,7 @@ export default function GuestDelete({ item }: GuestDeleteProps) {
     if (Number(inputData) === numberDeleteClicked) {
       e.preventDefault();
       await mutateAsync();
-      queryClient.invalidateQueries(['fetchCertainAnswer']);
+      queryClient.invalidateQueries(['getQuestionDetail', `${questionItem.questionId})`]);
       setNumberIsDeleteClicked(0);
       setInputData('');
       return;

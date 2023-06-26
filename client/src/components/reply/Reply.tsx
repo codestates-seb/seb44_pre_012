@@ -1,33 +1,32 @@
-// 질문 컴포넌트에서 질문 아이디 받아와야함.
-
 import '../../index.css';
 import { styled } from 'styled-components';
 import parse from 'html-react-parser';
-import { useQuery } from '@tanstack/react-query';
-import { questionsAPI } from '../../api/QuestionListApi';
 import colors from '../../constants/colorNames';
 import { formatAnswerElapsedTime } from '../../util/formatElapsedTime';
 import AddReply from './AddReply';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../redux/store';
-import { useState } from 'react';
-import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
-import { QuestionAnswer } from '../../types/types';
+import { QuestionAnswer, QuestionData } from '../../types/types';
 import SocialShare from './Share';
 import GuestDelete from './GuestDelete';
 import LoginDelete from './LoginDelete';
 import VoteCount from './VoteCount';
 
-export default function Reply() {
-  const query = useQuery(['fetchCertainAnswer'], () =>
-    questionsAPI.fetchCertainQuestion(1)
-  );
-  const isLoggedIn = true;
+interface ReplyProps {
+  questionData: QuestionData;
+}
+
+export default function Reply({questionData}:ReplyProps) {
+ // const { isLoggedIn } = useSelector(
+  //   (state: RootState) => state.auth.login
+  // );
+  const isLoggedIn = true; // temp
+
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
-        <div>{query.data ? `${query.data.length} answers` : null}</div>
+        <div>{Array.isArray(questionData.questionAnswers) ? `${questionData.questionAnswers.length} answers` : null}</div>
         <div>
           <span>sorted by:</span>
           <select defaultValue="highestScore">
@@ -38,8 +37,8 @@ export default function Reply() {
           </select>
         </div>
       </S.TotalAnswers>
-      {query.data
-        ? query.data.map((item: QuestionAnswer) => (
+      {Array.isArray(questionData.questionAnswers)
+        ? questionData.questionAnswers.map((item: QuestionAnswer) => (
             <S.RenderedAnswers key={item.questionAnswerId}>
               <div>
                 <div>
@@ -63,9 +62,9 @@ export default function Reply() {
                     <S.SocialBox>
                       <SocialShare />
                       {!isLoggedIn ? (
-                        <GuestDelete item={item} />
+                        <GuestDelete item={item} questionItem={questionData}/>
                       ) : (
-                        <LoginDelete item={item} />
+                        <LoginDelete item={item} questionItem={questionData}/>
                       )}
                     </S.SocialBox>
                     <S.UserBox>
@@ -88,8 +87,8 @@ export default function Reply() {
               </div>
             </S.RenderedAnswers>
           ))
-        : null}
-      <AddReply />
+          : null}
+      <AddReply item={questionData}/>
     </S.ReplyContainer>
   );
 }
@@ -99,21 +98,16 @@ const getUserRandomColor = (): string => {
 };
 const S = {
   ReplyContainer: styled.section`
-    padding: 24px;
+    padding-top: 25px;
     width: 100%;
-    height: 2000vh;
     display: flex;
     flex-direction: column;
-    > div:first-child {
-      border: 1px solid goldenrod;
-      height: 24px;
-    }
   `,
   TotalAnswers: styled.h3`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 45px;
+    padding: 5px 25px;
     margin-bottom: 8px;
     div:first-child {
       @media (max-width: 600px) {
@@ -138,8 +132,8 @@ const S = {
     align-items: center;
     > div {
       border-top: 1px solid var(--color-layout-lightgray);
-      padding: 20px 10px 10px 0;
-      width: 90%;
+      padding: 30px 0px;
+      width: 93.5%;
       display: flex;
       > div:first-child {
         margin-right: 20px;

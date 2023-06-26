@@ -1,6 +1,6 @@
 import '../../index.css';
 import { styled } from 'styled-components';
-import { QuestionAnswer } from '../../types/types';
+import { QuestionAnswer, QuestionData } from '../../types/types';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { questionsAPI } from '../../api/QuestionListApi';
@@ -8,9 +8,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 interface GuestDeleteProps {
   item: QuestionAnswer;
+  questionItem: QuestionData;
+
 }
 
-export default function GuestDelete({ item }: GuestDeleteProps) {
+export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
   const [numberDeleteClicked, setNumberIsDeleteClicked] = useState(0);
   const [inputData, setInputData] = useState('');
   const [isCorrectSentence, setIsCorrectSentence] = useState(true);
@@ -20,10 +22,10 @@ export default function GuestDelete({ item }: GuestDeleteProps) {
   //   (state: RootState) => state.auth.login.userName);
   const userName = 'Mango';
   const isUserCreated = item.userName === userName;
-
+ 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, numberDeleteClicked)
+    questionsAPI.deleteAnswerQuestion(Number(questionItem.questionId), numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   function handleEnterKey(this: HTMLInputElement, event: KeyboardEvent) {
@@ -47,7 +49,7 @@ export default function GuestDelete({ item }: GuestDeleteProps) {
     if (inputData === 'I Love Mango') {
       e.preventDefault();
       await mutateAsync();
-      queryClient.invalidateQueries(['fetchCertainAnswer']);
+      queryClient.invalidateQueries(['getQuestionDetail', `${questionItem.questionId})`]); //temp
       setNumberIsDeleteClicked(0);
       setInputData('');
       return;

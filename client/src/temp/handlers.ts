@@ -72,7 +72,6 @@ export const handlers = [
       questionAnswerContent,
       createdAt,
       userName,
-      userId: 0,
       modifiedAt: '',
       voteCount: 0,
     };
@@ -104,6 +103,5 @@ export const handlers = [
     }
     return res(ctx.status(200));
   }),
-
 
 ];

@@ -1,8 +1,12 @@
 import '../../index.css';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { QuestionAnswer } from '../../types/types';
-import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
+import { QuestionAnswer, QuestionData } from '../../types/types';
+import {
+  IoMdArrowDropup,
+  IoMdArrowDropdown,
+  IoIosHeartEmpty,
+} from 'react-icons/io';
 
 interface GuestDeleteProps {
   item: QuestionAnswer;
@@ -15,17 +19,17 @@ export default function VoteCount({ item, isLoggedIn }: GuestDeleteProps) {
   const [voteCount, setVoteCount] = useState(item.voteCount);
 
   const handleUpClick = () => {
-    if (voteCount && !isUpClicked && !isDownClicked) {
+    if (typeof voteCount === 'number' && !isUpClicked && !isDownClicked) {
       setVoteCount(voteCount + 1);
       setIsUpClicked(true);
-    } else if (voteCount && isUpClicked) {
+    } else if (typeof voteCount === 'number' && isUpClicked) {
       setVoteCount(voteCount - 1);
       setIsUpClicked(false);
     }
   };
 
   const handleDownClick = () => {
-    if (voteCount && !isDownClicked && !isUpClicked) {
+    if (typeof voteCount === 'number' && !isDownClicked && !isUpClicked) {
       setVoteCount(voteCount - 1);
       setIsDownClicked(true);
     } else if (isDownClicked) {
@@ -43,10 +47,10 @@ export default function VoteCount({ item, isLoggedIn }: GuestDeleteProps) {
         <IoMdArrowDropup size={28} />
       </S.ArrowBox>
       <S.VoteNumber>
-        {item.voteCount && isUpClicked
+        {item.voteCount !== undefined && isUpClicked
           ? item.voteCount + 1
           : isDownClicked
-          ? item.voteCount && item.voteCount - 1
+          ? item.voteCount !== undefined && item.voteCount - 1
           : item.voteCount}
       </S.VoteNumber>
       <S.ArrowBox

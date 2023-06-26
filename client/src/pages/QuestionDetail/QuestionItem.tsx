@@ -36,11 +36,10 @@ const QuestionItem=({questionData}:QuestionDataProps)=>{
                             </S.FlexWrap>
                         </S.PostEnd>
                     </S.PostCell>
-
                 </S.ContentLayout>
-                <S.AsideWrap>
+                {/* <S.AsideWrap>
                     <Aside />
-                </S.AsideWrap>
+                </S.AsideWrap> */}
             </S.Div>
         </S.Section>
     )

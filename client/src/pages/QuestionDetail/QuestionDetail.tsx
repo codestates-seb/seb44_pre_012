@@ -4,8 +4,10 @@ import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 import { questionDetailAPI } from '../../api/QuestionDetailApi';
-
+import Aside from '../Question/Aside';
 import EmptyPage from '../../components/EmptyPage';
+import Reply from '../../components/reply/Reply';
+
 
 const QuestionDetail=()=>{
 
@@ -25,10 +27,17 @@ const QuestionDetail=()=>{
       const questionData= data[0];
     return (
         <S.Container>
-            <section>
-                <QuestionItem questionData={questionData}/>
-            </section>
-            
+            <div>
+                <section>
+                    <QuestionItem questionData={questionData}/>
+                </section>
+                <section>
+                   <Reply questionData={questionData}/>
+                </section>
+            </div>
+            <S.AsideWrap>
+                <Aside />
+            </S.AsideWrap>            
         </S.Container>
     )
 }
@@ -40,6 +49,9 @@ const S = {
         >section{
             display: block;
         }
+    `,
+    AsideWrap:styled.div`
+        margin: 0 0 15px 0;
     `
 }
 
