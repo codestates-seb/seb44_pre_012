@@ -17,6 +17,7 @@
 
   /* color */
   --color-ui-border: #d6d9dc;
+  --color-ui-border-click: #69b9f7;
   --color-ui-border-shadow:#d6d9dc4c;
   --color-searchBtn: #0074CC;
   --color-navbar-button-hover: #E3E6E8;
@@ -51,6 +52,7 @@
   --color-layout-orange: hsl(27, 90%, 55%);
   --color-layout-black: hsl(214, 9%, 15%);
   --color-label-black: hsl(210, 8%, 5%);
+  --color-sidebar-gray: hsl(210, 8%, 97%);
 
   --color-blue-100: hsl(206, 100%, 52%);
   --color-blue-200: hsl(206, 100%, 40%);

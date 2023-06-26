@@ -8,6 +8,10 @@ import { useState } from "react";
 import logoIcon from '../assets/headerlogo.png';
 import { Link } from 'react-router-dom';
 
+interface SearchProps {
+  isDown: boolean;
+}
+
 const S = {
   TopbarWrapper: styled.header`
     max-width: 100%;
@@ -70,11 +74,11 @@ const S = {
     flex-grow: 1;
     padding: 0px 3px 0px 3px;
   `,
-  TopFormContainer: styled.div<{ isdown:boolean }>`
+  TopFormContainer: styled.div<SearchProps>`
     display: flex;
     align-items: center;
-    border: 1px solid ${(props)=>(props.isdown ? "#69b9f7" : "var(--color-ui-border)")};
-    box-shadow: ${(props) => (props.isdown ? "0px 0px 0px 4px rgba(105, 185, 247, 0.3)" : "none")};
+    border: 1px solid ${(props)=>(props.isDown ? "#69b9f7" : "var(--color-ui-border)")};
+    box-shadow: ${(props) => (props.isDown ? "0px 0px 0px 4px rgba(105, 185, 247, 0.3)" : "none")};
     border-radius: 3px;
     padding-left: 5px;
   `,
@@ -86,7 +90,7 @@ const S = {
     padding-left: 5px;
     outline: none;
   `,
-  TopSearchPopoverContainer: styled.div<{ isdown:boolean }>`
+  TopSearchPopoverContainer: styled.div<SearchProps>`
     background-color: white;
     border: 1px solid var(--color-ui-border);
     box-shadow:0px 1px 3px 3px var(--color-ui-border-shadow);
@@ -96,14 +100,14 @@ const S = {
     position: relative;
     margin-top: 10px;
     filter: drop-shadow(0px 0px 5px var(--color-ui-border));
-    display: ${(props) => (props.isdown ? "block" : "none")};
+    display: ${(props) => (props.isDown ? "block" : "none")};
     &::before {
       content: "";
       position: absolute;
       top: -8px;
       left: 50%;
       transform: translateX(-50%);
-	    border-bottom: 12px solid white;/* 화살표 */
+	    border-bottom: 12px solid white;
 	    border-left: 12px solid transparent;
 	    border-right: 12px solid transparent;
     }
@@ -203,8 +207,12 @@ const S = {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-left: 5px;
       &:hover {
         background-color: var(--color-navbar-button-hover);
+      }
+      > div {
+        margin-right: -1px;
       }
   `,
   TopbarReputation: styled.div`
@@ -213,55 +221,6 @@ const S = {
       font-size: 12px;
       display: flex;
       align-items: center;
-  `,
-  TopbarInboxBtn: styled.li`
-      width: 40px;
-      height: 49px;
-      font-size: 30px;
-      margin-left: 12px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: var(--color-navbar-button-hover);
-      }
-  `,
-  TopbarAchievementsBtn: styled.li`
-      width: 40px;
-      height: 49px;
-      font-size: 30px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: var(--color-navbar-button-hover);
-      }
-  `,
-  TopbarHelpBtn: styled.li`
-      width: 40px;
-      height: 49px;
-      font-size: 30px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: var(--color-navbar-button-hover);
-      }
-  `,
-  TopbarExchangeBtn: styled.li`
-      width: 40px;
-      height: 49px;
-      font-size: 27px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: var(--color-navbar-button-hover);
-      }
   `,
 };
 
@@ -313,13 +272,13 @@ export default function Header() {
       <S.TopForm>
         <S.TopFormContainer 
           onClick={SearchInputDropdown}
-          isdown={isDown}>
+          isDown={isDown}>
           <AiOutlineSearch />
           <S.TopFormInput 
             type="text"
             placeholder="Search..."/>
         </S.TopFormContainer>
-        <S.TopSearchPopoverContainer isdown={isDown}>
+        <S.TopSearchPopoverContainer isDown={isDown}>
           <S.TopSearchPopoverWrapper>
             {searchData.map((el, idx) => (
               <S.TopSearchPopoverContent key={idx}>
@@ -330,9 +289,11 @@ export default function Header() {
           </S.TopSearchPopoverWrapper>
           <S.TopSearchPopoverBottom>
             <S.TopSearchPopoverBottomWrapper>
-              <S.TopSearchPopoverQuestionBtn>
-                Ask a question
-              </S.TopSearchPopoverQuestionBtn>
+              <Link to="questions/ask">
+                <S.TopSearchPopoverQuestionBtn>
+                  Ask a question
+                </S.TopSearchPopoverQuestionBtn>
+              </Link>
               <S.TopSearchPopoverHelpBtn>
                 Serch help
               </S.TopSearchPopoverHelpBtn>
@@ -365,8 +326,3 @@ export default function Header() {
   </S.TopbarWrapper>
   ) 
 }
-
-
-
-
-
