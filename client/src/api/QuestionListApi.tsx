@@ -1,4 +1,6 @@
 import axios from 'axios';
+import instance from './instance';
+import { BASE_URL } from '../constants/apiUrl';
 interface AnswerData {
   questionAnswerContent: string | undefined;
   userName: string | undefined;
@@ -8,7 +10,9 @@ interface AnswerData {
 
 export const questionsAPI = {
   fetchQuestions: async (size: number, pageParam: number) => {
+    // const res = await instance.get(`${BASE_URL}/questions?size=${size}&page=${pageParam}`);
     const res = await axios.get(`/questions?size=${size}&page=${pageParam}`);
+
     const { data } = res.data;
     const { pageInfo } = res.data;
     return { data, pageInfo };

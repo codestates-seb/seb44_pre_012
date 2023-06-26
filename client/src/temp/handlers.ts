@@ -33,7 +33,7 @@ export const handlers = [
 
   // 💜 답변 GET , 질문 상세 페이지 GET
   rest.get('/questions/:questionId', (req, res, ctx) => {
-    const questionId: number = parseInt(req.params.questionId[0]); //
+    const questionId: number = parseInt(req.params.questionId as string); //
     const questionData = questionQuery.data.filter(question => question.questionId === questionId); // 질문 상세페이지
 
     const answerData = questionQuery.data.find(
@@ -66,7 +66,7 @@ export const handlers = [
       question => question.questionId === questionId
     )?.questionAnswers;
 
-    const { questionAnswerContent, userName, createdAt }: any | undefined =
+    const { questionAnswerContent, userName, createdAt, userId }: any | undefined =
       req.body;
     const questionAnswerId = Math.floor(Math.random() * 1000);
 
@@ -77,6 +77,7 @@ export const handlers = [
       userName,
       modifiedAt: '',
       voteCount: 0,
+      userId
     };
 
     answerData?.push(newAnswer);
@@ -137,7 +138,8 @@ export const handlers = [
       bounty: 0
     };
 
-    questionQuery.data.push(newQuestion);
+    questionQuery.data.unshift(newQuestion);
+    console.log(questionQuery);
     return res(ctx.status(201), ctx.json(newQuestion));
   }),
 ];

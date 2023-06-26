@@ -15,7 +15,6 @@ const QuestionDetail = () => {
     () => questionDetailAPI.fetchCertainQuestion(questionId)
   );
 
-  // console.log(data[0])
   if (isLoading) {
     return <>Loading...</>;
   }
@@ -26,7 +25,6 @@ const QuestionDetail = () => {
 
   if (data[0]) {
     const questionData = data[0];
-    // console.log(questionData)
     return (
       <S.Container>
         <div>

@@ -5,7 +5,6 @@ import { QuestionAnswer, QuestionData } from '../../types/types';
 import {
   IoMdArrowDropup,
   IoMdArrowDropdown,
-  IoIosHeartEmpty,
 } from 'react-icons/io';
 
 interface GuestDeleteProps {
@@ -71,6 +70,7 @@ const S = {
   ArrowBox: styled.div<StyledDivProps>`
     &.isNotLoggedIn {
       opacity: 0.14;
+      pointer-events: none;
     }
     border: 1px solid var(--color-button-lightgray);
     color: var(--color-content-desc);
