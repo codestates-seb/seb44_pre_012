@@ -8,8 +8,9 @@
       "viewCount": 140,
       "createdAt": "2023-06-17T13:09:00",
       "modifiedAt": "2023-06-17T13:09:00",
-      "voteCount": 1,
       "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
       "questionAnswers": [
         {
           "questionAnswerId": 1,
@@ -37,8 +38,9 @@
       "viewCount": 0,
       "createdAt": "2023-06-12T14:00:00",
       "modifiedAt": "2023-06-12T14:00:00",
-      "tag": ["java", "maven", "integration-testing", "maven-module"],
-
+      "tags": ["tag1", "tag2"],
+      "voteCount": 10,
+      "answerCount": 5,
       "questionAnswers": [
         {
           "questionAnswerId": 3,
@@ -66,6 +68,10 @@
       "viewCount": 0,
       "createdAt": "2023-05-15T22:00:00",
       "modifiedAt": "2023-05-15T22:00:00",
+      "tag": ["nextjs13", "react"],
+      "voteCount": 2,
+      "answerCount": 3,
+      "bounty": 100,
       "questionAnswers": [
         {
           "questionAnswerId": 4,
@@ -82,6 +88,262 @@
           "createdAt": "2023-06-12T14:00:00",
           "modifiedAt": "2023-06-12T14:00:00",
           "voteCount": 4
+        }
+      ]
+    },
+    {
+      "questionId": 4,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 5,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 6,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 7,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 4,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 8,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 9,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 10,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 11,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "tag": ["java", "maven", "integration-testing", "maven-module"],
+      "voteCount": 1,
+      "answerCount": 0,
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
         }
       ]
     }

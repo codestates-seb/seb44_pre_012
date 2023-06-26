@@ -11,6 +11,8 @@ export interface QuestionInfo {
   bounty?: number;
 }
 
+
+
 export interface QuestionAnswer {
   questionAnswerContent: string;
   createdAt: Date | string;
@@ -28,7 +30,7 @@ export interface QuestionData {
   viewCount: number;
   createdAt: string;
   modifiedAt?: string;
-  questionAnswers: QuestionAnswer | QuestionAnswer[];
+  questionAnswers: QuestionAnswer[] | QuestionAnswer;
   voteCount?: number;
 }
 export interface QuestionPostAnswer {
@@ -36,6 +38,17 @@ export interface QuestionPostAnswer {
   createdAt: Date | string;
   userName: string;
   userId?: number;
+}
+
+export interface LoginInfo {
+  email: string;
+  password: string;
+}
+
+export interface RegisterInfo {
+  userName: string;
+  email: string;
+  password: string;
 }
 
 export interface QuestionPost {

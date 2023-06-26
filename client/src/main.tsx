@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import QuestionList from './pages/Question/QuestionList';
 import Logout from './pages/Logout/Logout';
+import Askquestion from './pages/Askquestion/AskQuestion';
 import Register from './pages/Register/Register';
 import EmptyPage from './components/EmptyPage';
 import QuestionDetail from './pages/QuestionDetail/QuestionDetail';
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
 
       // 전체 질문 조회 페이지 예시 /questions?size={size}&page={page}
       { path: 'questions', element: <QuestionList /> },
+      { path: 'questions/ask', element: <Askquestion /> },
       { path: 'questions/:questionId', element: <QuestionDetail /> },
       // { path: 'questions/register', element: <컴포넌트명 /> },
 

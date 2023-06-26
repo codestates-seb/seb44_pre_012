@@ -1,7 +1,9 @@
 // 목업 서버 (나중에 쉽게 삭제하게 한 파일에 다 넣어두면 좋을 것 같아요)
-import allQuestions from './AllQuestionQuery.json';
+// import allQuestions from './AllQuestionQuery.json';
 import  questionQuery  from './questionQuery.json';
 import { rest } from 'msw';
+
+
 
 export const handlers = [
   // 💜 allQuestion 쿼리
@@ -17,11 +19,11 @@ export const handlers = [
     }
     const from = parseInt(page) * parseInt(size);
     const to = (parseInt(page) + 1) * parseInt(size);
-    const processedData = allQuestions.data.slice(from, to);
+    const processedData = questionQuery.data.slice(from, to);
     const pageInfo = {
       page: parseInt(page),
       totalElements: size,
-      totalPages: Math.ceil(allQuestions.data.length / parseInt(size)),
+      totalPages: Math.ceil(questionQuery.data.length / parseInt(size)),
     };
     return res(
       ctx.status(200),
@@ -42,6 +44,7 @@ export const handlers = [
       return res(ctx.status(404), ctx.json({ message: 'Question not found' }));
     }
     return res(ctx.status(200), ctx.json({ data: answerData, questionData: questionData }));
+
 
   }),
 
@@ -103,5 +106,38 @@ export const handlers = [
     }
     return res(ctx.status(200));
   }),
+  rest.post('/questions/register', (req, res, ctx) => {
+    const { questionContents, createdAt, userName }: any | undefined = req.body;
+    let title; 
+    let content;
+    let tag;
+    if (questionContents) {
+      title = questionContents.title
+      content = questionContents.content + questionContents.expection
+      tag = questionContents.tag
+    }
+    
+    // const {questionTitle, questionContent, tag} = questionContents;
+    const questionId = questionQuery.data.length + 1;
+    const modifiedAt = createdAt;
+    const viewCount = 0;
+    
+    const newQuestion = {
+      questionId,
+      questionTitle: title,
+      questionContent: content,
+      userName,
+      createdAt,
+      modifiedAt,
+      questionAnswers: [],
+      viewCount,
+      tag,
+      voteCount: 0,
+      answerCount: 0,
+      bounty: 0
+    };
 
+    questionQuery.data.push(newQuestion);
+    return res(ctx.status(201), ctx.json(newQuestion));
+  }),
 ];
