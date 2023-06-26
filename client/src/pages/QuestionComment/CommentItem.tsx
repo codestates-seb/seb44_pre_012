@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { Comment } from '../../../types/types';
+import { Comment } from '../../types/types';
 
 
 interface CommentProps {
@@ -24,7 +24,7 @@ const S={
     flex-wrap: wrap;
   `,
   Content:styled.span`
-    font-size: 12px;
+    font-size: 14px;
     color: hsl(210, 8%, 15%);
   `,
   CommentDate:styled.span`
