@@ -4,7 +4,9 @@ interface AuthState {
   login: {
     accessToken: string | null;
     refreshToken: string | null;
-    memberId: number | null;
+    userId: number | null;
+    userName: string | null;
+    userEmail: string | null;
     isLogin: boolean;
   };
 }
@@ -13,7 +15,9 @@ const initialState: AuthState = {
   login: {
     accessToken: null,
     refreshToken: null,
-    memberId: null,
+    userId: null,
+    userName: null,
+    userEmail: null,
     isLogin: false,
   },
 };

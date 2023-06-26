@@ -10,3 +10,24 @@ export interface QuestionInfo {
   viewCount: number;
   bounty?: number;
 }
+
+export interface QuestionData {
+  questionId:number|undefined|string;
+  questionTitle:string;
+  questionContent:string;
+  userName:string;
+  viewCount:number;
+  createdAt:string;
+  modifiedAt?:string;
+  questionAnswers:QuestionAnswer;
+}
+
+export interface QuestionAnswer {
+  questionAnswerId: number;
+  questionAnswerContent: string;
+  userId: number;
+  userName: string;
+  voteCount: number;
+  createdAt: string;
+  modifiedAt?: string;
+}

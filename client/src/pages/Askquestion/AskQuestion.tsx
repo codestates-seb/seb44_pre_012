@@ -365,7 +365,7 @@ const S = {
       }`,
   QuestionSidebar: styled.div<IsFocusProps>`
     margin-bottom: 14px;
-    width: 30%;
+    width: 20%;
     color: black;
     border: 1px solid var(--color-ui-border);
     border-radius: 3px;

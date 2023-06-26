@@ -2,15 +2,15 @@ import InputField from '../../components/InputField';
 import FormSubmit from '../../components/FormSubmit';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../store/authSlice';
-import { RootState } from '../../store/store';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { USER_MESSAGES } from '../../constants/userMessages';
 import { PATHS } from '../../constants/paths';
 import { ERROR_MESSAGES } from '../../constants/errorMessage';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { loginRequest } from '../../api/loginRequest';
+import CommonStyles from '../../style/CommonStyles';
 
 type LoginInfoType = {
   email: string;
@@ -42,7 +42,7 @@ export default function LoginForm() {
       setLoginInfo(prevState => ({ ...prevState, [key]: e.target.value }));
     };
 
-  const loginRequestHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const loginRequestHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 에러 상태 초기화
     setError({
@@ -76,59 +76,73 @@ export default function LoginForm() {
       return;
     }
 
-    return loginRequest(loginInfo)
-      .then((res: AxiosResponse<any>) => {
-        if (res.status === 200) {
-          const accessToken = res.headers['authorization'];
-          const refreshToken = res.headers['refresh'];
-          const memberId = res.data.id;
-          // 로컬 스토리지에 저장
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          localStorage.setItem('memberId', memberId);
+    // api 요청
+    try {
+      const response = await loginRequest(loginInfo);
+      if (response.status === 200) {
+        const accessToken = response.headers['authorization'];
+        const refreshToken = response.headers['refresh'];
+        const userId = response.data.id;
+        const userName = response.data.displayName;
+        const userEmail = response.data.email;
 
-          setError(prevError => ({
-            ...prevError,
-            emailError: '',
-            passwordError: '',
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('userEmail', userEmail);
+        setError(prevError => ({
+          ...prevError,
+          emailError: '',
+          passwordError: '',
+        }));
+
+        dispatch(
+          login({
+            accessToken,
+            userId,
+            isLogin: true,
+            refreshToken,
+            userName,
+            userEmail,
+          })
+        );
+
+        setLoginInfo({
+          email: '',
+          password: '',
+        });
+
+        navigate(`/`);
+      }
+    } catch (err: unknown) {
+      if (
+        err instanceof AxiosError &&
+        err.response &&
+        err.response.status === 401
+      ) {
+        const error = err.response.data;
+        if (error?.errorMessage === 'INVALID_EMAIL') {
+          setError(prev => ({
+            ...prev,
+            emailError: ERROR_MESSAGES.INVALID_EMAIL,
+            loginError: ERROR_MESSAGES.LOGIN_ERROR,
           }));
-
-          dispatch(
-            login({ accessToken, memberId, isLogin: true, refreshToken })
-          );
-
-          setLoginInfo({
-            email: '',
-            password: '',
-          });
-
-          navigate(`/`);
+        } else if (error?.errorMessage === 'INVALID_PASSWORD') {
+          setError(prev => ({
+            ...prev,
+            emailError: ERROR_MESSAGES.INVALID_PASSWORD,
+            passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
+          }));
+        } else {
+          return;
         }
-      })
-      .catch(err => {
-        if (err.response && err.response.status === 401) {
-          const error = err.response.data;
-          if (error?.errorMessage === 'INVALID_EMAIL') {
-            setError(prev => ({
-              ...prev,
-              emailError: ERROR_MESSAGES.INVALID_EMAIL,
-              loginError: ERROR_MESSAGES.LOGIN_ERROR,
-            }));
-          } else if (error?.errorMessage === 'INVALID_PASSWORD') {
-            setError(prev => ({
-              ...prev,
-              emailError: ERROR_MESSAGES.INVALID_PASSWORD,
-              passwordError: ERROR_MESSAGES.INVALID_PASSWORD,
-            }));
-          } else {
-            return;
-          }
-        }
-      });
+      }
+    }
   };
   return (
     <>
-      <S.LoginForm>
+      <S.FormContainer>
         <S.Form onSubmit={loginRequestHandler}>
           <InputField
             type="email"
@@ -145,37 +159,28 @@ export default function LoginForm() {
             message={USER_MESSAGES.ACCOUNT}
             error={error.passwordError}
           />
-          <FormSubmit text={USER_MESSAGES.LOGIN} />
+          <S.ButtonWrap>
+            <FormSubmit size="wide" text={USER_MESSAGES.LOGIN} />
+          </S.ButtonWrap>
         </S.Form>
         {error.loginError && (
           <S.ErrorMessage>{error.loginError}</S.ErrorMessage>
         )}
-      </S.LoginForm>
+      </S.FormContainer>
       {/* 로그인 여부 테스트 문구. 추후 삭제할 것. */}
     </>
   );
 }
 
 const S = {
-  LoginForm: styled.section`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.6rem;
-    background-color: #fff;
-    border-radius: 0.3rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05),
-      0 1rem 2rem rgba(0, 0, 0, 0.05), 0 1rem 3rem rgba(0, 0, 0, 0.1);
-  `,
-
-  Form: styled.form`
-    width: 100%;
-  `,
+  ...CommonStyles,
   ErrorMessage: styled.p`
     color: hsl(358, 62%, 52%);
     font-size: var(--font-xs);
+  `,
+  ButtonWrap: styled.div`
+    display: flex;
+    width: 100%;
+    margin: 6px auto;
   `,
 };

@@ -1,6 +1,7 @@
 package pre_Project.server.global.auth.utills;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CustomAuthorityUtills { // 유저 권한 부여
+public class CustomAuthorityUtils { // 유저 권한 부여
     @Value("${mail.address.admin}")
     private String adminMailAddress;
 

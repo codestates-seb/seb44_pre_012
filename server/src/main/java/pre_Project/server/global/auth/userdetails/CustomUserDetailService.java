@@ -7,7 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
-import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
@@ -17,11 +18,11 @@ import java.util.Optional;
 @Component
 public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final CustomAuthorityUtills authorityUtills;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public CustomUserDetailService(UserRepository userRepository, CustomAuthorityUtills authorityUtills) {
+    public CustomUserDetailService(UserRepository userRepository, CustomAuthorityUtils authorityUtils) {
         this.userRepository = userRepository;
-        this.authorityUtills = authorityUtills;
+        this.authorityUtils = authorityUtils;
     }
 
     @Override
@@ -31,24 +32,29 @@ public class CustomUserDetailService implements UserDetailsService {
 
         return new CustomUserDetails(findUser);
     }
+    public User getUser(CustomUserDetails userDetails) throws UsernameNotFoundException {
+        Optional<User> optionalUser = userRepository.findByEmail(userDetails.getEmail());
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
+        return findUser;
+    }
     private final class CustomUserDetails extends User implements UserDetails{
 
         CustomUserDetails(User user) {
             setUserId(user.getUserId());
             setEmail(user.getEmail());
-            setPassWord(user.getPassWord());
+            setPassword(user.getPassword());
             setRoles(user.getRoles());
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return authorityUtills.createAuthorities(this.getRoles());
+            return authorityUtils.createAuthorities(this.getRoles());
         }
 
         @Override
         public String getPassword() {
-            return getPassWord();
+            return super.getPassword();
         }
 
         @Override

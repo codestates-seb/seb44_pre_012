@@ -1,23 +1,91 @@
 {
   "data": [
     {
-      "question": {
-        "questionId": 3,
-        "questionTitle": "How to pass props from layout.js to page.js in Next.js 13 folder-based routing?",
-        "questionContent": "Next.js 13 operates on a folder-based routing system, where the folder structure itself defines the routing.\n\nFor example, the layout.js file, located directly under the app folder, includes components and styles that are shared across multiple pages.\n\nHere's a folder structure on my project (The parent folder containing package.json etc and unnecessary files are omitted.) :\n\napp\n  ├── (DropDownPages)/\n  │   ├── layout.js ------ (2) * problem (parent component)\n  │   ├── bookmark/\n  │   │    └── page.js --- (3) (children component)\n  │   └── product/\n  │        └── page.js --- (3) (children component)\n  │\n  │ \n  ├── layout.js   ---- (1) \n  └── page.js\n\n(1) app/layout.js\n\nIn the layout.js file --- (1) just under app folder, I have added a Header and Footer and pages within tags.",
-        "viewCount": 0
-      },
-      "questionAnswers": {
-        "questionAnswer-Id": 1,
-        "questionAnswerContent": "I'm curious if there are any other approaches to passing props without relying on Redux or React's Context API. I'd like to explore different methods for passing data down the component tree in a more efficient manner. Any suggestions or insights would be greatly appreciated. Thank you!",
-        "userId": 1,
-        "userName": "Lee Doyu"
-      }
+      "questionId": 1,
+      "questionTitle": "package a module before integration tests",
+      "questionContent": "I have a multi-module maven project. one of the modules (module-A) let me create an executable jar. This jar is normally executed from a third party application and communicate via stdin/stdout.",
+      "userName": "Vsfadfo",
+      "viewCount": 140,
+      "createdAt": "2023-06-17T13:09:00",
+      "modifiedAt": "2023-06-17T13:09:00",
+      "questionAnswers": [
+        {
+          "questionAnswerId": 1,
+          "questionAnswerContent": "</span>Totally agree that there are good alternatives to CRA now and React should more prominently feature them. However, as maintainer of Parcel, an alternative to Vite, I would appreciate if React did not play favorites (also with Next.js vs other frameworks). Since CRA was maintained by the React team it kinda made sense, but harder when it's not. Maybe a small description of each option with more details about what it's best for and the tradeoffs vs other options would be good?<br /><br /><b>if you're building an SPA, <u>Vite and Parcel</u> are good options</b>. Vite is a bundle-less dev server that works with React and other frameworks ... Parcel is an easy to use bundler that works great with React ... <br /><br />I<b>f you're building a server rendered app, <u>Next.js and Remix</u> are good options.</b> Next.js is a React framework with file system routing, server components, ... Remix is a React framework focused on web standards ... I<br /><br /><b>f you're building a static website, <u>Gatsby</u> is a good option.</b> Gatsby is ...</blockquote>",
+          "userId": 1,
+          "userName": "Mango",
+          "createdAt": "2023-06-22T12:00:00",
+          "modifiedAt": "2023-06-12T12:00:00",
+          "voteCount": 4
+        },
+        {
+          "questionAnswerId": 2,
+          "questionAnswerContent": "Most would agree that the recommendation of CRA needs to be removed, considering it's a dead repo. <br /><br /><span style='color: #009a87;'>But recommending a less optimal solution might be about <u>as bad for a beginner as multiple recommendations.</span></u><br />My completely subjective, gut feel is that <span style='color: #000000;'>vite should be that recommendation. </span>But any active project would be fine. Multiple will just result in analysis paralysis, which kills beginners. More advanced users will find other projects on their own.<br /><br />At the very minimum,<b><u> a single recommendation should be made for beginners</u></b> and any other recommendations segmented away for more advanced devs to investigate for their specific need.</blockquote>",
+          "userId": 1,
+          "userName": "Doyu",
+          "createdAt": "2019-09-12T12:00:00",
+          "modifiedAt": "2023-06-22T17:00:00",
+          "voteCount": 1
+        }
+      ]
+    },
+    {
+      "questionId": 2,
+      "questionTitle": "First Question",
+      "questionContent": "This is the content of the first question.",
+      "userName": "도유",
+      "viewCount": 0,
+      "createdAt": "2023-06-12T14:00:00",
+      "modifiedAt": "2023-06-12T14:00:00",
+      "questionAnswers": [
+        {
+          "questionAnswerId": 3,
+          "questionAnswerContent": "제가 알것 같습니다. 그것은 블라블라네요.",
+          "userId": 1,
+          "userName": "하하",
+          "createdAt": "2023-06-12T14:00:00",
+          "modifiedAt": "2023-06-12T14:00:00",
+          "voteCount": 0
+        },
+        {
+          "questionAnswerId": 4,
+          "questionAnswerContent": "와우",
+          "userId": 1,
+          "userName": "잘 몰겟..ㅋ ",
+          "createdAt": "2023-06-12T14:00:00",
+          "modifiedAt": "2023-06-12T14:00:00",
+          "voteCount": 4
+        }
+      ]
+    },
+    {
+      "questionId": 3,
+      "questionTitle": "How to pass props from layout.js to page.js in Next.js 13 folder-based routing?",
+      "questionContent": "Next.js 13 operates on a folder-based routing system, where the folder structure itself defines the routing.\n\nFor example, the layout.js file, located directly under the app folder, includes components and styles that are shared across multiple pages.\n\nHere's a folder structure on my project (The parent folder containing package.json etc and unnecessary files are omitted.) :\n\napp\n  ├── (DropDownPages)/\n  │   ├── layout.js ------ (2) * problem (parent component)\n  │   ├── bookmark/\n  │   │    └── page.js --- (3) (children component)\n  │   └── product/\n  │        └── page.js --- (3) (children component)\n  │\n  │ \n  ├── layout.js   ---- (1) \n  └── page.js\n\n(1) app/layout.js\n\nIn the layout.js file --- (1) just under app folder, I have added a Header and Footer and pages within tags.",
+      "userName": "Doyu",
+      "viewCount": 0,
+      "createdAt": "2023-05-15T22:00:00",
+      "modifiedAt": "2023-05-15T22:00:00",
+      "questionAnswers": [
+        {
+          "questionAnswerId": 4,
+          "questionAnswerContent": "제가 알것 같습니다. 그것은 블라블라네요.",
+          "userId": 1,
+          "userName": "하하",
+          "createdAt": "2023-06-12T14:00:00",
+          "modifiedAt": "2023-06-12T14:00:00",
+          "voteCount": 0
+        },
+        {
+          "questionAnswerId": 5,
+          "questionAnswerContent": "와우",
+          "userId": 1,
+          "userName": "잘 몰겟..ㅋ ",
+          "createdAt": "2023-06-12T14:00:00",
+          "modifiedAt": "2023-06-12T14:00:00",
+          "voteCount": 4
+        }
+      ]
     }
-  ],
-  "pageInfo": {
-    "page": 1,
-    "totalElements": 2,
-    "totalPages": 1
-  }
+  ]
 }

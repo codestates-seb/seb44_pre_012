@@ -1,4 +1,16 @@
 spring:
+  main:
+    allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 684018147936-rs4aqc1ld3f7ui6cff635hoh5bqlno8s.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
   h2:
     console:
       enabled: true
@@ -7,11 +19,12 @@ spring:
     url: jdbc:h2:mem:test
   jpa:
     hibernate:
-      ddl-auto: create  # (1) ??? ?? ??
-    show-sql: true      # (2) SQL ?? ??
+      ddl-auto: create
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true  # (3) SQL pretty print
+        format_sql: true
+    defer-datasource-initialization: true
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
@@ -29,6 +42,7 @@ mail:
   address:
     admin: admin@gmail.com
 jwt:
-  key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+  key: asd123123123123123123123123123123123
+  access-token-expiration-minutes: 60
+  refresh-token-expiration-minutes: 600
+

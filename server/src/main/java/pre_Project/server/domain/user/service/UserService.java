@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.domain.user.repository.UserRepository;
-import pre_Project.server.global.auth.utills.CustomAuthorityUtills;
+import pre_Project.server.global.auth.userdetails.CustomUserDetailService;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
+import pre_Project.server.global.auth.utills.CustomAuthorityUtils;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
@@ -24,9 +27,9 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CustomAuthorityUtills authorityUtils;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtills authorityUtils) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -35,8 +38,8 @@ public class UserService {
     public User createUser(User user){
         verifyExistsEmail(user.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(user.getPassWord()); // password 암호화
-        user.setPassWord(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(user.getPassword()); // password 암호화
+        user.setPassword(encryptedPassword);
 
         List<String> roles = authorityUtils.createRoles(user.getEmail()); // 유저 권한 설정
         user.setRoles(roles);
@@ -44,14 +47,24 @@ public class UserService {
         User savedUser = userRepository.save(user);
         return savedUser;
     }
+
+    public User createOauth2User(User user) {
+        Optional<User> findUser = userRepository.findByEmail(user.getEmail());
+        if(findUser.isPresent()){
+            return findUser.get();
+        }
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public User updateUser(User user){
         User finduser = findVerifiedUser(user.getUserId());
 
         Optional.ofNullable(user.getUserName())
                 .ifPresent(name -> user.setUserName(name));
-        Optional.ofNullable(user.getPassWord())
-                .ifPresent(password -> user.setPassWord(password));
+        Optional.ofNullable(user.getPassword())
+                .ifPresent(password -> user.setPassword(password));
         return userRepository.save(user);
     }
     @Transactional(readOnly = true)
@@ -83,5 +96,11 @@ public class UserService {
         }
     }
 
+    public User getUserByToken(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetailService userDetails = (CustomUserDetailService) principal;
+
+         return null;
+    }
 
 }
