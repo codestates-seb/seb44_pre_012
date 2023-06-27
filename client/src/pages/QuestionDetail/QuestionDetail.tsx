@@ -23,8 +23,8 @@ const QuestionDetail = () => {
     <EmptyPage />;
   }
 
-  if (data[0]) {
-    const questionData = data[0];
+  if (data) {
+    const questionData = data;
     return (
       <S.Container>
         <div>

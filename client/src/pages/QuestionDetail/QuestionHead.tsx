@@ -46,6 +46,7 @@ const S = {
     display: flex;
     flex: 1 auto;
     margin-bottom: 8px;
+    justify-content: space-between;
   `,
   Title: styled.h1`
     font-size: 1.8rem;

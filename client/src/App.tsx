@@ -10,14 +10,18 @@ import { login } from './redux/authSlice';
 import { useEffect } from 'react';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
+// import axios from 'axios';
+import { BASE_URL } from './constants/apiUrl';
+
+// axios.defaults.url = BASE_URL
 
 // 목업 서버
-import { worker } from './temp/worker';
-if (process.env.NODE_ENV === 'development') {
-  worker.start({
-    onUnhandledRequest: 'bypass',
-  });
-}
+// import { worker } from './temp/worker';
+// if (process.env.NODE_ENV === 'development') {
+//   worker.start({
+//     onUnhandledRequest: 'bypass',
+//   });
+// }
 
 const queryClient = new QueryClient();
 

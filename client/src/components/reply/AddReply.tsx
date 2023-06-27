@@ -32,27 +32,29 @@ export default function AddReply({ item }: ReplyProps) {
   }, [emailData]);
 
   const createdAt = new Date();
-  const questionAnswerContent = renderedData;
+  const questionAnswerContent = JSON.stringify(renderedData);
 
   const guestRequestBody = {
     questionAnswerContent,
-    userName: nameData,
-    createdAt,
+    // userName: nameData,
+    // createdAt,
   };
 
   const loginRequestBody = {
     questionAnswerContent,
-    userName,
-    createdAt,
-    userId,
+    // userName,
+    // createdAt,
+    // userId,
   };
 
-  let requestBody: QuestionPostAnswer;
-  if (isLoggedIn) {
-    requestBody = loginRequestBody;
-  } else {
-    requestBody = guestRequestBody;
-  }
+  const requestBody = questionAnswerContent;
+
+  // let requestBody: QuestionPostAnswer;
+  // if (isLoggedIn) {
+  //   requestBody = loginRequestBody;
+  // } else {
+  //   requestBody = guestRequestBody;
+  // }
 
   const queryClient = useQueryClient();
 

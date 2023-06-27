@@ -31,7 +31,7 @@ export default function QuestionContent({ data }: QuestionContentProps) {
           </div>
           <div>
             <span>
-              <S.UserImg>{data.userName.slice(0, 1).toUpperCase()}</S.UserImg>
+              <S.UserImg>{Array.isArray(data.userName) && data.userName.slice(0, 1).toUpperCase()}</S.UserImg>
             </span>
             <a>{data.userName}</a>
             <span>12</span>

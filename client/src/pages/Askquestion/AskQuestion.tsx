@@ -5,11 +5,12 @@ import { TfiPencil } from "react-icons/tfi";
 import { TbBellRinging2Filled } from "react-icons/tb"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { BASE_URL } from "../../constants/apiUrl";
 // import { BASE_URL } from "../../constants/apiUrl";
 
 export interface QuestionPost {
   questionContents: object;
-  createdAt: Date | string;
+  // createdAt: Date | string;
   userName: string;
 } 
 
@@ -28,7 +29,6 @@ type InputValue = {
  content?: string | undefined;
  expection?: string | undefined;
  tag?: string[] | undefined; 
- createdAt?: string | object | undefined;
 }
 
 
@@ -50,7 +50,7 @@ export default function Askquestion() {
     postAskQuestion: async (requestBody: InputValue) => {
       try {
         const res = await axios.post(
-          `/questions/register`,
+          `${BASE_URL}/questions/register`,
           requestBody
         );
         const { data } = res.data;
@@ -63,13 +63,12 @@ export default function Askquestion() {
   }
 
 
-  const createdAt = new Date(); //글을 생성한 날짜 넣어주기
-  const questionContents = inputValue;
+  // const createdAt = new Date(); //글을 생성한 날짜 넣어주기
+  const questionContent = inputValue;
 
   const requestBody = {
-    questionContents,
-    userName: "임시",
-    createdAt,
+    questionContent,
+    questionTitle: inputValue.title,
   };
 
   const queryClient = useQueryClient();

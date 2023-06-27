@@ -22,7 +22,7 @@ export default function Login() {
     (state: RootState) => state.auth.login.isLogin
   );
   const handleGoogleLogin = () => {
-    window.location.assign(`http://localhost:8080/oauth2/authorization/google`);
+    window.location.assign(`/oauth2/authorization/google`);
   };
   const handleGithubLogin = () => {};
   const handleFacebookLogin = () => {};
