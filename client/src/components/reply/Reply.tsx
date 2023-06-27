@@ -4,8 +4,8 @@ import parse from 'html-react-parser';
 import colors from '../../constants/colorNames';
 import { formatAnswerElapsedTime } from '../../util/formatElapsedTime';
 import AddReply from './AddReply';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer, QuestionData } from '../../types/types';
 import SocialShare from './Share';
@@ -17,16 +17,25 @@ interface ReplyProps {
   questionData: QuestionData;
 }
 
-export default function Reply({questionData}:ReplyProps) {
- // const { isLoggedIn } = useSelector(
-  //   (state: RootState) => state.auth.login
-  // );
-  const isLoggedIn = true; // temp
+export default function Reply({ questionData }: ReplyProps) {
+  const { isLoggedIn } = useSelector(
+    (state: RootState) => state.auth.login
+  );
+  // const isLoggedIn = true; // temp
+
+  function removeFirstAndLastCharacter(str) {
+    return str.slice(1, -1);
+  }
+  
 
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
-        <div>{Array.isArray(questionData.questionAnswers) ? `${questionData.questionAnswers.length} answers` : null}</div>
+        <div>
+          {Array.isArray(questionData.questionAnswers)
+            ? `${questionData.questionAnswers.length} answers`
+            : null}
+        </div>
         <div>
           <span>sorted by:</span>
           <select defaultValue="highestScore">
@@ -37,9 +46,9 @@ export default function Reply({questionData}:ReplyProps) {
           </select>
         </div>
       </S.TotalAnswers>
-      {Array.isArray(questionData.questionAnswers)
+      {questionData.questionAnswers
         ? questionData.questionAnswers.map((item: QuestionAnswer) => (
-            <S.RenderedAnswers key={item.questionAnswerId}>
+            <S.RenderedAnswers key={item.answerId}>
               <div>
                 <div>
                   <S.Sidebar>
@@ -57,14 +66,14 @@ export default function Reply({questionData}:ReplyProps) {
                   </S.Sidebar>
                 </div>
                 <S.MainBar>
-                  <div>{parse(item.questionAnswerContent)}</div>
+                  <div>{removeFirstAndLastCharacter(parse(item.answerContent))}</div>
                   <S.BottomContainer>
                     <S.SocialBox>
                       <SocialShare />
                       {!isLoggedIn ? (
-                        <GuestDelete item={item} questionItem={questionData}/>
+                        <GuestDelete item={item} questionItem={questionData} />
                       ) : (
-                        <LoginDelete item={item} questionItem={questionData}/>
+                        <LoginDelete item={item} questionItem={questionData} />
                       )}
                     </S.SocialBox>
                     <S.UserBox>
@@ -75,7 +84,8 @@ export default function Reply({questionData}:ReplyProps) {
                       <div>
                         <div>
                           <S.UserImg>
-                            {item.userName.slice(0, 1).toUpperCase()}
+                            {Array.isArray(item.userName) &&
+                              item.userName.slice(0, 1).toUpperCase()}
                           </S.UserImg>
                         </div>
                         <span>{item.userName}</span>
@@ -87,8 +97,8 @@ export default function Reply({questionData}:ReplyProps) {
               </div>
             </S.RenderedAnswers>
           ))
-          : null}
-      <AddReply item={questionData}/>
+        : null}
+      <AddReply item={questionData} />
     </S.ReplyContainer>
   );
 }

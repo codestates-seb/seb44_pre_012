@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "stackoverflow-clone-12",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -4,14 +4,12 @@ export interface QuestionInfo {
   questionContent: string;
   userName: string;
   tag: string[];
-  createdAt: string;
+  createdAt: Date | string;
   voteCount: number;
   answerCount: number;
   viewCount: number;
   bounty?: number;
 }
-
-
 
 export interface QuestionAnswer {
   questionAnswerContent: string;
@@ -19,7 +17,7 @@ export interface QuestionAnswer {
   userName: string;
   userId?: number;
   voteCount?: number;
-  modifiedAt?: string;
+  modifiedAt?: Date | string;
   questionAnswerId: number;
 }
 export interface QuestionData {
@@ -28,8 +26,8 @@ export interface QuestionData {
   questionContent: string;
   userName: string;
   viewCount: number;
-  createdAt: string;
-  modifiedAt?: string;
+  createdAt: Date | string;
+  modifiedAt?: Date | string;
   questionAnswers: QuestionAnswer[] | QuestionAnswer;
   voteCount?: number;
 }

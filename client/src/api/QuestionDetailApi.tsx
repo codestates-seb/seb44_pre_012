@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { BASE_URL } from '../constants/apiUrl';
 
 export const questionDetailAPI = {
 
   fetchCertainQuestion: async (questionId: number|undefined|string) => {
-    const res = await axios.get(`/questions/${questionId}`);
-    const { questionData } = res.data;
-    return questionData;
+    const res = await axios.get(`${BASE_URL}/questions/${questionId}`);
+    const { data } = res.data;
+    return data;
   },
 };

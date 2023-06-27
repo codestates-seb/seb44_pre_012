@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 
 type Props = {
     title: string;
-    content: string | number;
+    content: string | number | Date;
+    
   };
 
 

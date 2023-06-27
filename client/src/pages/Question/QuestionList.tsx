@@ -16,7 +16,7 @@ export default function QuestionList() {
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, error, hasNextPage } = useInfiniteQuery(
     ['questionList'],
-    ({ pageParam = 0 }) => questionsAPI.fetchQuestions(4, pageParam),
+    ({ pageParam = 1 }) => questionsAPI.fetchQuestions(4, pageParam),
     {
       getNextPageParam: lastPage => {
         return lastPage.pageInfo.page + 1 === lastPage.pageInfo.totalPages
@@ -63,11 +63,11 @@ export default function QuestionList() {
         ) : status === 'error' ? (
           <span>Error: {(error as Error).message}</span>
         ) : (
-          <div>
+          <S.MainContainer>
             <S.Title>
               <h1> All Questions </h1>
-              <Link to="questions/ask">
-             <S.AskButton> Ask Question </S.AskButton>
+              <Link to="/questions/ask">
+                <S.AskButton> Ask Question </S.AskButton>
               </Link>
             </S.Title>
             <S.SubTitle>
@@ -97,7 +97,7 @@ export default function QuestionList() {
                 {hasNextPage ? 'More' : 'Nothing more to load'}
               </S.Scroll>
             </S.ScrollBox>
-          </div>
+          </S.MainContainer>
         )}
         <Aside />
       </S.Container>
@@ -107,12 +107,17 @@ export default function QuestionList() {
 
 const S = {
   Main: styled.main`
+    width: 100%;
     height: 100%;
+    border: 1px solid transparent;
   `,
   Container: styled.div`
     display: flex;
   `,
-
+  MainContainer: styled.div`
+    /* border: 1px solid red; */
+    flex: 1;
+  `,
   Title: styled.div`
     padding: 25px 24px 0 24px;
     display: flex;

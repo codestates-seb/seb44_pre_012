@@ -10,25 +10,31 @@ interface AnswerData {
 
 export const questionsAPI = {
   fetchQuestions: async (size: number, pageParam: number) => {
-    // const res = await instance.get(`${BASE_URL}/questions?size=${size}&page=${pageParam}`);
-    const res = await axios.get(`/questions?size=${size}&page=${pageParam}`);
+    const res = await axios.get(`${BASE_URL}/questions?page=${pageParam}&size=${size}`);
+    // const res = await axios.get(`/questions?size=${size}&page=${pageParam}`);
 
     const { data } = res.data;
     const { pageInfo } = res.data;
     return { data, pageInfo };
   },
   fetchCertainQuestion: async (questionId: number) => {
-    const res = await axios.get(`/questions/${questionId}`);
+    const res = await axios.get(`${BASE_URL}/questions/${questionId}`);
     const { data } = res.data;
     return data;
   },
   postAnswerQuestion: async (questionId: number, requestBody: AnswerData) => {
     try {
       const res = await axios.post(
-        `/answers/register/${questionId}`,
-        requestBody
+        `${BASE_URL}/answers/register/${questionId}`,
+        JSON.stringify(requestBody),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       const { data } = res.data;
+      // console.log(res);
       return data;
     } catch (error) {
       console.error(error);
@@ -38,7 +44,8 @@ export const questionsAPI = {
   deleteAnswerQuestion: async (questionId: number, answerId: number) => {
     try {
       await axios.delete(
-        `/answers/?questionId=${questionId}&answerId=${answerId}`
+        // `${BASE_URL}/answers/?questionId=${questionId}&answerId=${answerId}`
+        `${BASE_URL}/answers/${answerId}`
       );
     } catch (error) {
       console.error(error);

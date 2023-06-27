@@ -15,7 +15,7 @@ const QuestionHead = ({ questionData }: QuestionDataProps) => {
     <div>
       <S.TitleDiv>
         <S.Title>{questionData.questionTitle}</S.Title>
-        <Link to="questions/ask">
+        <Link to="/questions/ask">
           <S.AskDiv>
             <S.AskButton>Ask Question</S.AskButton>
           </S.AskDiv>
@@ -46,6 +46,7 @@ const S = {
     display: flex;
     flex: 1 auto;
     margin-bottom: 8px;
+    justify-content: space-between;
   `,
   Title: styled.h1`
     font-size: 1.8rem;

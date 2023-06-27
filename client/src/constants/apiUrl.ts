@@ -2,7 +2,7 @@
 
 // export const BASE_URL = 'http://localhost:8080';
 
-export const BASE_URL = 'https://4b45-221-165-255-89.ngrok-free.app'
+export const BASE_URL = 'https://port-0-abc-dihik2mljcijloz.sel4.cloudtype.app'
 
 // 포스트맨 mock server 테스트용 URL
 // export const BASE_URL =

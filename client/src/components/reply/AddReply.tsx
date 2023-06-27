@@ -16,10 +16,12 @@ export default function AddReply({ item }: ReplyProps) {
   // const {isLoggedIn, userName, userId} = useSelector(
   //   (state: RootState) => state.auth.login
   // );
-  const userId = 77; // temp
-  const userName = 'Mango'; // temp
-  const isLoggedIn = true; // temp
-
+  // const userId = 77; // temp
+  // const userName = 'Mango'; // temp
+  // const isLoggedIn = true; // temp
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.login.isLogin
+  );
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
   const [emailData, setEmailData] = useState('');
@@ -32,27 +34,29 @@ export default function AddReply({ item }: ReplyProps) {
   }, [emailData]);
 
   const createdAt = new Date();
-  const questionAnswerContent = renderedData;
+  const questionAnswerContent = JSON.stringify(renderedData);
 
   const guestRequestBody = {
     questionAnswerContent,
-    userName: nameData,
-    createdAt,
+    // userName: nameData,
+    // createdAt,
   };
 
   const loginRequestBody = {
     questionAnswerContent,
-    userName,
-    createdAt,
-    userId,
+    // userName,
+    // createdAt,
+    // userId,
   };
 
-  let requestBody: QuestionPostAnswer;
-  if (isLoggedIn) {
-    requestBody = loginRequestBody;
-  } else {
-    requestBody = guestRequestBody;
-  }
+  const requestBody = questionAnswerContent;
+
+  // let requestBody: QuestionPostAnswer;
+  // if (isLoggedIn) {
+  //   requestBody = loginRequestBody;
+  // } else {
+  //   requestBody = guestRequestBody;
+  // }
 
   const queryClient = useQueryClient();
 
@@ -64,7 +68,7 @@ export default function AddReply({ item }: ReplyProps) {
   });
 
   const handleSubmit = async () => {
-    if (!isLoggedIn && (!userName || !emailData || !isValid)) {
+    if (!isLoggedIn && (!emailData || !isValid)) {
       return;
     }
     await mutateAsync();
@@ -136,7 +140,7 @@ export default function AddReply({ item }: ReplyProps) {
           Not the answer you're looking for? Browse other questions tagged or
           <a> ask your own question.</a>
         </div>
-      </S.RecommendSentence>
+      </S.RecommendSentence> 
     </S.ReplyContainer>
   );
 }

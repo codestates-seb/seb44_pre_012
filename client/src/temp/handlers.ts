@@ -139,7 +139,6 @@ export const handlers = [
     };
 
     questionQuery.data.unshift(newQuestion);
-    console.log(questionQuery);
     return res(ctx.status(201), ctx.json(newQuestion));
   }),
 ];

@@ -22,7 +22,7 @@ const Signature=({questionData}:QuestionDataProps)=>{
                 </span>
             </S.UserAction>
             <S.UserDiv>
-                <S.UserImg>{questionData.userName.slice(0, 1).toUpperCase()}</S.UserImg>
+                <S.UserImg>{Array.isArray(questionData.userName) && questionData.userName.slice(0, 1).toUpperCase()}</S.UserImg>
                 <S.UserDetail>
                     <S.UserName>
                         <span>{questionData.userName}</span>
