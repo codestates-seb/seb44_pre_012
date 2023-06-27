@@ -18,5 +18,4 @@ public class AnswerPatchDto {
 
     @NotBlank(message = "답변에는 내용이 있어야 합니다.")
     private String answerContent;
-    // +채택기능
 }

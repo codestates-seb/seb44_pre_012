@@ -7,23 +7,24 @@ import pre_Project.server.domain.answer.entity.Answer;
 import pre_Project.server.domain.answer.repository.AnswerRepository;
 import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.question.repository.QuestionRepository;
-import pre_Project.server.domain.user.entitiy.User;
-import pre_Project.server.domain.user.repository.UserRepository;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AnswerService {
-    private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
     public Answer createAnswer(Answer answer) {
 
+        Question question = questionRepository.findById(answer.getQuestion().getQuestionId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        answer.setQuestion(question);
         return answerRepository.save(answer);
     }
 

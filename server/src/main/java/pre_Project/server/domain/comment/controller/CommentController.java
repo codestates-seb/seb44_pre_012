@@ -27,10 +27,11 @@ public class CommentController {
 
 
     //댓글 만들기
-    @PostMapping("/register")
-    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto) {
+    @PostMapping("/register/{answerId}")
+    public ResponseEntity postComment(@PathVariable("answerId") long answerId,
+                                      @Valid @RequestBody CommentPostDto commentPostDto) {
 
-        Comment comment = mapper.commentPostDtoToComment(commentPostDto);
+        Comment comment = mapper.commentPostDtoToComment(answerId, commentPostDto);
         Comment saveComment = commentService.createComment(comment);
 
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.commentToCommentResponseDto(saveComment)), HttpStatus.CREATED);

@@ -10,10 +10,12 @@ import pre_Project.server.domain.question.repository.QuestionRepository;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
@@ -41,11 +43,11 @@ public class QuestionService {
 
         foundQuestion.setView(foundQuestion.getView() + 1);
 
-        return foundQuestion;
+        return questionRepository.save(foundQuestion);
     }
 
     public Page<Question> findQuestions(int page, int size) {
-        Page<Question> findAllQuestions = questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
+        Page<Question> findAllQuestions = questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").ascending()));
 
         return findAllQuestions;
     }

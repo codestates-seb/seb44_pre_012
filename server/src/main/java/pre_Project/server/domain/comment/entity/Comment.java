@@ -26,11 +26,11 @@ public class Comment {
 
 
     @ManyToOne
-    @JoinColumn(name = "answerId")
+    @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
     @ManyToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Column(nullable = false)

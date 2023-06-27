@@ -5,25 +5,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pre_Project.server.domain.answer.entity.Answer;
-import pre_Project.server.domain.answer.repository.AnswerRepository;
-import pre_Project.server.domain.answer.service.AnswerService;
 import pre_Project.server.domain.comment.entity.Comment;
 import pre_Project.server.domain.comment.repository.CommentRepository;
-import pre_Project.server.domain.question.repository.QuestionRepository;
-import pre_Project.server.domain.user.repository.UserRepository;
 import pre_Project.server.global.exception.BusinessLogicException;
 import pre_Project.server.global.exception.ExceptionCode;
 
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentService {
-    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
-    private final AnswerRepository answerRepository;
 
     public Comment createComment(Comment comment) {
 
