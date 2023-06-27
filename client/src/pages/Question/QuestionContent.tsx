@@ -17,7 +17,9 @@ export default function QuestionContent({ data }: QuestionContentProps) {
           {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
         </S.AnswerCount>
         <div>{data.viewCount} views</div>
-        <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>{data.bounty ? `+${data.bounty}` : ''} </S.BountyCount>
+        <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>
+          {data.bounty ? `+${data.bounty}` : ''}{' '}
+        </S.BountyCount>
       </S.SubInfo>
       <S.Content>
         <S.A to={`/questions/${data.questionId}`}>{data.questionTitle}</S.A>
@@ -82,27 +84,26 @@ const S = {
     display: inline-block;
     margin-bottom: 7px;
     padding: 1px 3px;
-      font-weight: 500;
+    font-weight: 500;
     &.answer {
       border: 1px solid #2f6f44;
       color: #2f6f44;
       border-radius: 3px;
-
     }
     &.chose {
       background: #2f6f44;
       color: white;
       border-radius: 3px;
-
     }
   `,
   BountyCount: styled.span`
-  &.hasBounty {
-    color: white;
-    background: #0074cc;
-    border-radius: 3px;
-    padding: 3px 3px;
-    font-weight: 500;}
+    &.hasBounty {
+      color: white;
+      background: #0074cc;
+      border-radius: 3px;
+      padding: 3px 3px;
+      font-weight: 500;
+    }
   `,
   BelowInfo: styled.div`
     text-align: left;
@@ -161,6 +162,7 @@ const S = {
     background-color: var(--color-button-sky);
     color: var(--color-tag-blue);
     margin-right: 6px;
+    margin-bottom: 4px;
     &:hover {
       background-color: var(--color-tag-skyblue-hover);
       color: var(--color-tag-blue-hover);

@@ -11,6 +11,17 @@ export interface QuestionInfo {
   bounty?: number;
 }
 
+
+
+export interface QuestionAnswer {
+  questionAnswerContent: string;
+  createdAt: Date | string;
+  userName: string;
+  userId?: number;
+  voteCount?: number;
+  modifiedAt?: string;
+  questionAnswerId: number;
+}
 export interface QuestionData {
   questionId: number | undefined | string;
   questionTitle: string;
@@ -19,17 +30,14 @@ export interface QuestionData {
   viewCount: number;
   createdAt: string;
   modifiedAt?: string;
-  questionAnswers: QuestionAnswer;
+  questionAnswers: QuestionAnswer[] | QuestionAnswer;
+  voteCount?: number;
 }
-
-export interface QuestionAnswer {
-  questionAnswerId: number;
+export interface QuestionPostAnswer {
   questionAnswerContent: string;
-  userId: number;
+  createdAt: Date | string;
   userName: string;
-  voteCount: number;
-  createdAt: string;
-  modifiedAt?: string;
+  userId?: number;
 }
 
 export interface LoginInfo {
@@ -41,4 +49,10 @@ export interface RegisterInfo {
   userName: string;
   email: string;
   password: string;
+}
+
+export interface QuestionPost {
+  questionContents: object;
+  createdAt: Date | string;
+  userName: string;
 }

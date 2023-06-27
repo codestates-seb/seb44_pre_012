@@ -68,7 +68,7 @@ const S = {
   Aside: styled.aside`
     padding: 25px;
 
-    @media (max-width: 979px) {
+    @media (max-width: 1110px) {
       display: none;
     }
   `,

@@ -67,7 +67,7 @@ export default function QuestionList() {
             <S.Title>
               <h1> All Questions </h1>
               <Link to="questions/ask">
-              <S.AskButton> Ask Question </S.AskButton>
+             <S.AskButton> Ask Question </S.AskButton>
               </Link>
             </S.Title>
             <S.SubTitle>

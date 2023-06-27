@@ -1,66 +1,32 @@
-// 질문 컴포넌트에서 질문 아이디 받아와야함.
-
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
 import parse from 'html-react-parser';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import { questionsAPI } from '../api/QuestionListApi';
-import colors from '../constants/colorNames';
-import { formatAnswerElapsedTime } from '../util/formatElapsedTime';
+import colors from '../../constants/colorNames';
+import { formatAnswerElapsedTime } from '../../util/formatElapsedTime';
 import AddReply from './AddReply';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../redux/store';
-import { useState } from 'react';
-import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
-import { QuestionAnswer } from '../types/types';
+import { QuestionAnswer, QuestionData } from '../../types/types';
 import SocialShare from './Share';
 import GuestDelete from './GuestDelete';
-import LoginDelete from './LoginDelete'
-// 유저 아이디 있어야 함.
+import LoginDelete from './LoginDelete';
+import VoteCount from './VoteCount';
 
-export default function Reply() {
-  const [isDeleteClicked, setIsDeleteClicked] = useState(0);
-  const [inputData, setInputData] = useState('');
-  const [isCorrectEmail, setIsCorrectEmail] = useState(true);
-  const query = useQuery(['fetchCertainAnswer'], () =>
-    questionsAPI.fetchCertainQuestion(1)
-  );
-  // const isLoggedIn = useSelector(
-  //   (state: RootState) => state.auth.login.isLogin
+interface ReplyProps {
+  questionData: QuestionData;
+}
+
+export default function Reply({questionData}:ReplyProps) {
+ // const { isLoggedIn } = useSelector(
+  //   (state: RootState) => state.auth.login
   // );
-  const isLoggedIn = true;
-  const queryClient = useQueryClient();
-  const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(1, isDeleteClicked)
-  );
-  const handleDelete = async (e: React.FormEvent) => {
-    console.log(
-      `이메일 확인 기능이 구현되지 않았습니다. 대신 인풋 칸에 해당 답변의 Id인 -> ${isDeleteClicked} (을)를 입력해주세요.`
-    );
-    if (Number(inputData) === isDeleteClicked) {
-      e.preventDefault();
-      await mutateAsync();
-      queryClient.invalidateQueries(['fetchCertainAnswer']);
-      setIsDeleteClicked(0);
-      console.log('삭제되었습니다');
-      setInputData('');
-      return;
-    }
-    e.preventDefault();
-    // setIsDeleteClicked(0);
-    console.log('이메일이 유효하지 않습니다.');
-    setInputData('');
-    setIsCorrectEmail(false);
-    return;
-  };
-
-  console.log(typeof inputData);
+  const isLoggedIn = true; // temp
 
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
-        <div>{query.data ? `${query.data.length} answers` : null}</div>
+        <div>{Array.isArray(questionData.questionAnswers) ? `${questionData.questionAnswers.length} answers` : null}</div>
         <div>
           <span>sorted by:</span>
           <select defaultValue="highestScore">
@@ -71,19 +37,13 @@ export default function Reply() {
           </select>
         </div>
       </S.TotalAnswers>
-      {query.data
-        ? query.data.map((item: QuestionAnswer) => (
+      {Array.isArray(questionData.questionAnswers)
+        ? questionData.questionAnswers.map((item: QuestionAnswer) => (
             <S.RenderedAnswers key={item.questionAnswerId}>
               <div>
                 <div>
                   <S.Sidebar>
-                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
-                      <IoMdArrowDropup size={28} />
-                    </S.ArrowBox>
-                    <div>{item.voteCount}</div>
-                    <S.ArrowBox className={isLoggedIn ? '' : 'isNotLoggedIn'}>
-                      <IoMdArrowDropdown size={28} />
-                    </S.ArrowBox>
+                    <VoteCount item={item} isLoggedIn={isLoggedIn} />
                     <S.Icon>
                       <FaRegBookmark
                         style={{ color: 'var(--color-button-lightgray)' }}
@@ -102,34 +62,15 @@ export default function Reply() {
                     <S.SocialBox>
                       <SocialShare />
                       {!isLoggedIn ? (
-                        <GuestDelete
-                          isLoggedIn={isLoggedIn}
-                          isDeleteClicked={isDeleteClicked}
-                          inputData={inputData}
-                          setInputData={setInputData}
-                          setIsDeleteClicked={setIsDeleteClicked}
-                          handleDelete={handleDelete}
-                          item={item}
-                          isCorrectEmail={isCorrectEmail}
-                          setIsCorrectEmail={setIsCorrectEmail}
-                        />
+                        <GuestDelete item={item} questionItem={questionData}/>
                       ) : (
-                        <LoginDelete
-                          isLoggedIn={isLoggedIn}
-                          isDeleteClicked={isDeleteClicked}
-                          inputData={inputData}
-                          setInputData={setInputData}
-                          setIsDeleteClicked={setIsDeleteClicked}
-                          handleDelete={handleDelete}
-                          item={item}
-                          isCorrectEmail={isCorrectEmail}
-                          setIsCorrectEmail={setIsCorrectEmail}
-                        />
+                        <LoginDelete item={item} questionItem={questionData}/>
                       )}
                     </S.SocialBox>
                     <S.UserBox>
                       <div>
-                        answered {formatAnswerElapsedTime(item.createdAt)}
+                        answered{' '}
+                        {formatAnswerElapsedTime(item.createdAt.toString())}
                       </div>
                       <div>
                         <div>
@@ -146,8 +87,8 @@ export default function Reply() {
               </div>
             </S.RenderedAnswers>
           ))
-        : null}
-      <AddReply />
+          : null}
+      <AddReply item={questionData}/>
     </S.ReplyContainer>
   );
 }
@@ -157,21 +98,16 @@ const getUserRandomColor = (): string => {
 };
 const S = {
   ReplyContainer: styled.section`
-    padding: 24px;
+    padding-top: 25px;
     width: 100%;
-    height: 2000vh;
     display: flex;
     flex-direction: column;
-    > div:first-child {
-      border: 1px solid goldenrod;
-      height: 24px;
-    }
   `,
   TotalAnswers: styled.h3`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 45px;
+    padding: 5px 25px;
     margin-bottom: 8px;
     div:first-child {
       @media (max-width: 600px) {
@@ -191,14 +127,13 @@ const S = {
   `,
   RenderedAnswers: styled.div`
     width: 100%;
-    /* border: 1px solid yellow; */
     display: flex;
     justify-content: center;
     align-items: center;
     > div {
       border-top: 1px solid var(--color-layout-lightgray);
-      padding: 20px 10px 10px 0;
-      width: 90%;
+      padding: 30px 0px;
+      width: 93.5%;
       display: flex;
       > div:first-child {
         margin-right: 20px;
@@ -218,27 +153,8 @@ const S = {
       margin-bottom: 7px;
     }
     > div:nth-child(2) {
-      color: var(--color-content-desc);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 7px;
-    }
-  `,
-  ArrowBox: styled.div`
-    &.isNotLoggedIn {
-      opacity: 0.4;
-    }
-    border: 1px solid var(--color-button-lightgray);
-    color: var(--color-content-desc);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      background-color: var(--color-button-orange-hover);
+      font-size: 1.2rem;
+      margin: 3px 0 7px 0;
     }
   `,
   Icon: styled.div`

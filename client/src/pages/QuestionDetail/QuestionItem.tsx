@@ -12,37 +12,38 @@ interface QuestionDataProps {
   questionData: QuestionData;
 }
 
-const QuestionItem = ({ questionData }: QuestionDataProps) => {
-  return (
-    <S.Section>
-      <QuestionHead questionData={questionData} />
-      <S.Div>
-        <S.ContentLayout>
-          <VoteCell />
-          <S.PostCell>
-            <article>
-              <p>{questionData.questionContent}</p>
-            </article>
-            <S.PostEnd>
-              <S.FlexWrap>
-                <S.PostMenu>
-                  <span>Share</span>
-                  <button>Follow</button>
-                </S.PostMenu>
-                <S.Signature>
-                  <Signature questionData={questionData} />
-                </S.Signature>
-              </S.FlexWrap>
-            </S.PostEnd>
-          </S.PostCell>
-        </S.ContentLayout>
-        <S.AsideWrap>
-          <Aside />
-        </S.AsideWrap>
-      </S.Div>
-    </S.Section>
-  );
-};
+const QuestionItem=({questionData}:QuestionDataProps)=>{
+
+    return (
+        <S.Section>
+            <QuestionHead questionData={questionData}/>
+             <S.Div>
+                 <S.ContentLayout>
+                     <VoteCell />
+                     <S.PostCell>
+                         <article>
+                             <p>{questionData.questionContent}</p>
+                         </article>
+                        <S.PostEnd>
+                            <S.FlexWrap>
+                                <S.PostMenu>
+                                    <span>Share</span>
+                                    <button>Follow</button>
+                                </S.PostMenu>
+                                <S.Signature>
+                                    <Signature questionData={questionData}/>
+                                </S.Signature>
+                            </S.FlexWrap>
+                        </S.PostEnd>
+                    </S.PostCell>
+                </S.ContentLayout>
+                {/* <S.AsideWrap>
+                    <Aside />
+                </S.AsideWrap> */}
+            </S.Div>
+        </S.Section>
+    )
+}
 
 const S = {
   Section: styled.div`

@@ -1,19 +1,25 @@
-import '../index.css';
+import '../../index.css';
 import { styled } from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { useState, useEffect } from 'react';
-import RecommendLogin from './RecommendLogin';
+import RecommendLogin from '../RecommendLogin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { questionsAPI } from '../api/QuestionListApi';
-
-export default function AddReply() {
-  // const isLoggedIn = useSelector(
-  //   (state: RootState) => state.auth.login.isLogin
+import { questionsAPI } from '../../api/QuestionListApi';
+import { QuestionPostAnswer, QuestionData } from '../../types/types';
+interface ReplyProps {
+  item: QuestionData;
+}
+export default function AddReply({ item }: ReplyProps) {
+  // const {isLoggedIn, userName, userId} = useSelector(
+  //   (state: RootState) => state.auth.login
   // );
-  const isLoggedIn = true;
+  const userId = 77; // temp
+  const userName = 'Mango'; // temp
+  const isLoggedIn = true; // temp
+
   const [renderedData, setRenderedData] = useState('');
   const [nameData, setNameData] = useState('');
   const [emailData, setEmailData] = useState('');
@@ -25,27 +31,45 @@ export default function AddReply() {
     }
   }, [emailData]);
 
-  const userName = nameData; // temp
   const createdAt = new Date();
   const questionAnswerContent = renderedData;
 
-  const requestBody = {
+  const guestRequestBody = {
+    questionAnswerContent,
+    userName: nameData,
+    createdAt,
+  };
+
+  const loginRequestBody = {
     questionAnswerContent,
     userName,
     createdAt,
+    userId,
   };
+
+  let requestBody: QuestionPostAnswer;
+  if (isLoggedIn) {
+    requestBody = loginRequestBody;
+  } else {
+    requestBody = guestRequestBody;
+  }
+
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation(() =>
-    questionsAPI.postAnswerQuestion(1, requestBody)
-  );
-  const handleSubmit = async (e: React.MouseEvent) => {
-    if (!userName || !emailData || !isValid) {
+  const { mutateAsync } = useMutation(() => {
+    return questionsAPI.postAnswerQuestion(
+      Number(item.questionId),
+      requestBody
+    );
+  });
+
+  const handleSubmit = async () => {
+    if (!isLoggedIn && (!userName || !emailData || !isValid)) {
       return;
     }
     await mutateAsync();
     setRenderedData('');
-    queryClient.invalidateQueries(['fetchCertainAnswer']);
+    queryClient.invalidateQueries(['getQuestionDetail']);
     setEmailData('');
     setNameData('');
     setIsValid(false);
@@ -76,7 +100,7 @@ export default function AddReply() {
               'redo',
               '|',
               'CKFinder',
-         
+
               'indent',
               'outdent',
               'insertTable',
@@ -118,14 +142,8 @@ export default function AddReply() {
 }
 
 const S = {
-  RenderedReplyContainer: styled.div`
-    width: 100%;
-    height: 50px;
-  `,
-
   ReplyContainer: styled.div`
     padding: 24px;
-    height: 35rem;
   `,
   H2: styled.h2`
     color: var(--color-page-title);
