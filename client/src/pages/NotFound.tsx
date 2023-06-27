@@ -27,7 +27,7 @@ export default function NotFound() {
 
 const S = {
   ...CommonStyles,
-  Container: styled.div<{ background: string }>`
+  Container: styled.div`
     display: flex;
     flex: 1;
     min-height: 100%;
