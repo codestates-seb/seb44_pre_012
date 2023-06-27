@@ -41,7 +41,7 @@ export const questionsAPI = {
       throw error;
     }
   },
-  deleteAnswerQuestion: async (questionId: number, answerId: number) => {
+  deleteAnswerQuestion: async (answerId: number) => {
     try {
       await axios.delete(
         // `${BASE_URL}/answers/?questionId=${questionId}&answerId=${answerId}`

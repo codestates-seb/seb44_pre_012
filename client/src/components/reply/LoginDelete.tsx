@@ -9,7 +9,6 @@ import { RootState } from '../../redux/store';
 interface GuestDeleteProps {
   item: QuestionAnswer;
   questionItem: QuestionData;
-
 }
 
 export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
@@ -22,16 +21,16 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
   //   (state: RootState) => state.auth.login.userName);
   const userName = 'Mango';
   const isUserCreated = item.userName === userName;
- 
+
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(Number(questionItem.questionId), numberDeleteClicked)
+    questionsAPI.deleteAnswerQuestion(numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   function handleEnterKey(this: HTMLInputElement, event: KeyboardEvent) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const button = document.getElementById("submitButton");
+      const button = document.getElementById('submitButton');
       if (button) {
         button.click();
       }
@@ -39,10 +38,12 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
   }
   useEffect(() => {
     if (inputRef.current) {
-    inputRef.current.addEventListener("keypress", handleEnterKey )};
+      inputRef.current.addEventListener('keypress', handleEnterKey);
+    }
     return () => {
       if (inputRef.current) {
-      inputRef.current.removeEventListener("keypress", handleEnterKey);}
+        inputRef.current.removeEventListener('keypress', handleEnterKey);
+      }
     };
   }, [handleEnterKey]);
   const handleDelete = async (e: React.FormEvent) => {
@@ -63,17 +64,17 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
 
   return (
     <S.DeleteContainer>
-      {isUserCreated && (
-        <S.DeleteButton
-          onClick={() => {
-            setNumberIsDeleteClicked(item.questionAnswerId);
-            setIsLayoutClicked(prev => !prev);
-          }}
-        >
-          Delete
-        </S.DeleteButton>
-      )}
-      {numberDeleteClicked === item.questionAnswerId && isLayoutClicked && (
+      {/* {isUserCreated && ( */}
+      <S.DeleteButton
+        onClick={() => {
+          setNumberIsDeleteClicked(item.answerId);
+          setIsLayoutClicked(prev => !prev);
+        }}
+      >
+        Delete
+      </S.DeleteButton>
+      {/* )} */}
+      {numberDeleteClicked === item.answerId && isLayoutClicked && (
         <div>
           <S.DeleteConfirmForm>
             {isCorrectSentence ? (
@@ -86,8 +87,7 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
               </S.FormInform>
             )}
             <S.FormInput
-            ref={inputRef}
-           
+              ref={inputRef}
               value={inputData}
               onChange={e => setInputData(e.target.value)}
               placeholder="I Love Mango"

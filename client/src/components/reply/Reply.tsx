@@ -18,16 +18,40 @@ interface ReplyProps {
 }
 
 export default function Reply({ questionData }: ReplyProps) {
-  const { isLoggedIn } = useSelector(
-    (state: RootState) => state.auth.login
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.login.isLogin
   );
   // const isLoggedIn = true; // temp
 
   function removeFirstAndLastCharacter(str) {
     return str.slice(1, -1);
   }
-  
 
+  function generateRandomName() {
+    const firstNames = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'Isabella'];
+    const lastNames = [
+      'Smith',
+      'Johnson',
+      'Brown',
+      'Davis',
+      'Miller',
+      'Wilson',
+    ];
+
+    const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);
+    const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);
+
+    const randomFirstName = firstNames[randomFirstNameIndex];
+    const randomLastName = lastNames[randomLastNameIndex];
+
+    const randomName = randomFirstName + ' ' + randomLastName;
+
+    return randomName;
+  }
+
+  const userRandomName = generateRandomName();
+
+  // console.log(isLoggedIn);
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
@@ -66,7 +90,9 @@ export default function Reply({ questionData }: ReplyProps) {
                   </S.Sidebar>
                 </div>
                 <S.MainBar>
-                  <div>{removeFirstAndLastCharacter(parse(item.answerContent))}</div>
+                  <div>
+                    {removeFirstAndLastCharacter(parse(item.answerContent))}
+                  </div>
                   <S.BottomContainer>
                     <S.SocialBox>
                       <SocialShare />
@@ -84,11 +110,13 @@ export default function Reply({ questionData }: ReplyProps) {
                       <div>
                         <div>
                           <S.UserImg>
-                            {Array.isArray(item.userName) &&
-                              item.userName.slice(0, 1).toUpperCase()}
+                            {
+                              // Array.isArray(item.userName) &&
+                              generateRandomName().slice(0, 1).toUpperCase()
+                            }
                           </S.UserImg>
                         </div>
-                        <span>{item.userName}</span>
+                        <span>{generateRandomName()}</span>
                       </div>
                     </S.UserBox>
                   </S.BottomContainer>
