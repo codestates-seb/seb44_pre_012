@@ -20,7 +20,7 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(() =>
-    questionsAPI.deleteAnswerQuestion(Number(questionItem.questionId), numberDeleteClicked)
+    questionsAPI.deleteAnswerQuestion(numberDeleteClicked)
   );
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   function handleEnterKey(this: HTMLInputElement, event: KeyboardEvent) {

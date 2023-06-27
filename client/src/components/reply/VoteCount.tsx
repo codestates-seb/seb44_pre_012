@@ -15,7 +15,14 @@ interface GuestDeleteProps {
 export default function VoteCount({ item, isLoggedIn }: GuestDeleteProps) {
   const [isUpClicked, setIsUpClicked] = useState(false);
   const [isDownClicked, setIsDownClicked] = useState(false);
-  const [voteCount, setVoteCount] = useState(item.voteCount);
+  const [voteCount, setVoteCount] = useState(generateRandomNumber());
+
+  function generateRandomNumber() {
+    const min = 0;
+    const max = 20;
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomNumber;
+  }
 
   const handleUpClick = () => {
     if (typeof voteCount === 'number' && !isUpClicked && !isDownClicked) {
@@ -31,8 +38,8 @@ export default function VoteCount({ item, isLoggedIn }: GuestDeleteProps) {
     if (typeof voteCount === 'number' && !isDownClicked && !isUpClicked) {
       setVoteCount(voteCount - 1);
       setIsDownClicked(true);
-    } else if (isDownClicked) {
-      setVoteCount(voteCount && voteCount + 1);
+    } else if (typeof voteCount === 'number' && isDownClicked) {  
+      setVoteCount(voteCount + 1);  
       setIsDownClicked(false);
     }
   };
@@ -46,11 +53,7 @@ export default function VoteCount({ item, isLoggedIn }: GuestDeleteProps) {
         <IoMdArrowDropup size={28} />
       </S.ArrowBox>
       <S.VoteNumber>
-        {item.voteCount !== undefined && isUpClicked
-          ? item.voteCount + 1
-          : isDownClicked
-          ? item.voteCount !== undefined && item.voteCount - 1
-          : item.voteCount}
+      {voteCount}
       </S.VoteNumber>
       <S.ArrowBox
         className={isLoggedIn ? '' : 'isNotLoggedIn'}

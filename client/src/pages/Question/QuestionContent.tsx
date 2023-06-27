@@ -9,16 +9,50 @@ interface QuestionContentProps {
 }
 
 export default function QuestionContent({ data }: QuestionContentProps) {
+
+  function generateRandomName() {
+    const firstNames = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'Isabella'];
+    const lastNames = [
+      'Smith',
+      'Johnson',
+      'Brown',
+      'Davis',
+      'Miller',
+      'Wilson',
+    ];
+
+    const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);
+    const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);
+
+    const randomFirstName = firstNames[randomFirstNameIndex];
+    const randomLastName = lastNames[randomLastNameIndex];
+
+    const randomName = randomFirstName + ' ' + randomLastName;
+
+    return randomName;
+  }
+
+  const userRandomName = generateRandomName();
+
+  function generateRandomNumber() {
+    const min = 0;
+    const max = 20;
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomNumber;
+  }
+
+  const randomNumber = generateRandomNumber();
+  const randomNumberTwo = generateRandomNumber();
   return (
     <S.Li key={data.questionId}>
       <S.SubInfo>
-        <div>{data.voteCount} votes</div>
-        <S.AnswerCount className={data.answerCount ? 'answer' : ''}>
-          {data.answerCount === 1 ? '1 answer' : `${data.answerCount} answers`}
+        <div>{generateRandomNumber()} votes</div>
+        <S.AnswerCount className={randomNumber ? 'answer' : ''}>
+          {randomNumber === 1 ? '1 answer' : `${randomNumber} answers`}
         </S.AnswerCount>
-        <div>{data.viewCount} views</div>
-        <S.BountyCount className={data.bounty ? 'hasBounty' : ''}>
-          {data.bounty ? `+${data.bounty}` : ''}{' '}
+        <div>{generateRandomNumber()} views</div>
+        <S.BountyCount className={randomNumberTwo? 'hasBounty' : ''}>
+          {randomNumberTwo ? `+${randomNumberTwo}` : ''}{' '}
         </S.BountyCount>
       </S.SubInfo>
       <S.Content>
@@ -31,9 +65,9 @@ export default function QuestionContent({ data }: QuestionContentProps) {
           </div>
           <div>
             <span>
-              <S.UserImg>{Array.isArray(data.userName) && data.userName.slice(0, 1).toUpperCase()}</S.UserImg>
+              <S.UserImg>{ userRandomName.slice(0, 1).toUpperCase()}</S.UserImg>
             </span>
-            <a>{data.userName}</a>
+            <a>{userRandomName}</a>
             <span>12</span>
             <span>asked {formatElapsedTime(data.createdAt)}</span>
           </div>
