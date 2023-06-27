@@ -1,11 +1,10 @@
 # ✨ 클론할거조
 
-### stackoverflow Clone Project
+## stackoverflow Clone Project
+
+<br>
 
 📆 2023.06.09 - 2023.06.27
-
-📌 [배포 링크](https://stackoverflow-clone-12.web.app/)
-
 
 ```js
 const TeamClone = {
@@ -13,6 +12,14 @@ const TeamClone = {
   BE: ['박형준', '김영식', '황성재'],
 };
 ```
+
+<br>
+
+📌 [배포 링크](https://stackoverflow-clone-12.web.app/)
+| test 아이디        | 비밀번호   |
+| ---------------- | ---------- |
+| admin@gmail.com | 123123    |
+
 
 </br>
 
@@ -45,6 +52,8 @@ const TeamClone = {
 |   `dev`   | 메인 브랜치 배포 전 릴리즈 브랜치                                |
 |   `be-feat/feature name`   | BE 기능 개발 브랜치 브랜치                                |
 |   `fe-feat/feature name`   | FE 기능 개발 브랜치 브랜치                                |
+
+<br>
 
 ## Commit Convention
 
