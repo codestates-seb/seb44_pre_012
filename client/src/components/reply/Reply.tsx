@@ -4,8 +4,8 @@ import parse from 'html-react-parser';
 import colors from '../../constants/colorNames';
 import { formatAnswerElapsedTime } from '../../util/formatElapsedTime';
 import AddReply from './AddReply';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { FaRegBookmark, FaHistory } from 'react-icons/fa';
 import { QuestionAnswer, QuestionData } from '../../types/types';
 import SocialShare from './Share';
@@ -18,13 +18,16 @@ interface ReplyProps {
 }
 
 export default function Reply({ questionData }: ReplyProps) {
-  // const { isLoggedIn } = useSelector(
-  //   (state: RootState) => state.auth.login
-  // );
-  const isLoggedIn = true; // temp
-  console.log('here');
+  const { isLoggedIn } = useSelector(
+    (state: RootState) => state.auth.login
+  );
+  // const isLoggedIn = true; // temp
 
-  console.log(questionData);
+  function removeFirstAndLastCharacter(str) {
+    return str.slice(1, -1);
+  }
+  
+
   return (
     <S.ReplyContainer>
       <S.TotalAnswers>
@@ -63,7 +66,7 @@ export default function Reply({ questionData }: ReplyProps) {
                   </S.Sidebar>
                 </div>
                 <S.MainBar>
-                  <div>{parse(item.answerContent)}</div>
+                  <div>{removeFirstAndLastCharacter(parse(item.answerContent))}</div>
                   <S.BottomContainer>
                     <S.SocialBox>
                       <SocialShare />

@@ -15,7 +15,7 @@ const QuestionHead = ({ questionData }: QuestionDataProps) => {
     <div>
       <S.TitleDiv>
         <S.Title>{questionData.questionTitle}</S.Title>
-        <Link to="questions/ask">
+        <Link to="/questions/ask">
           <S.AskDiv>
             <S.AskButton>Ask Question</S.AskButton>
           </S.AskDiv>

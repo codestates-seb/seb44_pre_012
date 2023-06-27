@@ -44,7 +44,8 @@ export const questionsAPI = {
   deleteAnswerQuestion: async (questionId: number, answerId: number) => {
     try {
       await axios.delete(
-        `${BASE_URL}/answers/?questionId=${questionId}&answerId=${answerId}`
+        // `${BASE_URL}/answers/?questionId=${questionId}&answerId=${answerId}`
+        `${BASE_URL}/answers/${answerId}`
       );
     } catch (error) {
       console.error(error);

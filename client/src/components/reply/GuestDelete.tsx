@@ -63,13 +63,13 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
     <S.DeleteContainer>
       <S.DeleteButton
         onClick={() => {
-          setNumberIsDeleteClicked(item.questionAnswerId);
+          setNumberIsDeleteClicked(item.answerId);
           setIsLayoutClicked(prev => !prev);
         }}
       >
         Delete
       </S.DeleteButton>
-      {numberDeleteClicked === item.questionAnswerId && isLayoutClicked && (
+      {numberDeleteClicked === item.answerId && isLayoutClicked && (
         <div>
           <S.DeleteConfirmForm>
             {isCorrectEmail ? (
@@ -86,7 +86,7 @@ export default function GuestDelete({ item, questionItem }: GuestDeleteProps) {
 
               value={inputData}
               onChange={e => setInputData(e.target.value)}
-              placeholder=" 아무 키나 입력 후 Submit을 누르고 콘솔창을 확인해주세요."
+              placeholder=" 아무 키나 입력 후 Delete을 누르고 콘솔창을 확인해주세요."
             />
             <S.ButtonBox>
               <S.FormCancelButton
