@@ -87,8 +87,9 @@ export default function Askquestion() {
       expectation: '',
     }));
     queryClient.invalidateQueries(['fetchQuestions']);
-    const questionId = res.questionId; 
-    window.location.href = `/question/${questionId}`;
+    //const questionId = res.questionId; 
+    //window.location.href = `/question/${questionId}`;
+    window.location.href = `/`;
   };
 
   const handleNextStep = () => {
