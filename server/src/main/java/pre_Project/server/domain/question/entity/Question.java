@@ -3,11 +3,13 @@ package pre_Project.server.domain.question.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pre_Project.server.domain.answer.entity.Answer;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.global.audit.Auditable;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,8 +29,11 @@ public class Question extends Auditable {
 
     @Column(nullable = false)
     private int view;
+
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
 }
