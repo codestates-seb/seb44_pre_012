@@ -65,25 +65,25 @@ const TeamClone = {
 ### Front
 | HTML5 | CSS | JS | TS | React |
 |:---:|:---:|:---:|:---:|:---:|
-| ![html5](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/0e91e855-687f-4b21-ba18-9f361c41a867) | ![css3](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e8a0bd88-dfcb-4376-b217-d468c642a281) | ![JS](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/8ec8f841-63ca-4fba-8a41-e1522d234f87) | ![TS](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/c4fa80f9-885d-40bd-8b51-7bd18e65fd89) | ![React](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e196cb31-0d6f-4334-b9e7-7e771af593bb) | 
+| ![html5](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/63e54418-b52d-45ff-98dc-c9b44e21223c) | ![css3](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/cb4e625e-c782-4292-8ddf-55a47536c73b) | ![JS](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e871aa23-673b-444b-90c1-2370a2bb9f9f) | ![TS](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/cbe1eb9f-a940-4f36-83e8-ddbb0a4d4f63) | ![React](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/bae342b4-34fa-4587-a824-a8defbcb3cf3) | 
 
 
 | Redux-toolkit | React-Query | Axios | React-Router |  Styled-Components |
 |:---:|:---:|:---:|:---:|:---:|
-| ![Redux-toolkit](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/3296f875-9c79-4a04-b43d-59d763a5d174) | ![React-query](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/8162c306-6106-4a7a-accf-d0283f6d74a9) | ![Axios](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/d17c0220-efa3-4c3c-ae99-3d9414ac8f61) | ![React-Router](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e5333dff-4d9a-4f92-8ec2-b5a5fefdb2d5) | ![Styled-components](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/4b9c9a9b-4e5f-43f2-aff9-6d7a34370e3f) |
+| ![Redux-toolkit](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/8c3c7c99-8af6-43e1-931f-615eba5f100f) | ![React-query](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/6c656584-df33-4f58-897c-9b84224fe3cf) | ![Axios](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/6c6efb40-b28e-485a-a5be-2d09dc02f89c) | ![React-Router](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/4973f9a2-30d3-431f-acf2-e53ecd429b35) | ![Styled-components](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e9ced931-8c9c-4a27-bd5d-90459db7f43b) |
 
 
 
 | Es-lint | Prettier |
 |:---:|:---:|
-| ![eslint](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/cd3a8839-25b9-4dea-95af-82dee95b8834) | ![Prettier](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/d54c6d05-9a86-487d-9cad-5c77c5c01544) |
+| ![eslint](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/7c5aa800-e4dc-412b-9978-ec0efb5a3719) | ![Prettier](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/d7584219-bdc6-43a6-b54a-03e7436bc49d) |
 
 <br>
 
 ### Back 
 | Spring Boot | Spring Security | JWT | JAVA | SPRING |
 |:---:|:---:|:---:|:---:|:---:|
-| ![springboot](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/0d5cd7b6-d1a5-49da-8ee5-6bebcb097d5a) | ![springsecurity](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/f1fd0aa3-d209-4a16-b878-dffec4197b94) | ![jwt](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/c276a2fa-bc07-4f3f-95f4-7c63879e0cce) | ![java-icon](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/40a1e155-4a9f-4cf1-883c-eeb2e1cfd866) | ![spring](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/ab8bee95-cacd-4aa7-84f1-5d54604312c6) |
+| ![springboot](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/1c36e862-42d6-435d-9ba8-eed8bd2c4730) | ![springsecurity](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e4e4c3b3-f93a-419f-bc76-53946e338f00) | ![jwt](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/e8886454-12c6-4b66-a4d7-1b94f17fc905) | ![java-icon](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/c9b037cf-293f-44cc-819a-f7827c10dfba) | ![spring](https://github.com/codestates-seb/seb44_pre_012/assets/121333344/ba00470d-ab67-4ed2-8af9-9ef782d2e53b)|
 
 
 <br>
@@ -100,11 +100,21 @@ const TeamClone = {
 
 ### 사용자 요구사항 정의서
 [요구사항 정의서 바로가기](https://ogu59.notion.site/55d2d88761934e029ee1138f0a6449c7?pvs=4)
-
+<details>
+  <summary>사용자 요구사항 정의서</summary>
+  
 ![요구사항 정의서](https://cdn.discordapp.com/attachments/1122740630053994597/1122752368933601361/image.png)
 
+</details>
 
 
+</br>
 
 ### API 명세서
+[API 명세서 바로가기](https://ogu59.notion.site/382180ae53164cdb91ef03cfb4da8e32?v=d28c64dc986a41f9a0b824e2668f83f5)
+<details>
+  <summary>API 명세서</summary>
+  
+![API 명세서](https://cdn.discordapp.com/attachments/1122740630053994597/1123081745781243965/-1.png)
 
+</details>
