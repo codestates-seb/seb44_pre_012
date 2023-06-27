@@ -22,9 +22,10 @@ public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper mapper;
 
-    @PostMapping("/register")
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
-        Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
+    @PostMapping("/register/{questionId}")
+    public ResponseEntity postAnswer(@PathVariable("questionId") long questionId,
+                                     @Valid @RequestBody AnswerPostDto answerPostDto) {
+        Answer answer = mapper.answerPostDtoToAnswer(questionId, answerPostDto);
         Answer saveAnswer = answerService.createAnswer(answer);
 
 

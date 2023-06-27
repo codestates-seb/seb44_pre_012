@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pre_Project.server.domain.comment.entity.Comment;
 import pre_Project.server.domain.question.entity.Question;
 import pre_Project.server.domain.user.entitiy.User;
 import pre_Project.server.global.audit.Auditable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,32 +26,15 @@ public class Answer extends Auditable {
     @Column(nullable = false)
     private String answerContent;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private AnswerStatus answerStatus = AnswerStatus.ANSWER_NOT_SELECT;
-
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
-    // @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    // private List<Comment> comments = new ArrayList<>();
-
-        public enum AnswerStatus{
-        ANSWER_SELECT("답변 채택"),
-        ANSWER_NOT_SELECT("답변 미채택");
-
-        @Getter
-        private String status;
-
-        AnswerStatus(String status) {
-            this.status = status;
-        }
-    }
+    @OneToMany(mappedBy = "answer")
+    private List<Comment> comments = new ArrayList<>();
 
 }
